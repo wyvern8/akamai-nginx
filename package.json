@@ -1,0 +1,15 @@
+{
+  "name": "akamai-nginx",
+  "version": "0.1.0",
+  "description": "generate nginx config from akamai property",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wyvern8/akamai-nginx.git"
+  },
+  "author": "Andrew Vaughan <andrewv@smartcreations.com.au> (https://halt.sh)",
+  "license": "MIT"
+}
