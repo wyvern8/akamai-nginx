@@ -2,7 +2,7 @@
 import { default as assert } from 'assert';
 
 // Libraries
-import { generateConf } from '../src/akamai-nginx.js';
+import { setContext, generateConf } from '../src/akamai-nginx.js';
 
 let test_conf = null;
 
@@ -11,9 +11,12 @@ describe('AkamaiNginx', function() {
         it('should find the default rule.', async function() {
             let expected_conf = 'default';
 
-            let test_conf = await generateConf(
+            setContext(
                 process.env.AKA_CONTRACT_ID,
-                process.env.AKA_GROUP_ID,
+                process.env.AKA_GROUP_ID
+            );
+
+            let test_conf = await generateConf(
                 process.env.AKA_PROPERTY_ID,
                 process.env.AKA_PROPERTY_VERSION
             );
