@@ -24,6 +24,7 @@ set the following env var in .env or shell:
 ```javascript
 import { setContext, generateConf } from 'akamai-nginx';
 ...
+async function getConf() {
     setContext(
         process.env.AKA_CONTRACT_ID,
         process.env.AKA_GROUP_ID
@@ -33,7 +34,9 @@ import { setContext, generateConf } from 'akamai-nginx';
         process.env.AKA_PROPERTY_ID,
         process.env.AKA_PROPERTY_VERSION
     );
-
+    
+    return nginxConf;
+}
 ````
 ## development
 set the following env var in .env or shell to allow npm test to work
