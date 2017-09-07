@@ -29,6 +29,11 @@ set the following env var in .env or shell:
 
     AKA_EDGERC=/path/to/.edgerc
     
+you can use the following commands to execute standalone:
+
+1. using a local sample.papi.json file `npm run start-local`
+2. using your akamai api setup `npm run start`   
+    
 ### example usage ES6
 ```javascript
 import EdgeGrid from 'edgegrid';
