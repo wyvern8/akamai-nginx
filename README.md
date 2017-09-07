@@ -2,7 +2,7 @@
 configure nginx reverse proxy based on akamai property rules
 
 ## Install
-`npm install akamai-nginx`
+`npm install akamai-nginx` or clone repo
 
 ## Setup papi
 1. install https://github.com/akamai/httpie-edgegrid 
@@ -29,7 +29,7 @@ set the following env var in .env or shell:
 
     AKA_EDGERC=/path/to/.edgerc
     
-you can use the following commands to execute standalone:
+after clone of this repo you can use the following commands to execute standalone:
 
 1. using a local sample.papi.json file `npm run start-local`
 2. using your akamai api setup `npm run start`   
