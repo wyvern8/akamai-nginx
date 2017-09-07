@@ -35,11 +35,13 @@ after clone of this repo you can use the following commands to execute standalon
 ```javascript
 var akamaiNginx = require('akamai-nginx');
 
+// example using local json. use setApiConfig for papi calls
 akamaiNginx.setLocalConfig(
     'node_modules/akamai-nginx/sample.papi.json',
-    './akamai.lua'
+    './akamai.lua' // output file
 );
 
+// map values such a origin hostnames
 akamaiNginx.setValueMap(
     new Map([
         ['staging-old.akamai.com', 'staging-new.akamai.com'],
@@ -47,16 +49,19 @@ akamaiNginx.setValueMap(
     ])
 );
 
+// behaviours to skip altogether
 akamaiNginx.setSkipBehaviors([
     'cpCode'
 ]);
 
+// do it
 akamaiNginx.generateConf().then(function() {
     console.log('done.')
 });
 
 ```  
-..then assuing above is 'generate.js', `node --require babel-polyfill generate.js`
+..then assuing above is 'generate.js', `node --require babel-polyfill generate.js` this will generate 'akamai.lua' in current dir.  
+This in conjunction with the nginx.conf and docker-compose can be used to build your akamai simulator proxy.
     
 ### example usage ES6
 ```javascript
@@ -127,9 +132,11 @@ import { Behavior } from '../behavior.js';
 
 export class BehaviorOrigin extends Behavior {
 
-    constructor(options) {
+    constructor(options, valueMap, skipBehaviors) {
         super();
         this.options = options;
+        this.valueMap = valueMap;
+        this.skipBehaviors = skipBehaviors;
     }
 
     process() {
