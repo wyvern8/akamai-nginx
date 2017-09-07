@@ -31,14 +31,38 @@ set the following env var in .env or shell:
     
 after clone of this repo you can use the following commands to execute standalone:
 
-1. using a local sample.papi.json file `npm run start-local`
-2. using your akamai api setup `npm run start`   
+### example usage
+```javascript
+var akamaiNginx = require('akamai-nginx');
+
+akamaiNginx.setLocalConfig(
+    'node_modules/akamai-nginx/sample.papi.json',
+    './akamai.lua'
+);
+
+akamaiNginx.setValueMap(
+    new Map([
+        ['staging-old.akamai.com', 'staging-new.akamai.com'],
+        ['origin.akamaicustomer.com', 'something.com']
+    ])
+);
+
+akamaiNginx.setSkipBehaviors([
+    'cpCode'
+]);
+
+akamaiNginx.generateConf().then(function() {
+    console.log('done.')
+});
+
+```  
+..then assuing above is 'generate.js', `node --require babel-polyfill generate.js`
     
 ### example usage ES6
 ```javascript
 import EdgeGrid from 'edgegrid';
 import dotenv from 'dotenv';
-import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from './index.js';
+import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from 'akamai-nginx';
 
 (async function() {
 
@@ -83,6 +107,9 @@ set the following env var in .env or shell to allow npm test to work
     AKA_PROPERTY_VERSION=XX
 
 run `npm test` to confirm things are working.
+
+1. using the local sample.papi.json file `npm run start-local`
+2. using your akamai api setup `npm run start` 
 
 ## adding criteria and behaviors
 support for new criteria and behaviors can be achieved by adding new js files in:
