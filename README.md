@@ -1,5 +1,5 @@
 # akamai-nginx
-configure nginx reverse proxy based on akamai property rules
+Configure nginx reverse proxy/simulator based on Akamai property rules (Unofficial)
 
 ## Install
 `npm install akamai-nginx` or clone repo
