@@ -17,7 +17,7 @@ The docker-compose.yml in this repo can be used to start an OpenResty container.
 OpenResty (https://openresty.org) is nginx with things such as the required Lua modules built in.
 The docker-compose.yml maps the local nginx.conf and lua directory into the docker container.  
 
-By default the directive 'lua_code_cache off;' is set in th nginx conf to allow generated lua 
+By default the directive 'lua_code_cache off;' is set in the nginx conf to allow generated lua 
 to take effect without restarting nginx.  This directive should be disabled in a deployment as it has performance implications.
 
 You can test that nginx is functioning using http://localhost/info which will output env info.
@@ -29,7 +29,7 @@ set the following env var in .env or shell:
 
     AKA_EDGERC=/path/to/.edgerc
     
-after clone of this repo you can use the following commands to execute standalone:
+after `npm install akamai-nginx` you can use the following to execute:
 
 ### example usage
 ```javascript
