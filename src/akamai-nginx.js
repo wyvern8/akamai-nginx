@@ -31,7 +31,8 @@ export function setValueMap(map) {
 }
 
 let skipBehaviors = [
-    'redirect'
+    'cpcode',
+    'webApplicationFirewall'
 ];
 
 export function setSkipBehaviors(skip) {

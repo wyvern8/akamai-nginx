@@ -41,33 +41,6 @@
         "comments": ""
       },
       {
-        "name": "Redirect to HTTPS",
-        "children": [],
-        "behaviors": [
-          {
-            "name": "redirect",
-            "options": {
-              "queryString": "APPEND",
-              "responseCode": 301,
-              "destinationHostname": "SAME_AS_REQUEST",
-              "destinationPath": "SAME_AS_REQUEST",
-              "destinationProtocol": "HTTPS",
-              "mobileDefaultChoice": "DEFAULT"
-            }
-          }
-        ],
-        "criteria": [
-          {
-            "name": "requestProtocol",
-            "options": {
-              "value": "HTTP"
-            }
-          }
-        ],
-        "criteriaMustSatisfy": "all",
-        "comments": "Redirect to the same URL on HTTPS protocol."
-      },
-      {
         "name": "HSTS - HTTP Strict Transport Security",
         "children": [],
         "behaviors": [
