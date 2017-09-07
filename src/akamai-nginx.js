@@ -1,54 +1,106 @@
-import { default as EdgeGrid } from 'edgegrid';
-import { default as dotenv } from 'dotenv';
+import fs from 'fs';
+import { Rule } from './rule.js';
 
-// load .env vars
-dotenv.config();
+let config = {};
 
-const data = 'bodyData';
-const eg = new EdgeGrid({
-    path: process.env.AKA_EDGERC,
-    section: 'default'
-});
-
-let context = {
-    contractId: null,
-    groupId: null
-}
-
-export function setContext(contractId, groupId) {
-    context.contractId = contractId;
-    context.groupId = groupId;
+export function setApiConfig(edgegrid, contractId, groupId, propertyId, propertyVersion, outputFile) {
+    config = {};
+    config.edgegrid = edgegrid;
+    config.contractId = contractId;
+    config.groupId = groupId;
+    config.propertyId = propertyId;
+    config.propertyVersion = propertyVersion;
+    config.outPutFile = outputFile;
     return this;
 }
 
-function getContextQs() {
-    return '?contractId=' + context.contractId + '&groupId=' + context.groupId;
+export function setLocalConfig(localPapiJsonPath, outputFile) {
+    config = {};
+    config.localPapiJsonPath = localPapiJsonPath;
+    config.outPutFile = outputFile;
+    return this;
 }
 
-export async function generateConf(propertyId, propertyVersion) {
-    try {
-        let propertyRules = await getPropertyRules(propertyId, propertyVersion);
+let valueMap = new Map([
+    ['HTTP', 'http'],
+    ['HTTPS', 'https']
+]);
 
-        //todo walk rules and build nginx vhost
-
-        return propertyRules;
-
-    } catch (e) {
-        console.log('akamai api request failed %o', e);
-    }
+export function setValueMap(map) {
+    valueMap = new Map([...valueMap, ...map]);
 }
 
-async function getPropertyRules(propertyId, propertyVersion) {
+let skipBehaviors = [
+    'redirect'
+];
+
+export function setSkipBehaviors(skip) {
+    skipBehaviors = [...skipBehaviors, ...skip];
+}
+
+function getPapiUrl() {
+    return '/papi/v1/properties/' + config.propertyId + '/versions/' + config.propertyVersion +
+        '/rules?contractId=' + config.contractId + '&groupId=' + config.groupId;
+}
+
+export async function generateConf() {
+
+    let propertyRules = await getPropertyRules();
+
+    let defaultRule = new Rule(
+        propertyRules.rules.name,
+        propertyRules.rules.criteria,
+        propertyRules.rules.criteriaMustSatisfy,
+        propertyRules.rules.behaviors,
+        propertyRules.rules.children,
+        skipBehaviors,
+        valueMap,
+        0 // depth starts at 0
+    );
+
+    let conf = '-- ### generated from ';
+    conf +=  config.localPapiJsonPath ? 'local: ' + config.localPapiJsonPath : 'api: ' + getPapiUrl() + ' ###';
+    conf += '\n' + defaultRule.process();
+
+    fs.readFile('lua/akamaiFunctions.lua', (err, fns) => {
+        conf = fns + conf;
+        fs.truncate(config.outPutFile, 0, () => {
+            fs.writeFile(config.outPutFile, conf, (err) => {
+                if (err) {
+                    throw err;
+                }
+            });
+        });
+    });
+
+}
+
+async function getPropertyRules() {
     return new Promise(
         (resolve, reject) => {
-            eg.auth({
-                path: '/papi/v1/properties/' + propertyId + '/versions/' + propertyVersion + '/rules' + getContextQs(),
-                method: 'GET',
-                headers: {},
-                body: data
-            }).send(function (error, response, body) {
-                console.log('akamai api response body: %o', body);
-                resolve(body);
-            });
+            if (config.localPapiJsonPath) {
+                // load local
+                console.log('loading local rules from: ' + config.localPapiJsonPath)
+                fs.readFile(config.localPapiJsonPath, (err, rules) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    return resolve(JSON.parse(rules));
+                });
+
+            } else {
+
+                // or call papi
+                let papiUrl = getPapiUrl();
+                console.log('loading rules from papi url: ' + papiUrl);
+
+                config.edgegrid.auth({
+                    path: papiUrl,
+                    method: 'GET'
+                }).send((error, response, body) => {
+                    console.debug('akamai api response body: %o', body);
+                    return resolve(JSON.parse(body));
+                });
+            }
         })
 }

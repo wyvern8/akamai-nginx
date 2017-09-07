@@ -1,0 +1,8 @@
+{
+  "queryString" : "APPEND",
+  "responseCode" : 301,
+  "destinationHostname" : "SAME_AS_REQUEST",
+  "destinationPath" : "SAME_AS_REQUEST",
+  "destinationProtocol" : "HTTPS",
+  "mobileDefaultChoice" : "DEFAULT"
+}

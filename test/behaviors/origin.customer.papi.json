@@ -1,0 +1,22 @@
+{
+  "originType": "CUSTOMER",
+  "hostname": "customer.origin.com",
+  "forwardHostHeader": "REQUEST_HOST_HEADER",
+  "cacheKeyHostname": "REQUEST_HOST_HEADER",
+  "compress": true,
+  "enableTrueClientIp": true,
+  "trueClientIpHeader": "True-Client-IP",
+  "trueClientIpClientSetting": false,
+  "originCertificate": "",
+  "verificationMode": "CUSTOM",
+  "originSni": false,
+  "customValidCnValues": [
+    "{{Origin Hostname}}",
+    "{{Forward Host Header}}"
+  ],
+  "originCertsToHonor" : "CUSTOM_CERTIFICATES",
+  "customCertificates" : [ ],
+  "ports": "",
+  "httpPort": 80,
+  "httpsPort": 443
+}

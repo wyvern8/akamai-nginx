@@ -60,3 +60,9 @@ typings/
 .idea/
 dist/
 *.swp
+
+# ignore the default output file
+lua/akamai.lua
+
+# ignore ssl dir
+ssl/

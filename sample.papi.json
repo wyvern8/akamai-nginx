@@ -1,0 +1,669 @@
+{
+  "accountId": "act_ABD-DEF",
+  "contractId": "ctr_A-BCDEF",
+  "groupId": "grp_999999",
+  "propertyId": "prp_999999",
+  "propertyName": "akamai.com",
+  "propertyVersion": 1,
+  "etag": "1209837128730127781270387102837189273908",
+  "rules": {
+    "name": "default",
+    "children": [
+      {
+        "name": "HTTP/2",
+        "children": [],
+        "behaviors": [
+          {
+            "name": "http2",
+            "options": {
+              "enabled": ""
+            }
+          },
+          {
+            "name": "allowTransferEncoding",
+            "options": {
+              "enabled": true
+            }
+          }
+        ],
+        "criteria": [
+          {
+            "name": "hostname",
+            "options": {
+              "matchOperator": "IS_ONE_OF",
+              "values": [
+                "*"
+              ]
+            }
+          }
+        ],
+        "criteriaMustSatisfy": "all",
+        "comments": ""
+      },
+      {
+        "name": "Redirect to HTTPS",
+        "children": [],
+        "behaviors": [
+          {
+            "name": "redirect",
+            "options": {
+              "queryString": "APPEND",
+              "responseCode": 301,
+              "destinationHostname": "SAME_AS_REQUEST",
+              "destinationPath": "SAME_AS_REQUEST",
+              "destinationProtocol": "HTTPS",
+              "mobileDefaultChoice": "DEFAULT"
+            }
+          }
+        ],
+        "criteria": [
+          {
+            "name": "requestProtocol",
+            "options": {
+              "value": "HTTP"
+            }
+          }
+        ],
+        "criteriaMustSatisfy": "all",
+        "comments": "Redirect to the same URL on HTTPS protocol."
+      },
+      {
+        "name": "HSTS - HTTP Strict Transport Security",
+        "children": [],
+        "behaviors": [
+          {
+            "name": "modifyOutgoingResponseHeader",
+            "options": {
+              "action": "MODIFY",
+              "standardModifyHeaderName": "OTHER",
+              "customHeaderName": "Strict-Transport-Security",
+              "newHeaderValue": "max-age=31536000",
+              "avoidDuplicateHeaders": true
+            }
+          }
+        ],
+        "criteria": [],
+        "criteriaMustSatisfy": "all",
+        "comments": ""
+      },
+      {
+        "name": "Security",
+        "children": [
+          {
+            "name": "IP Restrictions",
+            "children": [
+              {
+                "name": "Allowed hosts",
+                "children": [],
+                "behaviors": [
+                  {
+                    "name": "denyAccess",
+                    "options": {
+                      "reason": "deny-by-ip",
+                      "enabled": false
+                    }
+                  }
+                ],
+                "criteria": [
+                  {
+                    "name": "clientIp",
+                    "options": {
+                      "matchOperator": "IS_ONE_OF",
+                      "values": [
+                        "8.8.8.0/21",
+                        "9.9.9.0/21"
+                      ],
+                      "useHeaders": false
+                    }
+                  }
+                ],
+                "criteriaMustSatisfy": "all",
+                "comments": "vms for automated tests"
+              },
+              {
+                "name": "Staging",
+                "children": [
+                  {
+                    "name": "CUST IPs",
+                    "children": [],
+                    "behaviors": [
+                      {
+                        "name": "denyAccess",
+                        "options": {
+                          "reason": "deny-by-ip",
+                          "enabled": false
+                        }
+                      }
+                    ],
+                    "criteria": [
+                      {
+                        "name": "clientIp",
+                        "options": {
+                          "matchOperator": "IS_ONE_OF",
+                          "values": [
+                            "8.8.8.8",
+                            "9.9.9.9"
+                          ],
+                          "useHeaders": false
+                        }
+                      }
+                    ],
+                    "criteriaMustSatisfy": "all",
+                    "comments": ""
+                  },
+                  {
+                    "name": "VPN IPs",
+                    "children": [],
+                    "behaviors": [
+                      {
+                        "name": "denyAccess",
+                        "options": {
+                          "reason": "deny-by-ip",
+                          "enabled": false
+                        }
+                      }
+                    ],
+                    "criteria": [
+                      {
+                        "name": "clientIp",
+                        "options": {
+                          "matchOperator": "IS_ONE_OF",
+                          "values": [
+                            "8.8.8.8",
+                            "9.9.9.9"
+                          ],
+                          "useHeaders": false
+                        }
+                      }
+                    ],
+                    "criteriaMustSatisfy": "all",
+                    "comments": ""
+                  }
+                ],
+                "behaviors": [
+                  {
+                    "name": "denyAccess",
+                    "options": {
+                      "reason": "deny-by-ip",
+                      "enabled": true
+                    }
+                  }
+                ],
+                "criteria": [
+                  {
+                    "name": "hostname",
+                    "options": {
+                      "matchOperator": "IS_ONE_OF",
+                      "values": [
+                        "staging-old.akamai.com",
+                        "staging-def.akamai.com"
+                      ]
+                    }
+                  }
+                ],
+                "criteriaMustSatisfy": "all",
+                "comments": "change this to allow for nonprod"
+              }
+            ],
+            "behaviors": [
+              {
+                "name": "denyAccess",
+                "options": {
+                  "reason": "deny-by-ip",
+                  "enabled": true
+                }
+              }
+            ],
+            "criteria": [],
+            "criteriaMustSatisfy": "all",
+            "comments": ""
+          },
+          {
+            "name": "URL Restrictions",
+            "children": [
+              {
+                "name": "/server-status",
+                "children": [],
+                "behaviors": [
+                  {
+                    "name": "denyAccess",
+                    "options": {
+                      "reason": "default-deny-reason",
+                      "enabled": true
+                    }
+                  }
+                ],
+                "criteria": [
+                  {
+                    "name": "path",
+                    "options": {
+                      "matchOperator": "MATCHES_ONE_OF",
+                      "values": [
+                        "/server-status"
+                      ],
+                      "matchCaseSensitive": false
+                    }
+                  }
+                ],
+                "criteriaMustSatisfy": "all",
+                "comments": "Block access to the apache status page."
+              }
+            ],
+            "behaviors": [],
+            "criteria": [],
+            "criteriaMustSatisfy": "all",
+            "comments": "Place any URL blocking here."
+          }
+        ],
+        "behaviors": [
+          {
+            "name": "siteShield",
+            "options": {
+              "ssmap": {
+                "value": "sXXX.akamaiedge.net",
+                "srmap": "ABC123.akasrg.akamai.com",
+                "src": "PREVIOUS_MAP",
+                "name": "MAP"
+              }
+            }
+          },
+          {
+            "name": "webApplicationFirewall",
+            "options": {
+              "firewallConfiguration": {
+                "configId": 1234,
+                "productionStatus": "Active",
+                "productionVersion": 22,
+                "stagingStatus": "Active",
+                "stagingVersion": 22,
+                "fileName": "waf_portal_1234.xml"
+              }
+            }
+          }
+        ],
+        "criteria": [],
+        "criteriaMustSatisfy": "all",
+        "uuid": "deadbeef-dead-beef-dead-deabbeef1234",
+        "comments": ""
+      },
+      {
+        "name": "Performance",
+        "children": [
+          {
+            "name": "Compressible Objects",
+            "children": [],
+            "behaviors": [
+              {
+                "name": "gzipResponse",
+                "options": {
+                  "behavior": "ALWAYS"
+                }
+              }
+            ],
+            "criteria": [
+              {
+                "name": "contentType",
+                "options": {
+                  "matchOperator": "IS_ONE_OF",
+                  "values": [
+                    "text/html*",
+                    "text/css*",
+                    "application/x-javascript*",
+                    "text/javascript*"
+                  ],
+                  "matchWildcard": true,
+                  "matchCaseSensitive": false
+                }
+              }
+            ],
+            "criteriaMustSatisfy": "all",
+            "comments": "Compresses content to improve performance of clients with slow connections."
+          }
+        ],
+        "behaviors": [
+          {
+            "name": "enhancedAkamaiProtocol",
+            "options": {
+              "display": ""
+            }
+          },
+          {
+            "name": "prefetch",
+            "options": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "dnsAsyncRefresh",
+            "options": {
+              "enabled": true,
+              "timeout": "2h"
+            }
+          },
+          {
+            "name": "dnsPrefresh",
+            "options": {
+              "enabled": true,
+              "delay": "5m",
+              "timeout": "2h"
+            },
+            "uuid": "deadbeef-dead-beef-dead-deabbeef1234"
+          }
+        ],
+        "uuid": "deadbeef-dead-beef-dead-deabbeef1234",
+        "criteria": [],
+        "criteriaMustSatisfy": "all",
+        "comments": ""
+      },
+      {
+        "name": "Offload",
+        "children": [
+          {
+            "name": "Static Objects",
+            "children": [],
+            "behaviors": [
+              {
+                "name": "caching",
+                "options": {
+                  "behavior": "MAX_AGE",
+                  "mustRevalidate": false,
+                  "ttl": "2h"
+                }
+              },
+              {
+                "name": "prefetch",
+                "options": {
+                  "enabled": true
+                }
+              },
+              {
+                "name": "prefetchable",
+                "options": {
+                  "enabled": true
+                }
+              }
+            ],
+            "criteria": [
+              {
+                "name": "fileExtension",
+                "options": {
+                  "matchOperator": "IS_ONE_OF",
+                  "values": [
+                    "aif",
+                    "aiff",
+                    "au",
+                    "avi"
+                  ],
+                  "matchCaseSensitive": false
+                }
+              }
+            ],
+            "criteriaMustSatisfy": "any",
+            "comments": ""
+          },
+          {
+            "name": "Downstream Uncacheable ",
+            "children": [],
+            "behaviors": [
+              {
+                "name": "downstreamCache",
+                "options": {
+                  "behavior": "TUNNEL_ORIGIN"
+                }
+              }
+            ],
+            "criteria": [
+              {
+                "name": "cacheability",
+                "options": {
+                  "matchOperator": "IS_NOT",
+                  "value": "CACHEABLE"
+                }
+              }
+            ],
+            "criteriaMustSatisfy": "any",
+            "comments": ""
+          },
+          {
+            "name": "Uncachable request paths",
+            "children": [],
+            "behaviors": [
+              {
+                "name": "caching",
+                "options": {
+                  "behavior": "NO_STORE"
+                }
+              }
+            ],
+            "criteria": [
+              {
+                "name": "path",
+                "options": {
+                  "matchOperator": "MATCHES_ONE_OF",
+                  "values": [
+                    "/uncached/*"
+                  ],
+                  "matchCaseSensitive": false
+                }
+              }
+            ],
+            "criteriaMustSatisfy": "all"
+          }
+        ],
+        "behaviors": [
+          {
+            "name": "caching",
+            "options": {
+              "behavior": "MAX_AGE",
+              "mustRevalidate": false,
+              "ttl": "2h"
+            }
+          },
+          {
+            "name": "downstreamCache",
+            "options": {
+              "behavior": "ALLOW",
+              "allowBehavior": "LESSER",
+              "sendHeaders": "CACHE_CONTROL_AND_EXPIRES",
+              "sendPrivate": false
+            }
+          },
+          {
+            "name": "cacheError",
+            "options": {
+              "enabled": false
+            }
+          },
+          {
+            "name": "cacheRedirect",
+            "options": {
+              "enabled": "false"
+            }
+          },
+          {
+            "name": "prefreshCache",
+            "options": {
+              "enabled": true,
+              "prefreshval": 10
+            }
+          }
+        ],
+        "criteria": [],
+        "criteriaMustSatisfy": "all",
+        "comments": ""
+      },
+      {
+        "name": "Site Specific Rules",
+        "children": [
+          {
+            "name": "alt.akamaicustomer.com",
+            "children": [],
+            "behaviors": [
+              {
+                "name": "origin",
+                "options": {
+                  "originType": "CUSTOMER",
+                  "hostname": "alt.origin.akamaicustomer.com",
+                  "forwardHostHeader": "REQUEST_HOST_HEADER",
+                  "cacheKeyHostname": "REQUEST_HOST_HEADER",
+                  "compress": true,
+                  "enableTrueClientIp": false,
+                  "originCertificate": "",
+                  "verificationMode": "CUSTOM",
+                  "ports": "",
+                  "httpPort": 80,
+                  "httpsPort": 443,
+                  "originSni": false,
+                  "customValidCnValues": [
+                    "{{Origin Hostname}}",
+                    "{{Forward Host Header}}"
+                  ],
+                  "originCertsToHonor": "CUSTOM_CERTIFICATES"
+                }
+              },
+              {
+                "name": "cpCode",
+                "options": {
+                  "value": {
+                    "id": 99999,
+                    "description": "CP alt.origin.akamaicustomer.com",
+                    "products": [
+                      "Alta"
+                    ],
+                    "createdDate": 1393347578000,
+                    "name": "CP alt.origin.akamaicustomer.com"
+                  }
+                }
+              },
+              {
+                "name": "modifyOutgoingRequestHeader",
+                "options": {
+                  "action": "MODIFY",
+                  "standardModifyHeaderName": "OTHER",
+                  "newHeaderValue": "dev.othersite",
+                  "avoidDuplicateHeaders": true,
+                  "customHeaderName": "custom-header"
+                }
+              }
+            ],
+            "criteria": [
+              {
+                "name": "hostname",
+                "options": {
+                  "matchOperator": "IS_ONE_OF",
+                  "values": [
+                    "alt.akamaicustomer.com",
+                    "alt2.akamaicustomer.com"
+                  ]
+                }
+              }
+            ],
+            "criteriaMustSatisfy": "all",
+            "comments": "rules specific to an alternative site sharing this config"
+          }
+        ],
+        "behaviors": [],
+        "criteria": [],
+        "criteriaMustSatisfy": "all"
+      }
+    ],
+    "behaviors": [
+      {
+        "name": "origin",
+        "options": {
+          "originType": "CUSTOMER",
+          "hostname": "origin.akamaicustomer.com",
+          "forwardHostHeader": "REQUEST_HOST_HEADER",
+          "cacheKeyHostname": "REQUEST_HOST_HEADER",
+          "compress": true,
+          "enableTrueClientIp": true,
+          "trueClientIpHeader": "True-Client-IP",
+          "trueClientIpClientSetting": false,
+          "originCertificate": "",
+          "verificationMode": "CUSTOM",
+          "originSni": false,
+          "customValidCnValues": [
+            "{{Origin Hostname}}",
+            "{{Forward Host Header}}"
+          ],
+          "originCertsToHonor": "CUSTOM_CERTIFICATES",
+          "ports": "",
+          "httpPort": 80,
+          "httpsPort": 443
+        }
+      },
+      {
+        "name": "cpCode",
+        "options": {
+          "value": {
+            "id": 571115,
+            "description": "CP origin.akamaicustomer.com",
+            "products": [
+              "Alta"
+            ],
+            "createdDate": 1493346488000,
+            "name": "CP origin.akamaicustomer.com"
+          }
+        }
+      },
+      {
+        "name": "allowPost",
+        "options": {
+          "enabled": false
+        }
+      },
+      {
+        "name": "realUserMonitoring",
+        "options": {
+          "enabled": true
+        }
+      },
+      {
+        "name": "report",
+        "options": {
+          "logHost": true,
+          "logReferer": true,
+          "logUserAgent": true,
+          "logAcceptLanguage": false,
+          "logCookies": "OFF",
+          "logCustomLogField": false
+        }
+      },
+      {
+        "name": "healthDetection",
+        "options": {
+          "retryCount": 3,
+          "retryInterval": "120s",
+          "maximumReconnects": 3
+        }
+      },
+      {
+        "name": "dnsPrefresh",
+        "options": {
+          "enabled": true,
+          "delay": "5m",
+          "timeout": "2h"
+        },
+        "uuid": "deadbeef-dead-beef-dead-deabbeef1234"
+      },
+      {
+        "name": "modifyOutgoingRequestHeader",
+        "options": {
+          "action": "MODIFY",
+          "standardModifyHeaderName": "OTHER",
+          "newHeaderValue": "akamaicustomer.com",
+          "avoidDuplicateHeaders": true,
+          "customHeaderName": "cust-header"
+        }
+      }
+    ],
+    "uuid": "default",
+    "options": {
+      "is_secure": true
+    },
+    "variables": [],
+    "comments": "The behaviors in the Default Rule apply to all requests unless overridden."
+  },
+  "ruleFormat": "latest",
+  "comments": "Initial template version"
+}
