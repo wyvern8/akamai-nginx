@@ -20,7 +20,8 @@
     "edgegrid": "^3.0.2",
     "jsonschema": "^1.2.0",
     "require-dir": "^0.3.2",
-    "systemjs": "^0.20.18"
+    "systemjs": "^0.20.18",
+    "babel-polyfill": "^6.26.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
