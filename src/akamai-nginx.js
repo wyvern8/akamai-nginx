@@ -62,7 +62,7 @@ export async function generateConf() {
     conf +=  config.localPapiJsonPath ? 'local: ' + config.localPapiJsonPath : 'api: ' + getPapiUrl() + ' ###';
     conf += '\n' + defaultRule.process();
 
-    fs.readFile('lua/akamaiFunctions.lua', (err, fns) => {
+    fs.readFile(__dirname + '/../lua/akamaiFunctions.lua', (err, fns) => {
         conf = fns + conf;
         fs.truncate(config.outPutFile, 0, () => {
             fs.writeFile(config.outPutFile, conf, (err) => {
