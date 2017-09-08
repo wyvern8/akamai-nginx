@@ -149,7 +149,7 @@ Behavior.register('origin', BehaviorOrigin);
 - the 'process' function should return the lua script to be added to the akamai.lua conf to simulate the akamai behavior in nginx.
 
 ## Unit tests
-Please ensure that curresponding unit tests are created in:
+Please ensure that corresponding unit tests are created in:
 ```
 test/criteria
 test/behaviors
