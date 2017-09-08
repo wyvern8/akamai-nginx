@@ -15,6 +15,14 @@
   },
   "author": "Andrew Vaughan <andrewv@smartcreations.com.au> (https://halt.sh)",
   "license": "MIT",
+  "keywords": [
+    "akamai",
+    "nginx",
+    "openresty",
+    "lua",
+    "proxy",
+    "papi"
+  ],
   "dependencies": {
     "dotenv": "^4.0.0",
     "edgegrid": "^3.0.2",
