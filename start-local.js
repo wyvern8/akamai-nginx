@@ -9,7 +9,7 @@ import { setLocalConfig, setValueMap, setSkipBehaviors, generateConf } from './s
     setValueMap(
         new Map([
             ['staging-old.akamai.com', 'staging-new.akamai.com'],
-            ['origin.akamaicustomer.com', 'something.com']
+            ['origin.akamai-customer.com', 'akamai.com']
         ])
     );
 

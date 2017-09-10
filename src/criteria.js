@@ -4,8 +4,8 @@ export class Criteria {
 
     static valueMap;
 
-    constructor(name, options) {
-        return Criteria.create(name, options);
+    constructor(name, options, valueMap) {
+        return Criteria.create(name, options, valueMap);
     }
 
     checkVar;
@@ -23,7 +23,11 @@ export class Criteria {
             return valueArray.join(this.matchOperatorJoiner());
 
         } else if (this.options && this.options.value) {
-            return this.checkVar + this.matchOperatorCompare(this.options.value) + this.value(this.options.value);
+            if (usePattern) {
+                return 'matches(' + this.checkVar + ',' + this.value(this.options.value) + ')';
+            } else {
+                return this.checkVar + this.matchOperatorCompare(this.options.value) + this.value(this.options.value);
+            }
         }
     }
 

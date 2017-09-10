@@ -88,8 +88,10 @@ export class Rule {
         if (!criteria) return null;
         let criteriaArray = [];
         criteria.forEach((criteria) => {
-            let item = new Criteria(criteria.name, criteria.options, valueMap);
-            criteriaArray.push(item.process());
+            if (Criteria.isRegistered(criteria.name)) {
+                let item = new Criteria(criteria.name, criteria.options, valueMap);
+                criteriaArray.push(item.process());
+            }
         });
         return criteriaArray.join(this.criteriaJoiner());
     }
@@ -119,6 +121,9 @@ export class Rule {
         switch (this.criteriaMustSatisfy) {
             case 'all': {
                 return ' and '
+            }
+            case 'any': {
+                return ' or '
             }
         }
     }

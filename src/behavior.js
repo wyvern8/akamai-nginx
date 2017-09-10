@@ -4,8 +4,8 @@ export class Behavior {
 
     static valueMap;
 
-    constructor(name, options) {
-        return Behavior.create(name, options);
+    constructor(name, options, valueMap) {
+        return Behavior.create(name, options, valueMap);
     }
 
     process() {
