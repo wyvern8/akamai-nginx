@@ -10,7 +10,7 @@ describe('BehaviorRedirect', function() {
                     throw (err);
                 }
                 let opts = JSON.parse(options);
-                let expected = 'ngx.redirect("https://" .. ngx.var.host .. akamaiuri, ' + opts.responseCode + ')';
+                let expected = 'ngx.redirect("https" .. "://" .. ngx.var.host .. akamaiuri, ' + opts.responseCode + ')';
                 let behavior = new BehaviorRedirect(opts);
                 let actual = behavior.process();
                 assert.equal(actual, expected);

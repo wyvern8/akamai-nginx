@@ -9,32 +9,30 @@ export class BehaviorRedirect extends Behavior {
         this.skipBehaviors = skipBehaviors;
     }
 
+    switchByVal(cases, defaultCase, key) {
+        return key in cases ? cases[key] : defaultCase;
+    }
+
     process() {
+        let host = this.switchByVal({
+            'SAME_AS_REQUEST': 'ngx.var.host',
+            'OTHER': '"' + this.value(this.options.destinationHostnameOther) + '"'
+        }, 'ngx.var.host', this.options.destinationHostname);
 
-        let host = 'ngx.var.host';
-        switch (this.options.destinationPath) {
-            case 'SAME_AS_REQUEST' : {
-                host = '"' + this.value(this.options.destinationHostname) + '"'
-            }
-            case 'OTHER' : {
-                host = '"' + this.value(this.options.destinationHostnameOther) + '"'
-            }
-        }
+        let uri = this.switchByVal({
+            'SAME_AS_REQUEST': 'akamaiuri',
+            'OTHER': '"' + this.value(this.options.destinationPathOther) + '"'
+        }, 'akamaiuri', this.options.destinationPath);
 
-        let uri = 'akamaiuri';
-        switch (this.options.destinationPath) {
-            case 'SAME_AS_REQUEST' : {
-                uri= '"' + this.value(this.options.destinationPath) + '"'
-            }
-            case 'OTHER' : {
-                uri = '"' + this.value(this.options.destinationPathOther) + '"'
-            }
-        }
+        let protocol = this.switchByVal({
+            'SAME_AS_REQUEST': 'ngx.var.scheme',
+            'OTHER': '"' + this.value(this.options.destinationProtocol.toLowerCase()) + '"',
+            'HTTP': '"' + 'http' + '"',
+            'HTTPS': '"' + 'https' + '"'
+        }, 'ngx.var.scheme', this.options.destinationProtocol);
 
-        let protocol = this.options.destinationProtocol === 'SAME_AS_REQUEST' ?
-            'ngx.var.scheme' : '"' + this.value(this.options.destinationProtocol.toLowerCase()) + '"';
-
-        return 'ngx.redirect(' + protocol + ' .. "://" .. ' +  host + ' .. ' + uri + ', ' + this.value(this.options.responseCode) + ')';
+        return 'ngx.redirect(' + protocol + ' .. "://" .. ' +  host + ' .. ' + uri + ', '
+            + this.value(this.options.responseCode) + ')';
 
     }
 }
