@@ -109,7 +109,11 @@ export class Rule {
                 behaviorArray.push('-- ' + behavior.name + ' behavior');
                 let behaviourResult = item.process();
                 if (behaviourResult) {
-                    behaviorArray.push(behaviourResult);
+                    if (Array.isArray(behaviourResult)) {
+                        behaviorArray = [...behaviorArray, ...behaviourResult];
+                    } else {
+                        behaviorArray.push(behaviourResult);
+                    }
                 }
             }
 
