@@ -1,0 +1,7 @@
+{
+  "action" : "MODIFY",
+  "standardModifyHeaderName" : "OTHER",
+  "newHeaderValue" : "replaced-header",
+  "avoidDuplicateHeaders" : true,
+  "customHeaderName" : "x-testing"
+}
