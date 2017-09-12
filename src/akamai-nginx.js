@@ -64,7 +64,7 @@ export async function generateConf() {
     conf += '\n' + defaultRule.process();
 
     fs.readFile(__dirname + '/../lua/akamaiFunctions.lua', (err, fns) => {
-        conf = fns + conf + '\napplyVarLogic()';
+        conf = fns + conf + '\nfinalActions()';
         fs.truncate(config.outPutFile, 0, () => {
             fs.writeFile(config.outPutFile, conf, (err) => {
                 if (err) {
@@ -81,7 +81,7 @@ async function getPropertyRules() {
         (resolve, reject) => {
             if (config.localPapiJsonPath) {
                 // load local
-                console.log('loading local rules from: ' + config.localPapiJsonPath)
+                console.log('loading local rules from: ' + config.localPapiJsonPath + '\n');
                 fs.readFile(config.localPapiJsonPath, (err, rules) => {
                     if (err) {
                         return reject(err);
@@ -93,7 +93,7 @@ async function getPropertyRules() {
 
                 // or call papi
                 let papiUrl = getPapiUrl();
-                console.log('loading rules from papi url: ' + papiUrl);
+                console.log('loading rules from papi url: ' + papiUrl + '\n');
 
                 config.edgegrid.auth({
                     path: papiUrl,

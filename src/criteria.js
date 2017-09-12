@@ -17,7 +17,7 @@ export class Criteria {
                 if (usePattern) {
                     valueArray.push('matches(' + this.checkVar + ',' + this.value(val) + ')');
                 } else {
-                    valueArray.push(this.checkVar + this.matchOperatorCompare(val) + this.value(val));
+                    valueArray.push(this.checkVar + this.matchOperatorCompare() + this.value(val));
                 }
             });
             return valueArray.join(this.matchOperatorJoiner());
@@ -26,13 +26,12 @@ export class Criteria {
             if (usePattern) {
                 return 'matches(' + this.checkVar + ',' + this.value(this.options.value) + ')';
             } else {
-                return this.checkVar + this.matchOperatorCompare(this.options.value) + this.value(this.options.value);
+                return this.checkVar + this.matchOperatorCompare() + this.value(this.options.value);
             }
         }
     }
 
     value(value) {
-        if (value === '*') return '';
         if (this.valueMap && this.valueMap.has(value)) {
             let replacement = this.valueMap.get(value);
             console.debug('replacing "' + value + '" with "' + replacement + '"');
@@ -42,27 +41,23 @@ export class Criteria {
         }
     }
 
-    matchOperatorJoiner() {
-        switch (this.options.matchOperator) {
-            case 'IS_ONE_OF': {
-                return ' or ';
-            }
-            default : {
-                return ' and '
-            }
-        }
+    switchByVal(cases, defaultCase, key) {
+        return key in cases ? cases[key] : defaultCase;
     }
 
-    matchOperatorCompare(value) {
-        if (value === '*') return '';
-        switch (this.options.matchOperator) {
-            case 'IS_ONE_OF': {
-                return ' ==';
-            }
-            default : {
-                return ' =='
-            }
-        }
+    matchOperatorJoiner() {
+        return this.switchByVal({
+            'IS_ONE_OF': ' or ',
+        }, ' and ', this.options.matchOperator);
+    }
+
+    matchOperatorCompare() {
+        return this.switchByVal({
+            'IS_ONE_OF': ' ==',
+            'IS_NOT': ' ~='
+        }, ' ==', this.options.matchOperator);
+
+
     }
 
     static registeredTypes = new Map();
@@ -75,6 +70,7 @@ export class Criteria {
         if (!(Criteria.isRegistered(clazzname) &&
             clazz.prototype instanceof Criteria)) {
             Criteria.registeredTypes.set(clazzname, clazz);
+            console.info('Criteria registered: ' + clazzname);
         } else {
             console.log('invalid type. must be a subclass of Criteria');
         }

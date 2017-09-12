@@ -19,13 +19,15 @@ export class Rule {
         let result = '\n' + this.pad(this.depth) + '-- ' + this.name + ' rule ####';
         let criteriaNames = this.criteriaNames(this.criteria) ? this.criteriaNames(this.criteria) : 'none';
         result += '\n'  + this.pad(this.depth) + '-- criteria: ' + criteriaNames;
+
+        if (this.criteriaNamesNotRegistered(this.criteria) !== '') {
+            console.error('Criteria not registered: ' + this.criteriaNamesNotRegistered(this.criteria));
+        }
+
         if (this.anyCriteriaForRuleRegistered(this.criteria)) {
             result += '\n' + this.pad(this.depth) + 'if ' + this.processCriteria(this.criteria, this.valueMap) + ' then';
-        } else {
-            if (this.criteriaNamesNotRegistered(this.criteria)) {
-                console.error('Criteria not registered: ' + this.criteriaNamesNotRegistered(this.criteria));
-            }
         }
+
         if (this.behaviors && typeof this.behaviors !== 'undefined' && this.behaviors.length > 0) {
             result += this.pad(this.depth + 1) +
                 this.processBehaviors(this.behaviors, this.valueMap, this.skipBehaviors) + '\n';
@@ -74,7 +76,7 @@ export class Rule {
     }
 
     criteriaNamesNotRegistered(criteria) {
-        if (!criteria) return;
+        if (!criteria) return '';
         let criteriaNameArray = [];
         criteria.forEach((criteria) => {
             if (!Criteria.isRegistered(criteria.name)) {

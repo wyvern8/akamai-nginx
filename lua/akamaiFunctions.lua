@@ -9,6 +9,8 @@ else
     aka_request_qs = "?" .. aka_request_qs
 end
 
+-- table to contain manage headers sent to origin
+local aka_upstream_headers = ngx.req.get_headers()
 
 -- supporting functions
 function string.starts(String,Start)
@@ -139,16 +141,16 @@ function matches(value, glob)
     return (value):match(pattern)
 end
 
-function applyVarLogic()
+-- executed after all criteria and behavior are evaluated to apply final actions
+function finalActions()
 
+    -- deal with an calculated access controls
     if ngx.var.aka_deny_reason ~= nil and ngx.var.aka_deny_reason ~= "" then
-
         ngx.var.aka_origin_host = ''
         ngx.header.content_type = 'text/plain';
         ngx.status = ngx.HTTP_UNAUTHORIZED
         ngx.say("access denied: " .. ngx.var.aka_deny_reason)
         ngx.exit(ngx.HTTP_OK)
-
     end
 
     -- if redirect calculated, do it
@@ -156,10 +158,15 @@ function applyVarLogic()
         ngx.redirect(ngx.var.aka_redirect_location, ngx.var.aka_redirect_code)
     end
 
-    -- set headers
+    -- set upstream headers modified by behaviors
+    for key,value in pairs(aka_upstream_headers) do
+        ngx.req.set_header(key, value)
+    end
 
-
-
+    -- if we have not manipulated the path or qs, pass through to origin as is.
+    if aka_origin_url == nill or aka_origin_url == "" then
+        ngx.var.aka_origin_url = aka_request_path .. aka_request_qs
+    end
 
 end
 

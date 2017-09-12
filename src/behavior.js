@@ -33,6 +33,7 @@ export class Behavior {
         if (!(Behavior.isRegistered(clazzname) &&
             clazz.prototype instanceof Behavior)) {
             Behavior.registeredTypes.set(clazzname, clazz);
+            console.info('Behavior registered: ' + clazzname);
         } else {
             console.log('invalid type. must be a subclass of Behavior');
         }
