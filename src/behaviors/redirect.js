@@ -2,11 +2,10 @@ import { Behavior } from '../behavior.js';
 
 export class BehaviorRedirect extends Behavior {
 
-    constructor(options, valueMap, skipBehaviors) {
+    constructor(options, valueMap) {
         super();
         this.options = options;
         this.valueMap = valueMap;
-        this.skipBehaviors = skipBehaviors;
     }
 
     switchByVal(cases, defaultCase, key) {
@@ -15,14 +14,14 @@ export class BehaviorRedirect extends Behavior {
 
     process() {
         let host = this.switchByVal({
-            'SAME_AS_REQUEST': 'ngx.var.host',
+            'SAME_AS_REQUEST': 'aka_request_host',
             'OTHER': '"' + this.value(this.options.destinationHostnameOther) + '"'
-        }, 'ngx.var.host', this.options.destinationHostname);
+        }, 'aka_request_host', this.options.destinationHostname);
 
         let uri = this.switchByVal({
-            'SAME_AS_REQUEST': 'akamaiuri',
+            'SAME_AS_REQUEST': 'aka_request_path',
             'OTHER': '"' + this.value(this.options.destinationPathOther) + '"'
-        }, 'akamaiuri', this.options.destinationPath);
+        }, 'aka_request_path', this.options.destinationPath);
 
         let protocol = this.switchByVal({
             'SAME_AS_REQUEST': 'ngx.var.scheme',
@@ -31,8 +30,14 @@ export class BehaviorRedirect extends Behavior {
             'HTTPS': '"' + 'https' + '"'
         }, 'ngx.var.scheme', this.options.destinationProtocol);
 
-        return 'ngx.redirect(' + protocol + ' .. "://" .. ' +  host + ' .. ' + uri + ', '
-            + this.value(this.options.responseCode) + ')';
+        let qs = this.switchByVal({
+            'APPEND': '"?" .. ' + 'aka_request_qs'
+        }, '""', this.options.queryString);
+
+        return [
+            'ngx.var.aka_redirect_location = ' + protocol + ' .. "://" .. ' +  host + ' .. ' + uri + ' .. ' + qs,
+            'ngx.var.aka_redirect_code = "' + this.value(this.options.responseCode) + '"'
+        ];
 
     }
 }
