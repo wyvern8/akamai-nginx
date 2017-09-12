@@ -31,7 +31,7 @@ export class BehaviorRedirect extends Behavior {
         }, 'ngx.var.scheme', this.options.destinationProtocol);
 
         let qs = this.switchByVal({
-            'APPEND': '"?" .. ' + 'aka_request_qs'
+            'APPEND': 'aka_request_qs'
         }, '""', this.options.queryString);
 
         return [

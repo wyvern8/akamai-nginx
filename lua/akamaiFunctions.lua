@@ -3,8 +3,12 @@ local aka_request_host = ngx.var.host
 local aka_request_path = ngx.var.document_uri
 local aka_request_qs = ngx.var.query_string
 
--- default origin request url
--- ngx.var.aka_origin_url = aka_request_path .. "?" .. aka_request_qs
+if aka_request_qs == nil then
+    aka_request_qs = ""
+else
+    aka_request_qs = "?" .. aka_request_qs
+end
+
 
 -- supporting functions
 function string.starts(String,Start)
