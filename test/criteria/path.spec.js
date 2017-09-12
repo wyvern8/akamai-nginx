@@ -15,8 +15,8 @@ describe('CriteriaPath', function() {
     describe('specific match', function () {
         it('should return expected lua', function () {
 
-            let expected = 'matches(akamaiuri, "' + optionsMatchSpecific.values[0] +
-                '") or matches(akamaiuri, "' + optionsMatchSpecific.values[1] + '")';
+            let expected = 'matches(aka_request_path, "' + optionsMatchSpecific.values[0] +
+                '") or matches(aka_request_path, "' + optionsMatchSpecific.values[1] + '")';
 
             let criteria = new CriteriaPath(optionsMatchSpecific);
             let actual = criteria.process();

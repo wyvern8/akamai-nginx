@@ -6,7 +6,7 @@ export class CriteriaPath extends Criteria {
         super();
         this.options = options;
         this.valueMap = valueMap;
-        this.checkVar = 'akamaiuri';
+        this.checkVar = 'aka_request_path';
     }
 
     process() {

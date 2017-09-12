@@ -10,7 +10,7 @@ describe('BehaviorOrigin', () => {
                     throw (err);
                 }
                 let opts = JSON.parse(options);
-                let expected = 'ngx.var.origin = "' + opts.hostname + '"';
+                let expected = 'ngx.var.aka_origin_host = "' + opts.hostname + '"';
                 let actual = new BehaviorOrigin(opts).process();
                 assert.equal(actual, expected);
                 done();
