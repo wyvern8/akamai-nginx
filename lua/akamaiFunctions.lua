@@ -1,7 +1,12 @@
+-- vars for reference in criteria and behaviours
+local aka_request_host = ngx.var.host
+local aka_request_path = ngx.var.document_uri
+local aka_request_qs = ngx.var.query_string
+
+-- default origin request url
+-- ngx.var.aka_origin_url = aka_request_path .. "?" .. aka_request_qs
+
 -- supporting functions
-
-local akamaiuri = string.gsub(ngx.var.request_uri, "?.*", "")
-
 function string.starts(String,Start)
     return string.sub(String,1,string.len(Start))==Start
 end
@@ -130,6 +135,29 @@ function matches(value, glob)
     return (value):match(pattern)
 end
 
-ngx.var.originuri = akamaiuri
+function applyVarLogic()
+
+    if ngx.var.aka_deny_reason ~= nil and ngx.var.aka_deny_reason ~= "" then
+
+        ngx.var.aka_origin_host = ''
+        ngx.header.content_type = 'text/plain';
+        ngx.status = ngx.HTTP_UNAUTHORIZED
+        ngx.say("access denied: " .. ngx.var.aka_deny_reason)
+        ngx.exit(ngx.HTTP_OK)
+
+    end
+
+    -- if redirect calculated, do it
+    if ngx.var.aka_redirect_location ~= nil and ngx.var.aka_redirect_location ~= "" then
+        ngx.redirect(ngx.var.aka_redirect_location, ngx.var.aka_redirect_code)
+    end
+
+    -- set headers
+
+
+
+
+end
+
 
 
