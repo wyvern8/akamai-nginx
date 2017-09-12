@@ -64,7 +64,7 @@ export async function generateConf() {
     conf += '\n' + defaultRule.process();
 
     fs.readFile(__dirname + '/../lua/akamaiFunctions.lua', (err, fns) => {
-        conf = fns + conf;
+        conf = fns + conf + '\napplyVarLogic()';
         fs.truncate(config.outPutFile, 0, () => {
             fs.writeFile(config.outPutFile, conf, (err) => {
                 if (err) {
