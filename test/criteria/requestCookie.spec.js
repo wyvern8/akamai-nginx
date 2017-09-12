@@ -15,7 +15,7 @@ describe('CriteriaRequestCookie', function() {
     describe('specific match', function () {
         it('should return expected lua', function () {
 
-            let expected = 'ngx.var.cookie_ .. "' + optionsCookieEquals.cookieName + '" ' +
+            let expected = 'ngx.var.cookie_' + optionsCookieEquals.cookieName + ' ' +
                 '== "' + optionsCookieEquals.value + '"';
 
             let criteria = new CriteriaRequestCookie(optionsCookieEquals);
