@@ -1,15 +1,30 @@
 version: '2'
 services:
-    openresty:
+    akamai:
       restart: always
       image: openresty/openresty:trusty
       dns:
         - 8.8.8.8
+      links:
+        - origin
       ports:
         - "80:80"
         - "443:443" #todo tls support
       privileged: true
       volumes:
         - ./lua/:/usr/local/openresty/nginx/conf/lua
-        - ./nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+        - ./nginx-akamai.conf:/usr/local/openresty/nginx/conf/nginx.conf
+
+    origin:
+      restart: always
+      image: openresty/openresty:trusty
+      dns:
+        - 8.8.8.8
+      ports:
+        - "8082:80"
+        - "8443:443" #todo tls support
+      privileged: true
+      volumes:
+        - ./lua/:/usr/local/openresty/nginx/conf/lua
+        - ./nginx-origin.conf:/usr/local/openresty/nginx/conf/nginx.conf
 
