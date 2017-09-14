@@ -1,7 +1,9 @@
 -- vars for reference in criteria and behaviours
+local aka_request_scheme = ngx.var.scheme
 local aka_request_host = ngx.var.host
 local aka_request_path = ngx.var.document_uri
 local aka_request_qs = ngx.var.query_string
+local aka_origin_url = nil
 
 if aka_request_qs == nil then
     aka_request_qs = ""
@@ -11,15 +13,6 @@ end
 
 -- table to contain manage headers sent to origin
 local aka_upstream_headers = ngx.req.get_headers()
-
--- supporting functions
-function string.starts(String,Start)
-    return string.sub(String,1,string.len(Start))==Start
-end
-
-function string.ends(String,End)
-    return End=='' or string.sub(String,-string.len(End))==End
-end
 
 function globtopattern(g)
     -- Some useful references:
@@ -137,6 +130,7 @@ function globtopattern(g)
 end
 
 function matches(value, glob)
+    local glob = glob .. "*"
     local pattern = globtopattern(glob)
     return (value):match(pattern)
 end
@@ -146,15 +140,17 @@ function finalActions()
 
     -- deal with an calculated access controls
     if ngx.var.aka_deny_reason ~= nil and ngx.var.aka_deny_reason ~= "" then
-        ngx.var.aka_origin_host = ''
-        ngx.header.content_type = 'text/plain';
+        ngx.var.aka_origin_host = ""
+        ngx.header.content_type = "text/plain";
         ngx.status = ngx.HTTP_UNAUTHORIZED
+        ngx.log(ngx.ERR, "access denied: " .. ngx.var.aka_deny_reason)
         ngx.say("access denied: " .. ngx.var.aka_deny_reason)
         ngx.exit(ngx.HTTP_OK)
     end
 
     -- if redirect calculated, do it
     if ngx.var.aka_redirect_location ~= nil and ngx.var.aka_redirect_location ~= "" then
+        ngx.log(ngx.ERR, "redirecting to: " .. ngx.var.aka_redirect_location .. " as " .. ngx.var.aka_redirect_code)
         ngx.redirect(ngx.var.aka_redirect_location, ngx.var.aka_redirect_code)
     end
 
@@ -164,9 +160,13 @@ function finalActions()
     end
 
     -- if we have not manipulated the path or qs, pass through to origin as is.
-    if aka_origin_url == nill or aka_origin_url == "" then
-        ngx.var.aka_origin_url = aka_request_path .. aka_request_qs
+    if aka_origin_url == nil or aka_origin_url == "" then
+        aka_origin_url = aka_request_path .. aka_request_qs
     end
+
+    ngx.var.aka_origin_url = aka_origin_url
+    ngx.var.aka_origin_scheme = aka_request_scheme
+    ngx.log(ngx.ERR, "origin request: " .. ngx.var.aka_origin_scheme .. "://" .. ngx.var.aka_origin_host .. ngx.var.aka_origin_url)
 
 end
 
