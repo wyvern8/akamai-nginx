@@ -47,6 +47,7 @@ export class Criteria {
 
     matchOperatorJoiner() {
         return this.switchByVal({
+            'MATCHES_ONE_OF': ' or ',
             'IS_ONE_OF': ' or ',
         }, ' and ', this.options.matchOperator);
     }
