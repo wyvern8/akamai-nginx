@@ -6,8 +6,8 @@
   "scripts": {
     "test": "npm run build && EDGEGRID_ENV=test ./node_modules/.bin/mocha --timeout 10000 --compilers js:babel-core/register --require babel-polyfill $(find dist/test -name '*.js')",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./lua/akamai.lua,./ssl,.env,./.babelrc,./npm-debug.log --copy-files",
-    "start": "npm run build && echo '\n#### STARTING ####' && node --require babel-polyfill dist/start.js",
-    "start-local": "npm run build && echo '\n#### STARTING ####' && node --require babel-polyfill dist/start-local.js"
+    "start": "npm run build && echo '\n#### STARTING ####' && node dist/start.js",
+    "start-local": "npm run build && echo '\n#### STARTING ####' && node dist/start-local.js"
   },
   "repository": {
     "type": "git",

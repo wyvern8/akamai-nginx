@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import { setLocalConfig, setValueMap, setSkipBehaviors, generateConf } from './src/akamai-nginx.js';
 
 (function() {

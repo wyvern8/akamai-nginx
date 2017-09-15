@@ -57,6 +57,7 @@ Use the following to process the property rules into lua nginx config in the aka
 
 ### Example usage in a node app
 ```javascript
+require('babel-polyfill');
 var akamaiNginx = require('akamai-nginx');
 
 // example using local json. use setApiConfig for papi calls
@@ -84,11 +85,12 @@ akamaiNginx.generateConf().then(function() {
 });
 
 ```  
-..then assuing above is 'generate.js', `node --require babel-polyfill generate.js` this will generate 'akamai.lua' in current dir.  
+..then assuing above is 'generate.js', `node generate.js` this will generate 'akamai.lua' in current dir.  
 This in conjunction with the nginx.conf and docker-compose can be used to build your akamai simulator proxy.
     
 ### Example usage in ES6
 ```javascript
+import 'babel-polyfill'
 import EdgeGrid from 'edgegrid';
 import dotenv from 'dotenv';
 import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from 'akamai-nginx';

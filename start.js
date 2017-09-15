@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import EdgeGrid from 'edgegrid';
 import dotenv from 'dotenv';
 import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from './index.js';
