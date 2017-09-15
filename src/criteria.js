@@ -2,13 +2,25 @@ import requireDir from 'require-dir';
 
 export class Criteria {
 
-    static valueMap;
-
     constructor(name, options, valueMap) {
         return Criteria.create(name, options, valueMap);
     }
 
-    checkVar;
+    static get valueMap() {
+        return this._valueMap;
+    }
+
+    static set valueMap(valueMap) {
+        this._valueMap = valueMap;
+    }
+
+    static get checkVar() {
+        return this._checkVar;
+    }
+
+    static set checkVar(checkVar) {
+        this._checkVar = checkVar;
+    }
 
     process(usePattern) {
         if (this.options && this.options.values) {
@@ -61,7 +73,14 @@ export class Criteria {
 
     }
 
-    static registeredTypes = new Map();
+    static get registeredTypes() {
+        if (this.hasOwnProperty('_registeredTypeMap')) {
+            return this._registeredTypeMap;
+        } else {
+            this._registeredTypeMap = new Map();
+            return this._registeredTypeMap;
+        }
+    }
 
     static isRegistered(clazzname) {
         return Criteria.registeredTypes.has(clazzname);
@@ -75,7 +94,7 @@ export class Criteria {
         } else {
             console.log('invalid type. must be a subclass of Criteria');
         }
-    };
+    }
 
     static create(clazzname, ...options) {
         if (!clazzname) return null;

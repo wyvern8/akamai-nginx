@@ -103,5 +103,5 @@ async function getPropertyRules() {
                     return resolve(JSON.parse(body));
                 });
             }
-        })
+        });
 }

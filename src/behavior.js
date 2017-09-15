@@ -2,10 +2,20 @@ import { default as requireDir } from 'require-dir';
 
 export class Behavior {
 
-    static valueMap;
-
     constructor(name, options, valueMap) {
         return Behavior.create(name, options, valueMap);
+    }
+
+    static get valueMap() {
+        return this._valueMap;
+    }
+
+    static set valueMap(valueMap) {
+        this._valueMap = valueMap;
+    }
+
+    static switchByVal(cases, defaultCase, key) {
+        return key in cases ? cases[key] : defaultCase;
     }
 
     process() {
@@ -22,8 +32,14 @@ export class Behavior {
         }
     }
 
-    static registeredTypes = new Map();
-    static skipTypes = new Map();
+    static get registeredTypes() {
+        if (this.hasOwnProperty('_registeredTypeMap')) {
+            return this._registeredTypeMap;
+        } else {
+            this._registeredTypeMap = new Map();
+            return this._registeredTypeMap;
+        }
+    }
 
     static isRegistered(clazzname) {
         return Behavior.registeredTypes.has(clazzname);
@@ -37,7 +53,7 @@ export class Behavior {
         } else {
             console.log('invalid type. must be a subclass of Behavior');
         }
-    };
+    }
 
     static create(clazzname, ...options) {
         if (!clazzname) return null;

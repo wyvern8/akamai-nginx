@@ -72,7 +72,7 @@ export class Rule {
         criteria.forEach((criteria) => {
             criteriaNameArray.push(criteria.name);
         });
-        return criteriaNameArray.join(this.criteriaJoiner());
+        return '(' + criteriaNameArray.join(this.criteriaJoiner()) + ')';
     }
 
     criteriaNamesNotRegistered(criteria) {
@@ -95,7 +95,7 @@ export class Rule {
                 criteriaArray.push(item.process());
             }
         });
-        return criteriaArray.join(this.criteriaJoiner());
+        return '(' + criteriaArray.join(this.criteriaJoiner()) + ')';
     }
 
     processBehaviors(behaviors, valueMap, skipBehaviors) {
@@ -124,18 +124,14 @@ export class Rule {
     }
 
     criteriaJoiner() {
-        switch (this.criteriaMustSatisfy) {
-            case 'all': {
-                return ' and '
-            }
-            case 'any': {
-                return ' or '
-            }
-        }
+        return Behavior.switchByVal({
+            'all': ') and (',
+            'any': ') or ('
+        }, ') and (', this.criteriaMustSatisfy);
     }
 
     pad(count) {
-        if (!count || count <0) {count=0}
+        if (!count || count <0) {count=0;}
         return (new Array(count + 1)).join('\t');
     }
 
