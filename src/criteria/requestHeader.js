@@ -6,7 +6,7 @@ export class CriteriaRequestHeader extends Criteria {
         super();
         this.options = options;
         this.valueMap = valueMap;
-        this.checkVar = 'ngx.req_header["' + options.headerName + '"]';
+        this.checkVar = 'ngx.req.get_headers()["' + options.headerName + '"]';
     }
 
     process() {

@@ -14,9 +14,9 @@ describe('CriteriaRequestHeader', function() {
     describe('match one of', function () {
         it('should return expected lua', function () {
 
-            let expected = 'ngx.req_header["' + optionsHeaderEquals.headerName + '"]' +
+            let expected = 'ngx.req.get_headers()["' + optionsHeaderEquals.headerName + '"]' +
                 ' == "' + optionsHeaderEquals.values[0] + '" or ' +
-                'ngx.req_header["' + optionsHeaderEquals.headerName + '"]' +
+                'ngx.req.get_headers()["' + optionsHeaderEquals.headerName + '"]' +
                 ' == "' + optionsHeaderEquals.values[1] + '"';
 
             let criteria = new CriteriaRequestHeader(optionsHeaderEquals);
