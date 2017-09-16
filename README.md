@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/wyvern8/akamai-nginx.svg?branch=master)](https://travis-ci.org/wyvern8/akamai-nginx)
+
 # akamai-nginx
 Configure nginx reverse proxy/simulator based on Akamai property rules (Unofficial)
 
