@@ -33,6 +33,6 @@ import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from './ind
     ]);
 
     await generateConf().then(() => {
-        console.log('done.')
+        console.log('done.');
     });
 })();

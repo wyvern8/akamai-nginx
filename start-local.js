@@ -19,6 +19,6 @@ import { setLocalConfig, setValueMap, setSkipBehaviors, generateConf } from './s
     ]);
 
     generateConf().then(() => {
-        console.log('done.')
+        console.log('done.');
     });
 })();
