@@ -1,3 +1,4 @@
+[![npm version](https://badge.fury.io/js/akamai-nginx.svg)](https://badge.fury.io/js/akamai-nginx)
 [![Build Status](https://travis-ci.org/wyvern8/akamai-nginx.svg?branch=master)](https://travis-ci.org/wyvern8/akamai-nginx)
 [![Code Climate](https://codeclimate.com/github/wyvern8/akamai-nginx/badges/gpa.svg)](https://codeclimate.com/github/wyvern8/akamai-nginx)
 [![Test Coverage](https://codeclimate.com/github/wyvern8/akamai-nginx/badges/coverage.svg)](https://codeclimate.com/github/wyvern8/akamai-nginx/coverage)
@@ -53,7 +54,7 @@ To use an akamai property from your account, configure eddgegrid, and set the fo
     AKA_PROPERTY_ID=prp_XXXXXXXX
     AKA_PROPERTY_VERSION=XX
     
-Use the following to process the property rules into lua nginx config in the akamai docker container:
+To process property rules into lua nginx config in the akamai docker container:
 
 1. using the local sample.papi.json file `npm run start-local`
 2. using your akamai api setup `npm run start`
