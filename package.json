@@ -4,8 +4,9 @@
   "description": "generate nginx config from akamai property",
   "main": "dist/index.js",
   "scripts": {
+    "cover": "", 
     "lint": "node ./node_modules/.bin/eslint **/*.js --ignore-pattern node_modules/ --ignore-pattern dist/ --quiet",
-    "test": "npm run lint && npm run build && EDGEGRID_ENV=test ./node_modules/.bin/mocha --timeout 10000 --compilers js:babel-core/register --require babel-polyfill $(find dist/test -name '*.js')",
+    "test": "npm run lint && npm run build && EDGEGRID_ENV=test ./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/mocha --timeout 10000 --compilers js:babel-core/register --require babel-polyfill $(find dist/test -name '*.js')",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./lua/akamai.lua,./ssl,.env,./.babelrc,./npm-debug.log --copy-files",
     "start": "npm run build && echo '\n#### STARTING ####' && node dist/start.js",
     "start-local": "npm run build && echo '\n#### STARTING ####' && node dist/start-local.js"
@@ -46,6 +47,7 @@
     "chai": "^4.1.1",
     "eslint": "^4.7.0",
     "mocha": "^3.5.0",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "istanbul": "^0.4.5"
   }
 }
