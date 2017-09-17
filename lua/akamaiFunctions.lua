@@ -2,6 +2,7 @@
 local aka_request_scheme = ngx.var.scheme
 local aka_request_host = ngx.var.host
 local aka_request_path = ngx.var.document_uri
+local aka_request_file_extension = aka_request_path:match("^.+(%..+)$")
 local aka_request_qs = ngx.var.query_string
 local aka_origin_url = nil
 
