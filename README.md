@@ -3,6 +3,8 @@
 [![Code Climate](https://codeclimate.com/github/wyvern8/akamai-nginx/badges/gpa.svg)](https://codeclimate.com/github/wyvern8/akamai-nginx)
 [![Test Coverage](https://codeclimate.com/github/wyvern8/akamai-nginx/badges/coverage.svg)](https://codeclimate.com/github/wyvern8/akamai-nginx/coverage)
 # akamai-nginx
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/wyvern8/akamai-nginx.svg)](https://greenkeeper.io/)
 Configure nginx reverse proxy/simulator based on Akamai property rules (Unofficial)
 
 This project takes an Akamai property api json response, and generates lua code integrated with nginx in order to 
