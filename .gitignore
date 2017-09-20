@@ -66,3 +66,6 @@ lua/akamai.lua
 
 # ignore ssl dir
 ssl/
+
+# ignore papi json dir
+papiJson/

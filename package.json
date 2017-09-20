@@ -6,9 +6,10 @@
   "scripts": {
     "lint": "node ./node_modules/.bin/eslint **/*.js --ignore-pattern node_modules/ --ignore-pattern dist/ --quiet",
     "test": "npm run build && EDGEGRID_ENV=test cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha --timeout 10000 --compilers js:babel-core/register --require babel-polyfill ./dist/test/**/*.spec.js",
-    "build": "npm run lint && rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./lua/akamai.lua,./ssl,.env,./.babelrc,./npm-debug.log --copy-files",
+    "build": "npm run lint && rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./lua/akamai.lua,./papiJson,./ssl,.env,./.babelrc,./npm-debug.log --copy-files",
     "start": "npm run build && echo '\n#### STARTING ####' && node dist/start.js",
-    "start-local": "npm run build && echo '\n#### STARTING ####' && node dist/start-local.js"
+    "start-local": "npm run build && echo '\n#### STARTING ####' && node dist/start-local.js",
+    "configure": "npm run build && node dist/configure.js"
   },
   "engines": {
     "node": ">=8.4.0"
@@ -42,6 +43,8 @@
     "babel-polyfill": "^6.26.0",
     "dotenv": "^4.0.0",
     "edgegrid": "^3.0.2",
+    "format-json": "^1.0.3",
+    "inquirer": "^3.3.0",
     "require-dir": "^0.3.2",
     "systemjs": "^0.20.18",
     "webpack": "^3.6.0"

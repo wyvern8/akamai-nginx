@@ -8,31 +8,35 @@ import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from './ind
     // load .env vars
     dotenv.config();
 
+    // assumes you have configured edgegrid
     const edgegrid = new EdgeGrid({
         path: process.env.AKA_EDGERC,
         section: 'default'
     });
 
+    // assumes you have set env vars as output of 'npm run configure' or another method
     setApiConfig(
         edgegrid,
         process.env.AKA_CONTRACT_ID,
         process.env.AKA_GROUP_ID,
         process.env.AKA_PROPERTY_ID,
         process.env.AKA_PROPERTY_VERSION,
-        __dirname + '/lua/akamai.lua'
+        'lua/akamai.lua'
     );
 
+    // map old to new values in generated lua
     setValueMap(
         new Map([
             ['oldVal', 'replacement']
         ])
     );
 
+    // behaviours to skip altogether
     setSkipBehaviors([
-        'cpCode'
+        'webApplicationFirewall'
     ]);
 
-    await generateConf().then(() => {
-        console.log('done.');
+    generateConf().then(() => {
+        console.log('nginx config written to ./lua/akamai.lua');
     });
 })();

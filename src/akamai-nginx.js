@@ -31,7 +31,6 @@ export function setValueMap(map) {
 }
 
 let skipBehaviors = [
-    'cpcode',
     'webApplicationFirewall'
 ];
 
@@ -47,6 +46,10 @@ function getPapiUrl() {
 export async function generateConf() {
 
     let propertyRules = await getPropertyRules();
+    let propertyName = propertyRules.propertyName;
+    let propertyVersion = propertyRules.propertyVersion;
+
+    console.log('processing rules for property ' + propertyName + ' v' + propertyVersion);
 
     let defaultRule = new Rule(
         propertyRules.rules.name,
@@ -70,6 +73,7 @@ export async function generateConf() {
                 if (err) {
                     throw err;
                 }
+                console.log('processing completed for property ' + propertyName + ' v' + propertyVersion);
             });
         });
     });
