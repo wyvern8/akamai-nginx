@@ -134,9 +134,10 @@ import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from 'akama
         'cpCode'
     ]);
 
-    await generateConf().then(() => {
-        console.log('done.')
-    });
+    await generateConf();
+    
+    console.log('done.');
+    
 })();
 ````
 
