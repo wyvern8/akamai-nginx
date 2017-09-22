@@ -1,6 +1,6 @@
 import { Behavior } from '../behavior.js';
 
-export class BehaviorModifyOutgoingRequestHeader extends Behavior {
+export class BehaviorModifyOutgoingResponseHeader extends Behavior {
 
     constructor(options, valueMap) {
         super();
@@ -34,10 +34,10 @@ export class BehaviorModifyOutgoingRequestHeader extends Behavior {
         }, '', this.options.action);
 
         return [
-            '-- ' + this.options.action + ' request header to origin',
-            'aka_upstream_headers[' + headerName + '] = ' + headerValue
+            '-- ' + this.options.action + ' response header to client',
+            'ngx.header[' + headerName + '] = ' + headerValue
         ];
 
     }
 }
-Behavior.register('modifyOutgoingRequestHeader', BehaviorModifyOutgoingRequestHeader);
+Behavior.register('modifyOutgoingResponseHeader', BehaviorModifyOutgoingResponseHeader);

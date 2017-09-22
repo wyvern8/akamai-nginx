@@ -12,7 +12,7 @@ describe('BehaviorModifyOutgoingRequestHeader', function() {
 
                 let opts = JSON.parse(options);
                 let expected = [
-                    '-- ' + opts.action + ' header',
+                    '-- ' + opts.action + ' request header to origin',
                     'aka_upstream_headers["' + opts.customHeaderName + '"] = "' + opts.newHeaderValue + '"'
                 ];
 
