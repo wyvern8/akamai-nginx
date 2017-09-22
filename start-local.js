@@ -1,7 +1,7 @@
 import 'babel-polyfill'
 import { setLocalConfig, setValueMap, setSkipBehaviors, generateConf } from './src/akamai-nginx.js';
 
-(function() {
+(async function() {
 
     // to run locally against your papi json, run 'npm run configure'
     // and replace 'sample.papi.json' below with 'papiJson/your.property-v1.papi.json'
@@ -23,7 +23,7 @@ import { setLocalConfig, setValueMap, setSkipBehaviors, generateConf } from './s
         'webApplicationFirewall'
     ]);
 
-    generateConf().then(() => {
-        console.log('nginx config written to ./lua/akamai.lua');
-    });
+    await generateConf();
+
+    console.log('nginx config written to ./lua/akamai.lua');
 })();

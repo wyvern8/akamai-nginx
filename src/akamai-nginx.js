@@ -66,17 +66,13 @@ export async function generateConf() {
     conf +=  config.localPapiJsonPath ? 'local: ' + config.localPapiJsonPath : 'api: ' + getPapiUrl() + ' ###';
     conf += '\n' + defaultRule.process();
 
-    fs.readFile(__dirname + '/../lua/akamaiFunctions.lua', (err, fns) => {
-        conf = fns + conf + '\nfinalActions()';
-        fs.truncate(config.outPutFile, 0, () => {
-            fs.writeFile(config.outPutFile, conf, (err) => {
-                if (err) {
-                    throw err;
-                }
-                console.log('processing completed for property ' + propertyName + ' v' + propertyVersion);
-            });
-        });
-    });
+    let fns = fs.readFileSync(__dirname + '/../lua/akamaiFunctions.lua', 'utf8');
+    conf = fns + conf + '\nfinalActions()';
+
+    fs.truncateSync(config.outPutFile, 0);
+    fs.writeFileSync(config.outPutFile, conf, 'utf8');
+
+    console.log('processing completed for property ' + propertyName + ' v' + propertyVersion);
 
 }
 

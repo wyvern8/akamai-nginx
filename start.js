@@ -36,7 +36,8 @@ import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from './ind
         'webApplicationFirewall'
     ]);
 
-    generateConf().then(() => {
-        console.log('nginx config written to ./lua/akamai.lua');
-    });
+    await generateConf();
+
+    console.log('nginx config written to ./lua/akamai.lua');
+
 })();
