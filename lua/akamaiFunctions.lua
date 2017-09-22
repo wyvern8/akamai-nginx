@@ -1,8 +1,32 @@
--- vars for reference in criteria and behaviours
+-- ################ utility functions
+-- split a string
+function string:split(delimiter)
+    local result = { }
+    local from  = 1
+    local delim_from, delim_to = string.find( self, delimiter, from  )
+    while delim_from do
+        table.insert( result, string.sub( self, from , delim_from-1 ) )
+        from  = delim_to + 1
+        delim_from, delim_to = string.find( self, delimiter, from  )
+    end
+    table.insert( result, string.sub( self, from  ) )
+    return result
+end
+
+-- get table size
+local function tablelength(T)
+    local count = 0
+    for _ in pairs(T) do count = count + 1 end
+    return count
+end
+
+-- ################ vars for reference in criteria and behaviours
 local aka_request_scheme = ngx.var.scheme
 local aka_request_host = ngx.var.host
 local aka_request_path = ngx.var.document_uri
 local aka_request_file_extension = aka_request_path:match("^.+(%..+)$")
+local aka_request_uri_parts = aka_request_path:split("/")
+local aka_request_file_name = aka_request_uri_parts[tablelength(aka_request_uri_parts)]
 local aka_request_qs = ngx.var.query_string
 local aka_origin_url = nil
 
@@ -11,6 +35,26 @@ if aka_request_qs == nil then
 else
     aka_request_qs = "?" .. aka_request_qs
 end
+
+-- checked string for concatenation
+function cs(s)
+    if s == nil then
+        s = ""
+    end
+    return s
+end
+
+ngx.log(ngx.ERR,
+    "### incoming request details >> \n" ..
+    "--------------------------------------------------\n" ..
+    "aka_request_scheme: " .. cs(aka_request_scheme) .. "\n" ..
+    "aka_request_host: " .. cs(aka_request_host) .. "\n" ..
+    "aka_request_path: " .. cs(aka_request_path) .. "\n" ..
+    "aka_request_file_extension: " .. cs(aka_request_file_extension) .. "\n" ..
+    "aka_request_file_name: " .. cs(aka_request_file_name) .. "\n" ..
+    "aka_request_qs: " .. cs(aka_request_qs) .. "\n" ..
+    "--------------------------------------------------\n"
+)
 
 -- table to contain manage headers sent to origin
 local aka_upstream_headers = ngx.req.get_headers()
