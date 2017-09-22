@@ -15,7 +15,7 @@ describe('BehaviorCpCode', () => {
     describe('cpCode header', () => {
         it('should return expected lua', () => {
             let expected = 'ngx.header["x-aka-cpCode"] = "' +
-                optionsCpCode.value.id + ' ' + optionsCpCode.value.name.replace(' ', '_') + '"';
+                optionsCpCode.value.id + '_' + optionsCpCode.value.name.replace(' ', '_') + '"';
 
             let actual = new BehaviorCpCode(optionsCpCode).process();
             assert.equal(actual, expected);

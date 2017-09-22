@@ -11,7 +11,8 @@ export class BehaviorCpCode extends Behavior {
     process() {
         // just setting a response header for now.
         return 'ngx.header["x-aka-cpCode"] = "' +
-            this.options.value.id + ' ' + this.options.value.name.replace(' ', '_') + '"';
+            this.options.value.id +
+            (this.options.value.name ? '_' + this.options.value.name.replace(' ', '_') : '') + '"';
     }
 }
 Behavior.register('cpCode', BehaviorCpCode);
