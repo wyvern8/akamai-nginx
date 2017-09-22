@@ -1,6 +1,6 @@
 {
   "name": "akamai-nginx",
-  "version": "0.23.0",
+  "version": "0.24.0",
   "description": "generate nginx config from akamai property",
   "main": "./index.js",
   "scripts": {
