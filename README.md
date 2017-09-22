@@ -25,8 +25,12 @@ This can be useful for:
 1. install https://github.com/akamai/httpie-edgegrid 
 setup your .edgerc and test api calls are working.
 
-2. use httpie to obtain your contractId, groupId and 
-a propertyId via api calls 
+2. After npm install, run `npm run configure`in an interactive shell, and follow the prompts to retrieve your property json, or environment property values.  Select save json to run offline - your property json will be placed in ./papiJson dir - refer to start-local.js .  Alternatively, add output values to your .env file or environment variables. eg. start.js
+
+OR
+
+2b. Use httpie to obtain your contractId, groupId and 
+a propertyId via api calls yourself and set env vars.
 https://developer.akamai.com/api/luna/papi/resources.html
 
 ## Nginx integration
@@ -58,8 +62,8 @@ To use an akamai property from your account, configure eddgegrid, and set the fo
     
 To process property rules into lua nginx config in the akamai docker container:
 
-1. using the local sample.papi.json file `npm run start-local`
-2. using your akamai api setup `npm run start`
+1. using the local sample.papi.json file `npm run start-local` or your own papi json file.
+2. using your akamai api env to pull json at runtime, use `npm run start`
 
 ### Example usage in a node app
 ```javascript
