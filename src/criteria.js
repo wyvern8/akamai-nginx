@@ -61,13 +61,15 @@ export class Criteria {
         return this.switchByVal({
             'MATCHES_ONE_OF': ' or ',
             'IS_ONE_OF': ' or ',
+            'IS_NOT_ONE_OF': ' and '
         }, ' and ', this.options.matchOperator);
     }
 
     matchOperatorCompare() {
         return this.switchByVal({
             'IS_ONE_OF': ' ==',
-            'IS_NOT': ' ~='
+            'IS_NOT': ' ~=',
+            'IS_NOT_ONE_OF': ' ~='
         }, ' ==', this.options.matchOperator);
 
 
