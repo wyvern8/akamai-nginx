@@ -5,7 +5,7 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/wyvern8/akamai-nginx.svg)](https://greenkeeper.io/)
 
 # akamai-nginx
-Configure nginx reverse proxy/simulator based on Akamai property rules (Unofficial).
+Configure nginx reverse proxy/simulator based on Akamai property rules (Unofficial)
 
 This project takes an Akamai property api json response, and generates lua code integrated with nginx in order to 
 simulate an akamai property.  
