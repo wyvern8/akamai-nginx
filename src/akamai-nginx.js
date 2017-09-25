@@ -69,7 +69,8 @@ export async function generateConf() {
     let fns = fs.readFileSync(__dirname + '/../lua/akamaiFunctions.lua', 'utf8');
     conf = fns + conf + '\nfinalActions()';
 
-    fs.truncateSync(config.outPutFile, 0);
+    // create empty file
+    fs.closeSync(fs.openSync(config.outPutFile, 'w'));
     fs.writeFileSync(config.outPutFile, conf, 'utf8');
 
     console.log('processing completed for property ' + propertyName + ' v' + propertyVersion);
