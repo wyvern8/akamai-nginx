@@ -3,6 +3,7 @@
 [![Code Climate](https://codeclimate.com/github/wyvern8/akamai-nginx/badges/gpa.svg)](https://codeclimate.com/github/wyvern8/akamai-nginx)
 [![Test Coverage](https://codeclimate.com/github/wyvern8/akamai-nginx/badges/coverage.svg)](https://codeclimate.com/github/wyvern8/akamai-nginx/coverage)
 [![Greenkeeper badge](https://badges.greenkeeper.io/wyvern8/akamai-nginx.svg)](https://greenkeeper.io/)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 # akamai-nginx
 Configure nginx reverse proxy/simulator based on Akamai property rules (Unofficial)
@@ -151,6 +152,7 @@ npm install -g commitizen
 npm install -g cz-conventional-changelog
 echo '{ "path": "cz-conventional-changelog" }' > ~/.czrc
 ```
+or you can just use `npm run commit` which will use local commitizen install.
 
 Support for new criteria and behaviors is done by adding new ES6 class files in:
 
