@@ -4,6 +4,7 @@
   "description": "generate nginx config from akamai property",
   "main": "./index.js",
   "scripts": {
+    "commit": "./node_modules/.bin/git-cz",
     "lint": "node ./node_modules/.bin/eslint **/*.js --ignore-pattern node_modules/ --ignore-pattern dist/ --quiet",
     "test": "npm run build && EDGEGRID_ENV=test cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha --timeout 10000 --compilers js:babel-core/register --require babel-polyfill ./dist/test/**/*.spec.js",
     "build": "npm run lint && rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./lua/akamai.lua,./papiJson,./ssl,.env,./.babelrc,./npm-debug.log --copy-files",
@@ -11,6 +12,7 @@
     "start-local": "npm run build && echo '\n#### STARTING ####' && node dist/start-local.js",
     "configure": "npm run build && node dist/configure.js"
   },
+  
   "engines": {
     "node": ">=8.4.0"
   },
@@ -60,10 +62,17 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.1",
+    "commitizen": "^2.9.6",
     "cross-env": "^5.0.5",
+    "cz-conventional-changelog": "^2.0.0",
     "eslint": "^4.7.0",
     "mocha": "^3.5.0",
     "nyc": "^11.2.1",
     "rimraf": "^2.6.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

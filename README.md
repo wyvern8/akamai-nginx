@@ -144,6 +144,14 @@ import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from 'akama
 ## Contributing - adding criteria and behaviors
 Fork this repo and work on your enhancements, then send a pull request.
 
+Use commitizen for conventional commit messages via `git cz` instead of `git commit`.  
+To setup if not already installed:
+```
+npm install -g commitizen
+npm install -g cz-conventional-changelog
+echo '{ "path": "cz-conventional-changelog" }' > ~/.czrc
+```
+
 Support for new criteria and behaviors is done by adding new ES6 class files in:
 
 ```
