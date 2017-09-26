@@ -7,7 +7,7 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 # akamai-nginx
-Configure nginx reverse proxy/simulator based on Akamai property rules (Unofficial)
+Configure nginx reverse proxy/simulator based on Akamai property rules (Unofficial).
 
 This project takes an Akamai property api json response, and generates lua code integrated with nginx in order to 
 simulate an akamai property.  
