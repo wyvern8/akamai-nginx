@@ -11,7 +11,7 @@
     "start": "npm run build && echo '\n#### STARTING ####' && node dist/start.js",
     "start-local": "npm run build && echo '\n#### STARTING ####' && node dist/start-local.js",
     "configure": "npm run build && node dist/configure.js",
-    "semantic-release": "semantic-release pre && npm run build && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "engines": {
     "node": ">=8.4.0"
