@@ -1,2 +1,1 @@
-let AkamaiNginx = require('./src/akamai-nginx.js');
-module.exports = AkamaiNginx;
+module.exports = require('./dist/src/akamai-nginx.js');
