@@ -41,3 +41,5 @@ export class BehaviorModifyOutgoingRequestHeader extends Behavior {
     }
 }
 Behavior.register('modifyOutgoingRequestHeader', BehaviorModifyOutgoingRequestHeader);
+// reusing the above for now
+Behavior.register('modifyIncomingRequestHeader', BehaviorModifyOutgoingRequestHeader);
