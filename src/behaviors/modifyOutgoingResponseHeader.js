@@ -41,3 +41,5 @@ export class BehaviorModifyOutgoingResponseHeader extends Behavior {
     }
 }
 Behavior.register('modifyOutgoingResponseHeader', BehaviorModifyOutgoingResponseHeader);
+// reusing the above for now
+Behavior.register('modifyIncomingResponseHeader', BehaviorModifyOutgoingResponseHeader);
