@@ -1,7 +1,7 @@
 import 'babel-polyfill'
 import EdgeGrid from 'edgegrid';
 import dotenv from 'dotenv';
-import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from './index.js';
+import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from './src/akamai-nginx.js';
 
 (async function() {
 
