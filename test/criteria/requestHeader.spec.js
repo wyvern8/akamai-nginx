@@ -1,27 +1,27 @@
 import { default as assert } from 'assert';
+import { describe, it } from 'mocha';
 import { CriteriaRequestHeader } from '../../src/criteria/requestHeader.js';
-
-const optionsHeaderEquals = {
-    "headerName" : "x-testing",
-    "matchOperator" : "IS_ONE_OF",
-    "values" : [ "testvalue", "testing2" ],
-    "matchWildcardName" : false,
-    "matchWildcardValue" : false,
-    "matchCaseSensitiveValue" : true
-};
+import { default as fs } from 'fs';
 
 describe('CriteriaRequestHeader', function() {
     describe('match one of', function () {
-        it('should return expected lua', function () {
+        it('should return expected lua', function (done) {
+            fs.readFile(__dirname + '/requestHeader.papi.json', 'utf8', (err, options) => {
+                if (err) {
+                    throw (err);
+                }
+                let opts = JSON.parse(options);
 
-            let expected = 'ngx.req.get_headers()["' + optionsHeaderEquals.headerName + '"]' +
-                ' == "' + optionsHeaderEquals.values[0] + '" or ' +
-                'ngx.req.get_headers()["' + optionsHeaderEquals.headerName + '"]' +
-                ' == "' + optionsHeaderEquals.values[1] + '"';
+                let expected = 'ngx.req.get_headers()["' + opts.headerName + '"]' +
+                    ' == "' + opts.values[0] + '" or ' +
+                    'ngx.req.get_headers()["' + opts.headerName + '"]' +
+                    ' == "' + opts.values[1] + '"';
 
-            let criteria = new CriteriaRequestHeader(optionsHeaderEquals);
-            let actual = criteria.process();
-            assert.equal(actual, expected);
+                let criteria = new CriteriaRequestHeader(opts);
+                let actual = criteria.process();
+                assert.equal(actual, expected);
+                done();
+            });
         });
     });
 

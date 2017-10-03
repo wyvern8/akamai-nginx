@@ -1,11 +1,12 @@
 import assert from 'assert';
+import { describe, it } from 'mocha';
 import {BehaviorOrigin} from '../../src/behaviors/origin.js';
 import fs from 'fs';
 
 describe('BehaviorOrigin', () => {
     describe('customer origin', () => {
         it('should return expected lua', (done) => {
-            fs.readFile(__dirname + '/origin.customer.papi.json', 'utf8', (err, options) => {
+            fs.readFile(__dirname + '/origin.papi.json', 'utf8', (err, options) => {
                 if (err) {
                     throw (err);
                 }

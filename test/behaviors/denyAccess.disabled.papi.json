@@ -1,8 +1,4 @@
 {
-  "value": {
-    "id": 888888,
-    "description": "CP2 akamai.com",
-    "products": ["Alta"],
-    "createdDate": 1493347578000,
-    "name": "CP2 akamai.com"
-  }
+  "reason" : "deny-by-ip",
+  "enabled" : false
+}

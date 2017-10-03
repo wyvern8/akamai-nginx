@@ -1,9 +1,8 @@
 {
-  "cookieName" : "usertype",
-  "matchOperator" : "IS",
-  "value" : "redirectedUser",
+  "headerName" : "x-testing",
+  "matchOperator" : "IS_ONE_OF",
+  "values" : [ "testvalue", "testing2" ],
   "matchWildcardName" : false,
-  "matchCaseSensitiveName" : true,
   "matchWildcardValue" : false,
   "matchCaseSensitiveValue" : true
 }

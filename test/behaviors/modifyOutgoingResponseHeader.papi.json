@@ -1,7 +1,7 @@
 {
-  "action" : "MODIFY",
-  "standardModifyHeaderName" : "OTHER",
-  "newHeaderValue" : "replaced-header",
-  "avoidDuplicateHeaders" : true,
-  "customHeaderName" : "x-testing"
+  "action": "MODIFY",
+  "standardModifyHeaderName": "OTHER",
+  "customHeaderName": "Strict-Transport-Security",
+  "newHeaderValue": "max-age=31536000",
+  "avoidDuplicateHeaders": true
 }

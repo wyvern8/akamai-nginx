@@ -1,8 +1,4 @@
 {
-  "headerName" : "x-testing",
-  "matchOperator" : "IS_ONE_OF",
-  "values" : [ "testvalue", "testing2" ],
-  "matchWildcardName" : false,
-  "matchWildcardValue" : false,
-  "matchCaseSensitiveValue" : true
+  "matchOperator" : "IS",
+  "value" : "GET"
 }

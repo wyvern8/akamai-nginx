@@ -1,23 +1,24 @@
 import { default as assert } from 'assert';
+import { describe, it } from 'mocha';
 import { CriteriaFilename } from '../../src/criteria/filename.js';
-
-const optionsFilenameNotOneOf = {
-    "matchOperator": "IS_NOT_ONE_OF",
-    "values": [
-        "abc.pdf"
-    ],
-    "matchCaseSensitive": true
-};
+import { default as fs } from 'fs';
 
 describe('CriteriaFilename', function() {
     describe('specific match', function () {
-        it('should return expected lua', function () {
+        it('should return expected lua', function (done) {
+            fs.readFile(__dirname + '/filename.papi.json', 'utf8', (err, options) => {
+                if (err) {
+                    throw (err);
+                }
+                let opts = JSON.parse(options);
 
-            let expected = 'aka_request_file_name ~= "' + optionsFilenameNotOneOf.values[0] + '"';
+                let expected = 'aka_request_file_name ~= "' + opts.values[0] + '"';
 
-            let criteria = new CriteriaFilename(optionsFilenameNotOneOf);
-            let actual = criteria.process();
-            assert.equal(actual, expected);
+                let criteria = new CriteriaFilename(opts);
+                let actual = criteria.process(true);
+                assert.equal(actual, expected);
+                done();
+            });
         });
     });
 

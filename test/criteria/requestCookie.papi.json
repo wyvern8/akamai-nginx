@@ -1,10 +1,9 @@
 {
-  "parameterName" : "myquery",
-  "matchOperator" : "IS_ONE_OF",
+  "cookieName" : "usertype",
+  "matchOperator" : "IS",
+  "value" : "redirectedUser",
   "matchWildcardName" : false,
   "matchCaseSensitiveName" : true,
-  "values" : [ "abc", "def" ],
   "matchWildcardValue" : false,
-  "matchCaseSensitiveValue" : true,
-  "escapeValue" : false
+  "matchCaseSensitiveValue" : true
 }

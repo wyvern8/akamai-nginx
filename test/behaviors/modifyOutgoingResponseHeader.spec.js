@@ -1,27 +1,28 @@
 import assert from 'assert';
+import { describe, it } from 'mocha';
 import { BehaviorModifyOutgoingResponseHeader } from '../../src/behaviors/modifyOutgoingResponseHeader.js';
-
-let options = {
-    "action": "MODIFY",
-    "standardModifyHeaderName": "OTHER",
-    "customHeaderName": "Strict-Transport-Security",
-    "newHeaderValue": "max-age=31536000",
-    "avoidDuplicateHeaders": true
-}
+import { default as fs } from 'fs';
 
 describe('BehaviorModifyOutgoingResponseHeader', () => {
     describe('other header', () => {
         it('should return expected lua', (done) => {
-            let expected = [
-                '-- ' + options.action + ' response header to client',
-                'ngx.header["' + options.customHeaderName + '"] = "' + options.newHeaderValue + '"'
-            ];
+            fs.readFile(__dirname + '/modifyOutgoingResponseHeader.papi.json', 'utf8', (err, options) => {
+                if (err) {
+                    throw (err);
+                }
+                let opts = JSON.parse(options);
 
-            let actual = new BehaviorModifyOutgoingResponseHeader(options).process();
+                let expected = [
+                    '-- ' + opts.action + ' response header to client',
+                    'ngx.header["' + opts.customHeaderName + '"] = "' + opts.newHeaderValue + '"'
+                ];
 
-            assert.equal(actual[0], expected[0]);
-            assert.equal(actual[1], expected[1]);
-            done();
+                let actual = new BehaviorModifyOutgoingResponseHeader(opts).process();
+
+                assert.equal(actual[0], expected[0]);
+                assert.equal(actual[1], expected[1]);
+                done();
+            });
         });
     });
 

@@ -1,26 +1,25 @@
 import { default as assert } from 'assert';
+import { describe, it } from 'mocha';
 import { CriteriaPath } from '../../src/criteria/path.js';
-
-const optionsMatchAny = {
-    matchOperator : 'IS_ONE_OF',
-    values : [ '*' ]
-};
-
-const optionsMatchSpecific = {
-    matchOperator : 'IS_ONE_OF',
-    values : [ '/path/to/somewhere*', '/path/to/file2.html' ]
-};
+import { default as fs } from 'fs';
 
 describe('CriteriaPath', function() {
-    describe('specific match', function () {
-        it('should return expected lua', function () {
+    describe('match any', function () {
+        it('should return expected lua', function (done) {
+            fs.readFile(__dirname + '/path.papi.json', 'utf8', (err, options) => {
+                if (err) {
+                    throw (err);
+                }
+                let opts = JSON.parse(options);
 
-            let expected = 'matches(aka_request_path, "' + optionsMatchSpecific.values[0] +
-                '") or matches(aka_request_path, "' + optionsMatchSpecific.values[1] + '")';
+                let expected = 'matches(aka_request_path, "' + opts.values[0] +
+                    '*") or matches(aka_request_path, "' + opts.values[1] + '*")';
 
-            let criteria = new CriteriaPath(optionsMatchSpecific);
-            let actual = criteria.process();
-            assert.equal(actual, expected);
+                let criteria = new CriteriaPath(opts);
+                let actual = criteria.process(true, '*');
+                assert.equal(actual, expected);
+                done();
+            });
         });
     });
 

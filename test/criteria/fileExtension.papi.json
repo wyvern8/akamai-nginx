@@ -1,7 +1,5 @@
 {
-  "action" : "MODIFY",
-  "standardModifyHeaderName" : "OTHER",
-  "newHeaderValue" : "replaced-header",
-  "avoidDuplicateHeaders" : true,
-  "customHeaderName" : "x-testing"
+  "matchOperator" : "IS_ONE_OF",
+  "values" : [ "jpg", "gif", "png" ],
+  "matchCaseSensitive" : false
 }
