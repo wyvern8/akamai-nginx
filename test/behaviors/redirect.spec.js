@@ -1,4 +1,5 @@
 import { default as assert } from 'assert';
+import { describe, it } from 'mocha';
 import { BehaviorRedirect } from '../../src/behaviors/redirect.js';
 import { default as fs } from 'fs';
 

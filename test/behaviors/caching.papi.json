@@ -1,0 +1,5 @@
+{
+  "behavior" : "MAX_AGE",
+  "mustRevalidate" : false,
+  "ttl" : "2h"
+}

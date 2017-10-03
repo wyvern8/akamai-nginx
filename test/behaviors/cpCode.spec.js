@@ -1,24 +1,24 @@
 import assert from 'assert';
+import { describe, it } from 'mocha';
 import { BehaviorCpCode } from '../../src/behaviors/cpCode.js';
-
-let optionsCpCode = {
-    "value": {
-        "id": 888888,
-        "description": "CP2 akamai.com",
-        "products": ["Alta"],
-        "createdDate": 1493347578000,
-        "name": "CP2 akamai.com"
-    }
-}
+import { default as fs } from 'fs';
 
 describe('BehaviorCpCode', () => {
     describe('cpCode header', () => {
-        it('should return expected lua', () => {
-            let expected = 'ngx.header["x-aka-cpCode"] = "' +
-                optionsCpCode.value.id + '_' + optionsCpCode.value.name.replace(' ', '_') + '"';
+        it('should return expected lua', (done) => {
+            fs.readFile(__dirname + '/cpCode.papi.json', 'utf8', (err, options) => {
+                if (err) {
+                    throw (err);
+                }
+                let opts = JSON.parse(options);
 
-            let actual = new BehaviorCpCode(optionsCpCode).process();
-            assert.equal(actual, expected);
+                let expected = 'ngx.header["x-aka-cpCode"] = "' +
+                    opts.value.id + '_' + opts.value.name.replace(' ', '_') + '"';
+
+                let actual = new BehaviorCpCode(opts).process();
+                assert.equal(actual, expected);
+                done();
+            });
         });
     });
 

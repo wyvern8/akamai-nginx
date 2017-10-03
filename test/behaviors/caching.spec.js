@@ -1,20 +1,24 @@
 import assert from 'assert';
+import { describe, it } from 'mocha';
 import { BehaviorCaching } from '../../src/behaviors/caching.js';
-
-let optionsMaxAgeCacheTTL = {
-    "behavior" : "MAX_AGE",
-    "mustRevalidate" : false,
-    "ttl" : "2h"
-};
+import { default as fs } from 'fs';
 
 describe('BehaviorCaching', () => {
     describe('max age ttl', () => {
-        it('should return expected lua', () => {
-            let expected = 'ngx.header["x-aka-' + optionsMaxAgeCacheTTL.behavior + '"] = "' +
-                optionsMaxAgeCacheTTL.ttl + '"';
+        it('should return expected lua', (done) => {
+            fs.readFile(__dirname + '/caching.papi.json', 'utf8', (err, options) => {
+                if (err) {
+                    throw (err);
+                }
+                let opts = JSON.parse(options);
 
-            let actual = new BehaviorCaching(optionsMaxAgeCacheTTL).process();
-            assert.equal(actual, expected);
+                let expected = 'ngx.header["x-aka-' + opts.behavior + '"] = "' +
+                    opts.ttl + '"';
+
+                let actual = new BehaviorCaching(opts).process();
+                assert.equal(actual, expected);
+                done();
+            });
         });
     });
 

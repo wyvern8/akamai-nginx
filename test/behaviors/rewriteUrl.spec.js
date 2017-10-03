@@ -1,4 +1,5 @@
 import { default as assert } from 'assert';
+import { describe, it } from 'mocha';
 import { BehaviorRewriteUrl } from '../../src/behaviors/rewriteUrl.js';
 import { default as fs } from 'fs';
 
@@ -9,8 +10,8 @@ describe('BehaviorRewriteUrl', function() {
                 if (err) {
                     throw (err);
                 }
-
                 let opts = JSON.parse(options);
+
                 let expected = [
                     '-- ' + opts.behavior + ' path part',
                     'aka_origin_url = string.gsub(aka_request_path, "' + opts.match + '", "' + opts.targetPath + '")',

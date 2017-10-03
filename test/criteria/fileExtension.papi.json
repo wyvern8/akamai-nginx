@@ -1,0 +1,5 @@
+{
+  "matchOperator" : "IS_ONE_OF",
+  "values" : [ "jpg", "gif", "png" ],
+  "matchCaseSensitive" : false
+}
