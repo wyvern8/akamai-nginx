@@ -175,7 +175,6 @@ function globtopattern(g)
 end
 
 function matches(value, glob)
-    local glob = glob .. "*"
     local pattern = globtopattern(glob)
     return (value):match(pattern)
 end
