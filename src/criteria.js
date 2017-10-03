@@ -22,11 +22,12 @@ export class Criteria {
         this._checkVar = checkVar;
     }
 
-    process(usePattern) {
+    process(usePattern, valueSuffix) {
         if (this.options && this.options.values) {
             let valueArray = [];
             this.options.values.forEach((val) => {
-                if (usePattern) {
+                if (valueSuffix) val = val + valueSuffix;
+                if (usePattern || val.indexOf('*') > 0) {
                     valueArray.push('matches(' + this.checkVar + ',' + this.value(val) + ')');
                 } else {
                     valueArray.push(this.checkVar + this.matchOperatorCompare() + this.value(val));
@@ -35,10 +36,12 @@ export class Criteria {
             return valueArray.join(this.matchOperatorJoiner());
 
         } else if (this.options && this.options.value) {
-            if (usePattern) {
-                return 'matches(' + this.checkVar + ',' + this.value(this.options.value) + ')';
+            let val = this.options.value;
+            if (valueSuffix) val = val + valueSuffix;
+            if (usePattern || val.indexOf('*') > 0) {
+                return 'matches(' + this.checkVar + ',' + this.value(val) + ')';
             } else {
-                return this.checkVar + this.matchOperatorCompare() + this.value(this.options.value);
+                return this.checkVar + this.matchOperatorCompare() + this.value(val);
             }
         }
     }

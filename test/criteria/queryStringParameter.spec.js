@@ -1,29 +1,27 @@
 import { default as assert } from 'assert';
+import { describe, it } from 'mocha';
 import { CriteriaQueryStringParameter } from '../../src/criteria/queryStringParameter.js';
+import { default as fs } from 'fs';
 
-const optionsQueryStringOneOf = {
-    "parameterName" : "myquery",
-    "matchOperator" : "IS_ONE_OF",
-    "matchWildcardName" : false,
-    "matchCaseSensitiveName" : true,
-    "values" : [ "abc", "def" ],
-    "matchWildcardValue" : false,
-    "matchCaseSensitiveValue" : true,
-    "escapeValue" : false
-};
-
-describe('CriteriaRequestHeader', function() {
+describe('CriteriaQueryStringParameter', function() {
     describe('match one of', function () {
-        it('should return expected lua', function () {
+        it('should return expected lua', function (done) {
+            fs.readFile(__dirname + '/queryStringParameter.papi.json', 'utf8', (err, options) => {
+                if (err) {
+                    throw (err);
+                }
+                let opts = JSON.parse(options);
 
-            let expected = 'ngx.req.get_uri_args()["' + optionsQueryStringOneOf.parameterName + '"]' +
-                ' == "' + optionsQueryStringOneOf.values[0] + '" or ' +
-                'ngx.req.get_uri_args()["' + optionsQueryStringOneOf.parameterName + '"]' +
-                ' == "' + optionsQueryStringOneOf.values[1] + '"';
+                let expected = 'ngx.req.get_uri_args()["' + opts.parameterName + '"]' +
+                    ' == "' + opts.values[0] + '" or ' +
+                    'ngx.req.get_uri_args()["' + opts.parameterName + '"]' +
+                    ' == "' + opts.values[1] + '"';
 
-            let criteria = new CriteriaQueryStringParameter(optionsQueryStringOneOf);
-            let actual = criteria.process();
-            assert.equal(actual, expected);
+                let criteria = new CriteriaQueryStringParameter(opts);
+                let actual = criteria.process();
+                assert.equal(actual, expected);
+                done();
+            });
         });
     });
 

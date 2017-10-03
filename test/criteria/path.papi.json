@@ -1,0 +1,4 @@
+{
+  "matchOperator" : "IS_ONE_OF",
+  "values" : [ "/path/to/somewhere", "/path/to/file2.html" ]
+}

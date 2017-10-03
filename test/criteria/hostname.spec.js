@@ -1,26 +1,43 @@
 import { default as assert } from 'assert';
+import { describe, it } from 'mocha';
 import { CriteriaHostname } from '../../src/criteria/hostname.js';
-
-const optionsMatchAny = {
-    matchOperator : 'IS_ONE_OF',
-    values : [ '*' ]
-};
-
-const optionsMatchSpecific = {
-    matchOperator : 'IS_ONE_OF',
-    values : [ 'akamai.com', 'edgekey.net' ]
-};
+import { default as fs } from 'fs';
 
 describe('CriteriaHostname', function() {
-    describe('specific match', function () {
+    describe('match exact', function () {
+        it('should return expected lua', function (done) {
+            fs.readFile(__dirname + '/hostname.exact.papi.json', 'utf8', (err, options) => {
+                if (err) {
+                    throw (err);
+                }
+                let opts = JSON.parse(options);
+
+                let expected = 'ngx.var.host == "' + opts.values[0] +
+                    '" or ngx.var.host == "' + opts.values[1] + '"';
+
+                let criteria = new CriteriaHostname(opts);
+                let actual = criteria.process();
+                assert.equal(actual, expected);
+                done();
+            });
+        });
+    });
+
+    describe('match pattern', function () {
         it('should return expected lua', function () {
+            fs.readFile(__dirname + '/hostname.pattern.papi.json', 'utf8', (err, options) => {
+                if (err) {
+                    throw (err);
+                }
+                let opts = JSON.parse(options);
 
-            let expected = 'ngx.var.host == "' + optionsMatchSpecific.values[0] +
-                '" or ngx.var.host == "' + optionsMatchSpecific.values[1] + '"';
+                let expected = 'matches(ngx.var.host, "' + opts.values[0] +
+                    '") or matches(ngx.var.host, "' + opts.values[1] + ')"';
 
-            let criteria = new CriteriaHostname(optionsMatchSpecific);
-            let actual = criteria.process();
-            assert.equal(actual, expected);
+                let criteria = new CriteriaHostname(opts);
+                let actual = criteria.process(true);
+                assert.equal(actual, expected);
+            });
         });
     });
 

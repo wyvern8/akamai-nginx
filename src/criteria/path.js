@@ -11,7 +11,8 @@ export class CriteriaPath extends Criteria {
 
     process() {
         let usePattern = true;
-        return super.process(usePattern);
+        let valueSuffix = '*'; // path is a special case as it matches as a prefix always
+        return super.process(usePattern, valueSuffix);
     }
 
 }

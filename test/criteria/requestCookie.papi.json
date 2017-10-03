@@ -1,0 +1,9 @@
+{
+  "cookieName" : "usertype",
+  "matchOperator" : "IS",
+  "value" : "redirectedUser",
+  "matchWildcardName" : false,
+  "matchCaseSensitiveName" : true,
+  "matchWildcardValue" : false,
+  "matchCaseSensitiveValue" : true
+}

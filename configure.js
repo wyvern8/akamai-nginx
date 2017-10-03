@@ -1,4 +1,4 @@
-import 'babel-polyfill'
+import 'babel-polyfill';
 import EdgeGrid from 'edgegrid';
 import dotenv from 'dotenv';
 import inquirer from 'inquirer';
@@ -50,7 +50,7 @@ import fs from 'fs';
                 if (parseInt(version) > 0 && parseInt(version) <= latestVersion) {
                     return true;
                 } else {
-                    return 'Please enter a valid version number.'
+                    return 'Please enter a valid version number.';
                 }
             }
 
@@ -89,7 +89,7 @@ import fs from 'fs';
                 outputDir + '/' + propertyName + '-v' + version + '.papi.json',
                 formatJson.plain(propertyJson), 'utf8'
             );
-            console.log('\npapi json written to: ./papiJson/' + propertyName + '-v' + version + '.papi.json')
+            console.log('\npapi json written to: ./papiJson/' + propertyName + '-v' + version + '.papi.json');
         }
     });
 
@@ -143,7 +143,7 @@ import fs from 'fs';
                         return reject(error);
                     }
                     let jsonResult = JSON.parse(body);
-                    papiResponses.set(type, jsonResult)
+                    papiResponses.set(type, jsonResult);
                     return resolve(jsonResult);
                 });
 
