@@ -27,7 +27,7 @@ export class Criteria {
             let valueArray = [];
             this.options.values.forEach((val) => {
                 if (valueSuffix) val = val + valueSuffix;
-                if (usePattern || val.indexOf('*') > 0) {
+                if (usePattern || val.indexOf('*') > -1) {
                     valueArray.push('matches(' + this.checkVar + ',' + this.value(val) + ')');
                 } else {
                     valueArray.push(this.checkVar + this.matchOperatorCompare() + this.value(val));
@@ -38,7 +38,7 @@ export class Criteria {
         } else if (this.options && this.options.value) {
             let val = this.options.value;
             if (valueSuffix) val = val + valueSuffix;
-            if (usePattern || val.indexOf('*') > 0) {
+            if (usePattern || val.indexOf('*') > -1) {
                 return 'matches(' + this.checkVar + ',' + this.value(val) + ')';
             } else {
                 return this.checkVar + this.matchOperatorCompare() + this.value(val);
