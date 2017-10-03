@@ -24,7 +24,7 @@ describe('CriteriaHostname', function() {
     });
 
     describe('match pattern', function () {
-        it('should return expected lua', function () {
+        it('should return expected lua', function (done) {
             fs.readFile(__dirname + '/hostname.pattern.papi.json', 'utf8', (err, options) => {
                 if (err) {
                     throw (err);
@@ -32,11 +32,12 @@ describe('CriteriaHostname', function() {
                 let opts = JSON.parse(options);
 
                 let expected = 'matches(ngx.var.host, "' + opts.values[0] +
-                    '") or matches(ngx.var.host, "' + opts.values[1] + ')"';
+                    '") or matches(ngx.var.host, "' + opts.values[1] + '")';
 
                 let criteria = new CriteriaHostname(opts);
-                let actual = criteria.process(true);
+                let actual = criteria.process();
                 assert.equal(actual, expected);
+                done();
             });
         });
     });
