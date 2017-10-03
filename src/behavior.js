@@ -22,6 +22,32 @@ export class Behavior {
         // override
     }
 
+    processHeaderOptions(luaMapName, comment) {
+        let headerName = this.switchByVal({
+            'MODIFY': '"' + (this.options.standardModifyHeaderName === 'OTHER' ?
+                this.options.customHeaderName : this.options.standardModifyHeaderName) + '"',
+
+            'ADD': '"' + (this.options.standardAddHeaderName === 'OTHER' ?
+                this.options.customHeaderName : this.options.standardAddHeaderName) + '"',
+
+            'REMOVE': '"' + (this.options.standardRemoveHeaderName === 'OTHER' ?
+                this.options.customHeaderName : this.options.standardRemoveHeaderName) + '"',
+
+        }, this.options.customHeaderName, this.options.action);
+
+
+        let headerValue = this.switchByVal({
+            'MODIFY': '"' + this.value(this.options.newHeaderValue) + '"',
+            'ADD': '"' + this.value(this.options.headerValue) + '"',
+            'REMOVE': 'nil'
+        }, '', this.options.action);
+
+        return [
+            '-- ' + this.options.action + ' ' + comment,
+            luaMapName + '[' + headerName + '] = ' + headerValue
+        ];
+    }
+
     value(value) {
         if (this.valueMap && this.valueMap.has(value)) {
             let replacement = this.valueMap.get(value);

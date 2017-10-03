@@ -14,29 +14,7 @@ export class BehaviorModifyOutgoingRequestHeader extends Behavior {
 
     process() {
 
-        let headerName = this.switchByVal({
-            'MODIFY': '"' + (this.options.standardModifyHeaderName === 'OTHER' ?
-                this.options.customHeaderName : this.options.standardModifyHeaderName) + '"',
-
-            'ADD': '"' + (this.options.standardAddHeaderName === 'OTHER' ?
-                this.options.customHeaderName : this.options.standardAddHeaderName) + '"',
-
-            'REMOVE': '"' + (this.options.standardRemoveHeaderName === 'OTHER' ?
-                this.options.customHeaderName : this.options.standardRemoveHeaderName) + '"',
-
-        }, this.options.customHeaderName, this.options.action);
-
-
-        let headerValue = this.switchByVal({
-            'MODIFY': '"' + this.value(this.options.newHeaderValue) + '"',
-            'ADD': '"' + this.value(this.options.headerValue) + '"',
-            'REMOVE': 'nil'
-        }, '', this.options.action);
-
-        return [
-            '-- ' + this.options.action + ' request header to origin',
-            'aka_upstream_headers[' + headerName + '] = ' + headerValue
-        ];
+        return this.processHeaderOptions('aka_upstream_headers', 'request header to origin');
 
     }
 }
