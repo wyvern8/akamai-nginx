@@ -6,7 +6,7 @@ export class CriteriaRequestCookie extends Criteria {
         super();
         this.options = options;
         this.valueMap = valueMap;
-        this.checkVar = 'ngx.var.cookie_' + options.cookieName;
+        this.checkVar = 'ngx.var["cookie_' + options.cookieName + '"]';
     }
 
     process() {
