@@ -13,8 +13,9 @@ describe('BehaviorModifyOutgoingResponseHeader', () => {
                 let opts = JSON.parse(options);
 
                 let expected = [
-                    '-- ' + opts.action + ' response header to client',
-                    'ngx.header["' + opts.customHeaderName + '"] = "' + opts.newHeaderValue + '"'
+                    '-- ' + opts.action + ' CAPTURE response header to client',
+                    'aka_downstream_headers["' + opts.customHeaderName + '"] = ' +
+                        '{ "MODIFY", "max-age=31536000", "undefined", "undefined" }'
                 ];
 
                 let actual = new BehaviorModifyOutgoingResponseHeader(opts).process();

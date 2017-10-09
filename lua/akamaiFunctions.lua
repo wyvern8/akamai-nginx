@@ -58,6 +58,7 @@ ngx.log(ngx.ERR,
 
 -- table to contain manage headers sent to origin
 local aka_upstream_headers = ngx.req.get_headers()
+local aka_downstream_headers = { }
 
 function globtopattern(g)
     -- Some useful references:
@@ -207,6 +208,8 @@ function finalActions()
     if aka_origin_url == nil or aka_origin_url == "" then
         aka_origin_url = aka_request_path .. aka_request_qs
     end
+
+    ngx.ctx["aka_downstream_headers"] = aka_downstream_headers
 
     ngx.var.aka_origin_url = aka_origin_url
     ngx.var.aka_origin_scheme = aka_request_scheme

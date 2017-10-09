@@ -12,7 +12,7 @@ export class Behavior extends RuleAttribute {
         // override
     }
 
-    processHeaderOptions(luaMapName, comment) {
+    processHeaderOptions(luaMapName, comment, capture) {
         let headerName = this.switchByVal({
             'MODIFY': '"' + (this.options.standardModifyHeaderName === 'OTHER' ?
                 this.options.customHeaderName : this.options.standardModifyHeaderName) + '"',
@@ -33,15 +33,30 @@ export class Behavior extends RuleAttribute {
             'MODIFY': this.value(this.options.newHeaderValue),
             'ADD': this.value(this.options.headerValue),
             'REMOVE': 'nil',
-            'REGEX': 'string.gsub(cs(' + luaMapName + '[' + headerName + ']), "' +
-                this.options.regexHeaderMatch + '", "' +
-                this.options.regexHeaderReplace + '")',
+            'REGEX': 'string.gsub(cs(' + luaMapName + '[' + headerName + ']), ' +
+            this.value(this.options.regexHeaderMatch) + ', ' +
+            this.value(this.options.regexHeaderReplace) + ')',
         }, 'nil', this.options.action);
 
-        return [
-            '-- ' + this.options.action + ' ' + comment,
-            luaMapName + '[' + headerName + '] = ' + headerValue
-        ];
+        let lua = [];
+
+        // capture header manipulations to apply after proxy pass as table mapping header to
+        // action, value, search, replacement
+        if (capture) {
+            lua = [
+                '-- ' + this.options.action + ' CAPTURE ' + comment,
+                luaMapName + '[' + headerName + '] = { "' + this.options.action + '", ' +
+                headerValue + ', ' +
+                this.value(this.options.regexHeaderMatch) + ', ' +
+                this.value(this.options.regexHeaderReplace) + ' }'];
+        } else {
+            lua = [
+                '-- ' + this.options.action + ' ' + comment,
+                luaMapName + '[' + headerName + '] = ' + headerValue
+            ];
+        }
+
+        return lua;
     }
 
 }

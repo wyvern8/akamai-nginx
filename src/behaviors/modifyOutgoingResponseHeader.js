@@ -14,7 +14,7 @@ export class BehaviorModifyOutgoingResponseHeader extends Behavior {
 
     process() {
 
-        return this.processHeaderOptions('ngx.header', 'response header to client');
+        return this.processHeaderOptions('aka_downstream_headers', 'response header to client', true);
 
     }
 }
