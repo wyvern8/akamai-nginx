@@ -33,20 +33,14 @@ export class Behavior {
             'REMOVE': '"' + (this.options.standardRemoveHeaderName === 'OTHER' ?
                 this.options.customHeaderName : this.options.standardRemoveHeaderName) + '"',
 
-            'REGEX': '"' + (this.options.standardModifyHeaderName === 'OTHER' ?
-                this.options.customHeaderName : this.options.standardModifyHeaderName) + '"',
-
-        }, '"' + this.options.customHeaderName + '"', this.options.action);
+        }, this.options.customHeaderName, this.options.action);
 
 
         let headerValue = this.switchByVal({
             'MODIFY': '"' + this.value(this.options.newHeaderValue) + '"',
             'ADD': '"' + this.value(this.options.headerValue) + '"',
-            'REMOVE': 'nil',
-            'REGEX': 'string.gsub(cs(' + luaMapName + '[' + headerName + ']), "' +
-                this.options.regexHeaderMatch + '", "' +
-                this.options.regexHeaderReplace + '")',
-        }, 'nil', this.options.action);
+            'REMOVE': 'nil'
+        }, '', this.options.action);
 
         return [
             '-- ' + this.options.action + ' ' + comment,
