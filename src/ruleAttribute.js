@@ -1,9 +1,8 @@
-import { default as requireDir } from 'require-dir';
 
-export class Behavior {
+export class RuleAttribute {
 
-    constructor(name, options, valueMap) {
-        return Behavior.create(name, options, valueMap);
+    constructor() {
+        return this;
     }
 
     static get valueMap() {
@@ -22,39 +21,13 @@ export class Behavior {
         // override
     }
 
-    processHeaderOptions(luaMapName, comment) {
-        let headerName = this.switchByVal({
-            'MODIFY': '"' + (this.options.standardModifyHeaderName === 'OTHER' ?
-                this.options.customHeaderName : this.options.standardModifyHeaderName) + '"',
-
-            'ADD': '"' + (this.options.standardAddHeaderName === 'OTHER' ?
-                this.options.customHeaderName : this.options.standardAddHeaderName) + '"',
-
-            'REMOVE': '"' + (this.options.standardRemoveHeaderName === 'OTHER' ?
-                this.options.customHeaderName : this.options.standardRemoveHeaderName) + '"',
-
-        }, this.options.customHeaderName, this.options.action);
-
-
-        let headerValue = this.switchByVal({
-            'MODIFY': '"' + this.value(this.options.newHeaderValue) + '"',
-            'ADD': '"' + this.value(this.options.headerValue) + '"',
-            'REMOVE': 'nil'
-        }, '', this.options.action);
-
-        return [
-            '-- ' + this.options.action + ' ' + comment,
-            luaMapName + '[' + headerName + '] = ' + headerValue
-        ];
-    }
-
     value(value) {
         if (this.valueMap && this.valueMap.has(value)) {
             let replacement = this.valueMap.get(value);
             console.debug('replacing "' + value + '" with "' + replacement + '"');
-            return replacement;
+            return '"' + replacement + '"';
         } else {
-            return value;
+            return '"' + value +'"';
         }
     }
 
@@ -68,31 +41,29 @@ export class Behavior {
     }
 
     static isRegistered(clazzname) {
-        return Behavior.registeredTypes.has(clazzname);
+        return this.registeredTypes.has(clazzname);
     }
 
     static register(clazzname, clazz) {
-        if (!(Behavior.isRegistered(clazzname) &&
-            clazz.prototype instanceof Behavior)) {
-            Behavior.registeredTypes.set(clazzname, clazz);
-            console.info('Behavior registered: ' + clazzname);
+        if (!(this.isRegistered(clazzname) &&
+            clazz.prototype instanceof this)) {
+            this.registeredTypes.set(clazzname, clazz);
+            console.info(this.name + ' registered: ' + clazzname);
         } else {
-            console.log('invalid type. must be a subclass of Behavior');
+            console.log('invalid type. must be a subclass of ' + this.name);
         }
     }
 
     static create(clazzname, ...options) {
         if (!clazzname) return null;
-        if (!Behavior.registeredTypes.has(clazzname)) {
-            console.error('Behavior not registered: ' + clazzname);
+        if (!this.registeredTypes.has(clazzname)) {
+            console.error(this.name + ' not registered: ' + clazzname);
             return null;
         }
 
-        let clazz = Behavior.registeredTypes.get(clazzname);
+        let clazz = this.registeredTypes.get(clazzname);
         let instance = new clazz(...options);
         return instance;
     }
 
 }
-
-requireDir('./behaviors');

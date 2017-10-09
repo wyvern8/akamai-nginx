@@ -1,25 +1,47 @@
 import { default as assert } from 'assert';
 import { describe, it } from 'mocha';
-import { CriteriaFileExtension } from '../../src/criteria/fileExtension.js';
+import { Criteria } from '../src/criteria.js';
 import { default as fs } from 'fs';
 
-describe('CriteriaFileExtension', function() {
-    describe('specific match', function () {
-        it('should return expected lua', function (done) {
-            fs.readFile(__dirname + '/fileExtension.papi.json', 'utf8', (err, options) => {
-                if (err) {
-                    throw (err);
-                }
-                let opts = JSON.parse(options);
+describe('Criteria', function() {
+    describe('process', function () {
+        describe('match multiple patterns', function () {
+            it('should return expected lua', function (done) {
+                fs.readFile(__dirname + '/criteria.multi.papi.json', 'utf8', (err, options) => {
+                    if (err) {
+                        throw (err);
+                    }
+                    let opts = JSON.parse(options);
 
-                let expected = 'aka_request_file_extension == "' + opts.values[0] + '"' +
-                    ' or aka_request_file_extension == "' + opts.values[1] + '"' +
-                    ' or aka_request_file_extension == "' + opts.values[2] + '"';
+                    let expected = 'matches(ngx.test, "' + opts.values[0] +
+                        '") or matches(ngx.test, "' + opts.values[1] + '")';
 
-                let criteria = new CriteriaFileExtension(opts);
-                let actual = criteria.process(true);
-                assert.equal(actual, expected);
-                done();
+                    Criteria.register('testCriteria', Criteria);
+                    let criteria = new Criteria('testCriteria', opts);
+                    criteria.checkVar = 'ngx.test';
+                    let actual = criteria.process();
+                    assert.equal(actual, expected);
+                    done();
+                });
+            });
+        });
+        describe('not equal single value', function () {
+            it('should return expected lua', function (done) {
+                fs.readFile(__dirname + '/criteria.single.papi.json', 'utf8', (err, options) => {
+                    if (err) {
+                        throw (err);
+                    }
+                    let opts = JSON.parse(options);
+
+                    let expected = 'ngx.test ~= "' + opts.value + '")';
+
+                    Criteria.register('testCriteria', Criteria);
+                    let criteria = new Criteria('testCriteria', opts);
+                    criteria.checkVar = 'ngx.test';
+                    let actual = criteria.process();
+                    assert.equal(actual, expected);
+                    done();
+                });
             });
         });
     });

@@ -1,4 +1,4 @@
 {
-  "matchOperator" : "IS_ONE_OF",
-  "values" : [ "*", "*.host" ]
+  "matchOperator" : "IS_NOT",
+  "value" : "green"
 }
