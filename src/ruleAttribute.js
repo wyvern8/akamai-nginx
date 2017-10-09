@@ -27,7 +27,7 @@ export class RuleAttribute {
             console.debug('replacing "' + value + '" with "' + replacement + '"');
             return '"' + replacement + '"';
         } else {
-            return '"' + value +'"';
+            return '"' + value + '"';
         }
     }
 

@@ -9,7 +9,7 @@ export class BehaviorOrigin extends Behavior {
     }
 
     process() {
-        return 'ngx.var.aka_origin_host = "' + this.value(this.options.hostname) + '"';
+        return 'ngx.var.aka_origin_host = ' + this.value(this.options.hostname);
     }
 }
 Behavior.register('origin', BehaviorOrigin);

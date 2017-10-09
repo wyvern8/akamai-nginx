@@ -12,7 +12,7 @@ describe('CriteriaRequestCookie', function() {
                 }
                 let opts = JSON.parse(options);
 
-                let expected = 'ngx.var.cookie_' + opts.cookieName + ' ' +
+                let expected = 'ngx.var["cookie_' + opts.cookieName + '"] ' +
                     '== "' + opts.value + '"';
 
                 let criteria = new CriteriaRequestCookie(opts);
