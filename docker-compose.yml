@@ -9,10 +9,11 @@ services:
         - origin
       ports:
         - "80:80"
-        - "443:443" #todo tls support
+        - "443:443"
       privileged: true
       volumes:
         - ./lua/:/usr/local/openresty/nginx/conf/lua
+        - ./ssl/:/usr/local/openresty/nginx/conf/ssl
         - ./nginx-akamai.conf:/usr/local/openresty/nginx/conf/nginx.conf
 
     origin:
@@ -22,9 +23,10 @@ services:
         - 8.8.8.8
       ports:
         - "8082:80"
-        - "8443:443" #todo tls support
+        - "8443:443"
       privileged: true
       volumes:
         - ./lua/:/usr/local/openresty/nginx/conf/lua
+        - ./ssl/:/usr/local/openresty/nginx/conf/ssl
         - ./nginx-origin.conf:/usr/local/openresty/nginx/conf/nginx.conf
 
