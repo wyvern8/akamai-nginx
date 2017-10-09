@@ -6,7 +6,7 @@
   "scripts": {
     "commit": "./node_modules/.bin/git-cz",
     "lint": "node ./node_modules/.bin/eslint *.js **/*.js **/**/*.js --ignore-pattern node_modules/ --ignore-pattern dist/ --ignore-pattern coverage/ --quiet",
-    "test": "npm run build && EDGEGRID_ENV=test cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha --timeout 10000 --compilers js:babel-core/register --require babel-polyfill ./dist/test/**/*.spec.js",
+    "test": "npm run build && EDGEGRID_ENV=test cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha --timeout 10000 --compilers js:babel-core/register --require babel-polyfill ./dist/test/*.spec.js ./dist/test/**/*.spec.js",
     "build": "npm run lint && rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./lua/akamai.lua,./papiJson,./ssl,.env,./.babelrc,./npm-debug.log --copy-files",
     "start": "npm run build && echo '\n#### STARTING ####' && node dist/start.js",
     "start-local": "npm run build && echo '\n#### STARTING ####' && node dist/start-local.js",
