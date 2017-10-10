@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 import EdgeGrid from 'edgegrid';
 import dotenv from 'dotenv';
+import fs from 'fs';
 import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from './src/akamai-nginx.js';
 
 (async function() {
@@ -24,11 +25,19 @@ import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from './src
         'lua/akamai.lua'
     );
 
-    // map old to new values in generated lua
-    setValueMap(
-        new Map([
+    // map old to new values in generated lua based on local json (gitignored)
+    let valueMap;
+    if (fs.existsSync(__dirname + '/../valueMap.local.json')) {
+        console.log('loading valueMap from valueMap.local.json');
+        valueMap = JSON.parse(fs.readFileSync(__dirname + '/../valueMap.local.json', 'utf8'));
+    } else {
+        valueMap = [
             ['oldVal', 'replacement']
-        ])
+        ];
+    }
+
+    setValueMap(
+        new Map(valueMap)
     );
 
     // behaviours to skip altogether

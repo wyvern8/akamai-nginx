@@ -68,3 +68,6 @@ ssl/
 
 # ignore papi json dir
 papiJson/
+
+# ignore local conf json
+*.local.json

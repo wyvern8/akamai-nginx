@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import fs from 'fs';
 import { setLocalConfig, setValueMap, setSkipBehaviors, generateConf } from './src/akamai-nginx.js';
 
 (async function() {
@@ -10,12 +11,19 @@ import { setLocalConfig, setValueMap, setSkipBehaviors, generateConf } from './s
         'lua/akamai.lua'
     );
 
-    // map old to new values in generated lua
-    setValueMap(
-        new Map([
+    // map old to new values in generated lua based on local json (gitignored)
+    let valueMap;
+    if (fs.existsSync(__dirname + '/../valueMap.local.json')) {
+        console.log('loading valueMap from valueMap.local.json');
+        valueMap = JSON.parse(fs.readFileSync(__dirname + '/../valueMap.local.json', 'utf8'));
+    } else {
+        valueMap = [
             ['staging-old.akamai.com', 'origin'],
             ['origin.akamai-customer.com', 'origin']
-        ])
+        ];
+    }
+    setValueMap(
+        new Map(valueMap)
     );
 
     // behaviours to skip altogether
