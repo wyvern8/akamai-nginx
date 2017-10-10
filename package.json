@@ -3,6 +3,7 @@
   "version": "0.0.0-semantically-released",
   "description": "generate nginx config from akamai property",
   "main": "./index.js",
+  "tonicExampleFilename": "runkit-example.js",
   "scripts": {
     "commit": "./node_modules/.bin/git-cz",
     "lint": "node ./node_modules/.bin/eslint *.js **/*.js **/**/*.js --ignore-pattern node_modules/ --ignore-pattern dist/ --ignore-pattern coverage/ --quiet",
