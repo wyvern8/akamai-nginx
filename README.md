@@ -27,7 +27,7 @@ This can be useful for:
 1. After npm install, follow the instructions here to setup your .edgerc and test api calls are working. https://github.com/akamai/AkamaiOPEN-edgegrid-node 
 
 
-2. Execute `npm run configure`in an interactive shell, and follow the prompts to retrieve your property json, or environment property values.  Select save json to run offline - your property json will be placed in ./papiJson dir - refer to start-local.js .  Alternatively, add output values to your .env file or environment variables. eg. start.js
+2. Execute `npm run configure`in an interactive shell, and follow the prompts to retrieve your property json, or environment property values.  Select 'save json' to run offline - your property json will be placed in ./papiJson dir - refer to start.js .  Alternatively, add output values to your .env file or environment variables.
 
 OR
 
@@ -78,7 +78,7 @@ AKA_PAPI_JSON_FILE : path to local papiJson file to process_
 
 examples:
 
-`AKA_MODE=PAPI AKA_LUA_OUTPUT_FILE=myProperty.lau node dist/start.js`
+`AKA_MODE=PAPI AKA_LUA_OUTPUT_FILE=property.lua node dist/start.js`
 
 `AKA_MODE=LOCAL AKA_PAPI_JSON_FILE=papiJson/dev-assetservicing.nabgroup.com-v2.papi.json node dist/start.js`
 
