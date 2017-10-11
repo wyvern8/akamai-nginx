@@ -7,7 +7,7 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 # akamai-nginx
-Configure nginx reverse proxy/simulator based on Akamai property rules (Unofficial)
+Configure an nginx reverse proxy/simulator based on Akamai property rules (Unofficial)
 
 This project takes an Akamai property api json response, and generates lua code integrated with nginx in order to 
 simulate an akamai property.  
@@ -24,10 +24,10 @@ This can be useful for:
 ..or clone this repository.
 
 ## Setup papi
-1. install https://github.com/akamai/httpie-edgegrid 
-setup your .edgerc and test api calls are working.
+1. After npm install, follow the instructions here to setup your .edgerc and test api calls are working. https://github.com/akamai/AkamaiOPEN-edgegrid-node 
 
-2. After npm install, run `npm run configure`in an interactive shell, and follow the prompts to retrieve your property json, or environment property values.  Select save json to run offline - your property json will be placed in ./papiJson dir - refer to start-local.js .  Alternatively, add output values to your .env file or environment variables. eg. start.js
+
+2. Execute `npm run configure`in an interactive shell, and follow the prompts to retrieve your property json, or environment property values.  Select save json to run offline - your property json will be placed in ./papiJson dir - refer to start-local.js .  Alternatively, add output values to your .env file or environment variables. eg. start.js
 
 OR
 
@@ -36,9 +36,9 @@ a propertyId via api calls yourself and set env vars.
 https://developer.akamai.com/api/luna/papi/resources.html
 
 ## Nginx integration
-The docker-compose.yml in this repo can be used to start an OpenResty containers to simulate an akamai property.
+The docker-compose.yml in this repo can be used to start OpenResty containers to simulate an akamai property.
   
-OpenResty (https://openresty.org) is a packaging of nginx with the required Lua modules built in.
+OpenResty ( https://openresty.org ) is a packaging of nginx with the required Lua modules built in.
 
 The docker-compose.yml maps the local nginx-akamai.conf and lua directory into a docker container, 
 and a second container to act as origin has the nginx-origin.conf mapped.  
@@ -46,15 +46,16 @@ and a second container to act as origin has the nginx-origin.conf mapped.
 By default the directive 'lua_code_cache off;' is set in the nginx-akamai.conf to allow generated lua 
 to take effect without restarting nginx.  This directive should be disabled in a deployment as it has performance implications.
 
-use ```docker-compose up``` to start both containers, with localhost port 80 mapped to the akamai container.  Setting/mapping a property origin 
+use ```docker-compose up``` to start both containers, with localhost port 80 and 443 (self-signed) mapped to the akamai container.  Setting/mapping a property origin 
 hostname as 'origin' will allow the akamai container to use the second container as origin for testing.  This mapping can be done using the setValueMap function.
 
 You can test that nginx is functioning using http://localhost/info which will output env info.
 
 ## Execution
-After install, you can test without papi rest calls using the local json example using 'npm run start-local' or 'npm test' to run unit tests.
+After install, you can test without papi rest calls using the local json example using `npm run start-local`  or `npm test` to run unit tests.
 
-To use an akamai property from your account, configure eddgegrid, and set the following env var in .env or shell:
+To use an akamai property from your account, configure edgegrid, and set the following env var in .env or shell.  
+The values can be obtained using  `npm run configure`:
 
     AKA_EDGERC=/path/to/.edgerc    
     AKA_CONTRACT_ID=ctr_XXXXXXXX
@@ -64,8 +65,22 @@ To use an akamai property from your account, configure eddgegrid, and set the fo
     
 To process property rules into lua nginx config in the akamai docker container:
 
-1. using the local sample.papi.json file `npm run start-local` or your own papi json file.
-2. using your akamai api env to pull json at runtime, use `npm run start`
+1. using the local sample.papi.json file  `npm run start-local`  or your own papi json file.
+2. using your akamai api env to pull json at runtime, use  `npm run start`
+
+Using the sample 'start.js' script directly after build, you can also pass parameters to control execution.
+
+AKA_MODE : controls whether to run using local papiJson or papi api call.
+
+AKA_LUA_OUTPUT_FILE : output to a file other than lua/akamai.lua (not for local docker)
+
+AKA_PAPI_JSON_FILE : path to local papiJson file to process_
+
+examples:
+
+`AKA_MODE=PAPI AKA_LUA_OUTPUT_FILE=myProperty.lau node dist/start.js`
+
+`AKA_MODE=LOCAL AKA_PAPI_JSON_FILE=papiJson/dev-assetservicing.nabgroup.com-v2.papi.json node dist/start.js`
 
 ### Example usage in a node app
 ```javascript
@@ -97,7 +112,7 @@ akamaiNginx.generateConf().then(function() {
 });
 
 ```  
-..then assuing above is 'generate.js', `node generate.js` this will generate 'akamai.lua' in current dir.  
+..then assuing above is 'generate.js',  `node generate.js`  this will generate 'akamai.lua' in current dir.  
 This in conjunction with the nginx.conf and docker-compose can be used to build your akamai simulator proxy.
     
 ### Example usage in ES6

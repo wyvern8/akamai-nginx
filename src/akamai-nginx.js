@@ -49,7 +49,7 @@ export async function generateConf() {
     let propertyName = propertyRules.propertyName;
     let propertyVersion = propertyRules.propertyVersion;
 
-    console.log('processing rules for property ' + propertyName + ' v' + propertyVersion);
+    await console.log('processing rules for property ' + propertyName + ' v' + propertyVersion);
 
     let defaultRule = new Rule(
         propertyRules.rules.name,
