@@ -12,20 +12,17 @@ export class Behavior extends RuleAttribute {
         // override
     }
 
+    getHeaderName(headerNameOption) {
+        return '"' + (this.options[headerNameOption] === 'OTHER' ?
+            this.options.customHeaderName : [headerNameOption]) + '"';
+    }
+
     processHeaderOptions(luaMapName, comment, capture) {
         let headerName = this.switchByVal({
-            'MODIFY': '"' + (this.options.standardModifyHeaderName === 'OTHER' ?
-                this.options.customHeaderName : this.options.standardModifyHeaderName) + '"',
-
-            'ADD': '"' + (this.options.standardAddHeaderName === 'OTHER' ?
-                this.options.customHeaderName : this.options.standardAddHeaderName) + '"',
-
-            'REMOVE': '"' + (this.options.standardRemoveHeaderName === 'OTHER' ?
-                this.options.customHeaderName : this.options.standardRemoveHeaderName) + '"',
-
-            'REGEX': '"' + (this.options.standardModifyHeaderName === 'OTHER' ?
-                this.options.customHeaderName : this.options.standardModifyHeaderName) + '"',
-
+            'MODIFY': this.getHeaderName('standardModifyHeaderName'),
+            'ADD': this.getHeaderName('standardAddHeaderName'),
+            'REMOVE': this.getHeaderName('standardRemoveHeaderName'),
+            'REGEX': this.getHeaderName('standardModifyHeaderName')
         }, '"' + this.options.customHeaderName + '"', this.options.action);
 
 

@@ -80,7 +80,7 @@ examples:
 
 `AKA_MODE=PAPI AKA_LUA_OUTPUT_FILE=property.lua node dist/start.js`
 
-`AKA_MODE=LOCAL AKA_PAPI_JSON_FILE=papiJson/dev-assetservicing.nabgroup.com-v2.papi.json node dist/start.js`
+`AKA_MODE=LOCAL AKA_PAPI_JSON_FILE=papiJson/dev-www.yoursite.com-v2.papi.json node dist/start.js`
 
 ### Example usage in a node app
 ```javascript
