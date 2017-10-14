@@ -23,39 +23,40 @@ export class Criteria extends RuleAttribute {
         } else if (this.options.matchOperator === 'DOES_NOT_EXIST') {
             return this.checkVar + this.matchOperatorCompare() + 'nil';
 
-        } else if (this.options && this.options.values) {
+        } else {
+            let conditionArray = [];
             let valueArray = [];
-            this.options.values.forEach((val) => {
+            if (this.options.value) {
+                valueArray = [this.options.value];
+            } else if (this.options.values) {
+                valueArray = [...this.options.values];
+            }
+
+            valueArray.forEach((val) => {
                 if (valueSuffix) val = val + valueSuffix;
-                if (usePattern || val.indexOf('*') > -1) {
-                    valueArray.push('matches(' + this.checkVar + ', ' + this.value(val) + ')');
+                if (usePattern || this.options.matchWildcard === true || val.indexOf('*') > -1) {
+                    let negate = this.options.matchOperator === 'DOES_NOT_MATCH_ONE_OF' ? 'not ' : '';
+                    conditionArray.push(negate + 'matches(' + this.checkVar + ', ' + this.value(val) + ')');
                 } else {
-                    valueArray.push(this.checkVar + this.matchOperatorCompare() + this.value(val));
+                    conditionArray.push(this.checkVar + this.matchOperatorCompare() + this.value(val));
                 }
             });
-            return valueArray.join(this.matchOperatorJoiner());
+            return conditionArray.join(this.matchOperatorJoiner());
 
-        } else if (this.options && this.options.value) {
-            let val = this.options.value;
-            if (valueSuffix) val = val + valueSuffix;
-            if (usePattern || val.indexOf('*') > -1) {
-                return 'matches(' + this.checkVar + ', ' + this.value(val) + ')';
-            } else {
-                return this.checkVar + this.matchOperatorCompare() + this.value(val);
-            }
         }
     }
 
     matchOperatorJoiner() {
-        return RuleAttribute.switchByVal({
+        return this.switchByVal({
             'MATCHES_ONE_OF': ' or ',
             'IS_ONE_OF': ' or ',
-            'IS_NOT_ONE_OF': ' and '
+            'IS_NOT_ONE_OF': ' and ',
+            'DOES_NOT_MATCH_ONE_OF': ' and '
         }, ' and ', this.options.matchOperator);
     }
 
     matchOperatorCompare() {
-        return RuleAttribute.switchByVal({
+        return this.switchByVal({
             'EXISTS': ' ~= ',
             'DOES_NOT_EXIST': ' == ',
             'IS_ONE_OF': ' == ',

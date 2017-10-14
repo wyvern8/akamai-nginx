@@ -19,7 +19,7 @@ This can be useful for:
 - learning the basic concepts of how Akamai works
 
 ## Install
-    `npm install akamai-nginx` 
+`npm install akamai-nginx`
     
 ..or clone this repository.
 
@@ -27,7 +27,7 @@ This can be useful for:
 1. After npm install, follow the instructions here to setup your .edgerc and test api calls are working. https://github.com/akamai/AkamaiOPEN-edgegrid-node 
 
 
-2. Execute `npm run configure`in an interactive shell, and follow the prompts to retrieve your property json, or environment property values.  Select 'save json' to run offline - your property json will be placed in ./papiJson dir - refer to start.js .  Alternatively, add output values to your .env file or environment variables.
+2. Execute `npm run configure` in an interactive shell, and follow the prompts to retrieve your property json, or environment property values.  Select 'save json' to run offline - your property json will be placed in ./papiJson dir - refer to start.js .  Alternatively, add output values to your .env file or environment variables.
 
 OR
 
@@ -70,11 +70,11 @@ To process property rules into lua nginx config in the akamai docker container:
 
 Using the sample 'start.js' script directly after build, you can also pass parameters to control execution.
 
-AKA_MODE : controls whether to run using local papiJson or papi api call.
+`AKA_MODE` : controls whether to run using local papiJson or papi api call. Either 'PAPI' or 'LOCAL'.
 
-AKA_LUA_OUTPUT_FILE : output to a file other than lua/akamai.lua (not for local docker)
+`AKA_LUA_OUTPUT_FILE` : output to a file other than lua/akamai.lua (not for local docker)
 
-AKA_PAPI_JSON_FILE : path to local papiJson file to process_
+`AKA_PAPI_JSON_FILE` : path to local papiJson file to process_
 
 examples:
 
@@ -175,7 +175,6 @@ Support for new criteria and behaviors is done by adding new ES6 class files in:
 ```
 src/criteria
 src/behaviors
-
 ```
 each new feature should extend the corresponding base class and register itself using the name in the papi json response. 
 eg. for the 'origin' behavior at a basic level:

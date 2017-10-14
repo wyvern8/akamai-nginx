@@ -29,6 +29,7 @@ local aka_request_uri_parts = aka_request_path:split("/")
 local aka_request_file_name = aka_request_uri_parts[tablelength(aka_request_uri_parts)]
 local aka_request_qs = ngx.var.query_string
 local aka_origin_url = nil
+local aka_cache_ttl_seconds = nil
 
 if aka_request_qs == nil then
     aka_request_qs = ""
@@ -177,7 +178,7 @@ end
 
 function matches(value, glob)
     local pattern = globtopattern(glob)
-    return (value):match(pattern)
+    return (cs(value)):match(pattern)
 end
 
 -- executed after all criteria and behavior are evaluated to apply final actions

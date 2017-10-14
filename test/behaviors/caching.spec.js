@@ -12,8 +12,7 @@ describe('BehaviorCaching', () => {
                 }
                 let opts = JSON.parse(options);
 
-                let expected = 'ngx.header["x-aka-' + opts.behavior + '"] = "' +
-                    opts.ttl + '"';
+                let expected = 'ngx.var.aka_cache_ttl_seconds = 7200';
 
                 let actual = new BehaviorCaching(opts).process();
                 assert.equal(actual, expected);
