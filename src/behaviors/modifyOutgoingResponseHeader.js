@@ -8,14 +8,8 @@ export class BehaviorModifyOutgoingResponseHeader extends Behavior {
         this.valueMap = valueMap;
     }
 
-    switchByVal(cases, defaultCase, key) {
-        return key in cases ? cases[key] : defaultCase;
-    }
-
     process() {
-
         return this.processHeaderOptions('aka_downstream_headers', 'response header to client', true);
-
     }
 }
 Behavior.register('modifyOutgoingResponseHeader', BehaviorModifyOutgoingResponseHeader);

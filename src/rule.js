@@ -124,10 +124,17 @@ export class Rule {
     }
 
     criteriaJoiner() {
-        return Behavior.switchByVal({
-            'all': ') and (',
-            'any': ') or ('
-        }, ') and (', this.criteriaMustSatisfy);
+        let joiner = ') and (';
+
+        switch (this.criteriaMustSatisfy) {
+        case 'all':
+            joiner = ') and (';
+            break;
+        case 'm':
+            joiner = ') or (';
+            break;
+        }
+        return joiner;
     }
 
     pad(count) {

@@ -13,7 +13,7 @@ export class RuleAttribute {
         this._valueMap = valueMap;
     }
 
-    static switchByVal(cases, defaultCase, key) {
+    switchByVal(cases, defaultCase, key) {
         return key in cases ? cases[key] : defaultCase;
     }
 

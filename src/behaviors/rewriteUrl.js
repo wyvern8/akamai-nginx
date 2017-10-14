@@ -8,10 +8,6 @@ export class BehaviorRewriteUrl extends Behavior {
         this.valueMap = valueMap;
     }
 
-    switchByVal(cases, defaultCase, key) {
-        return key in cases ? cases[key] : defaultCase;
-    }
-
     process() {
 
         let match = this.switchByVal({

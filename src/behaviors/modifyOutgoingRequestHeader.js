@@ -8,14 +8,8 @@ export class BehaviorModifyOutgoingRequestHeader extends Behavior {
         this.valueMap = valueMap;
     }
 
-    switchByVal(cases, defaultCase, key) {
-        return key in cases ? cases[key] : defaultCase;
-    }
-
     process() {
-
         return this.processHeaderOptions('aka_upstream_headers', 'request header to origin');
-
     }
 }
 Behavior.register('modifyOutgoingRequestHeader', BehaviorModifyOutgoingRequestHeader);

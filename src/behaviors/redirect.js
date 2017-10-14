@@ -8,10 +8,6 @@ export class BehaviorRedirect extends Behavior {
         this.valueMap = valueMap;
     }
 
-    switchByVal(cases, defaultCase, key) {
-        return key in cases ? cases[key] : defaultCase;
-    }
-
     process() {
         let host = this.switchByVal({
             'SAME_AS_REQUEST': 'aka_request_host',
