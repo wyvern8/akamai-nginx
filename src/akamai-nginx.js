@@ -3,6 +3,11 @@ import { Rule } from './rule.js';
 
 let config = {};
 
+process.on('unhandledRejection', (reason, p) => {
+    console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+    // application specific logging, throwing an error, or other logic here
+});
+
 export function setApiConfig(edgegrid, contractId, groupId, propertyId, propertyVersion, outputFile) {
     config = {};
     config.edgegrid = edgegrid;
