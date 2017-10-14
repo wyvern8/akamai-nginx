@@ -70,7 +70,7 @@ ssl/
 papiJson/
 
 # ignore local conf json
-*.local.json
+/*.local.json
 
 # ignore generated lua in project root
 /*.lua
