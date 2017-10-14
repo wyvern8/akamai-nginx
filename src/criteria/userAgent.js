@@ -1,12 +1,12 @@
 import { Criteria } from '../criteria.js';
 
-export class CriteriaRequestHeader extends Criteria {
+export class CriteriaUserAgent extends Criteria {
 
     constructor(options, valueMap) {
         super();
         this.options = options;
         this.valueMap = valueMap;
-        this.checkVar = 'ngx.req.get_headers()["' + options.headerName + '"]';
+        this.checkVar = 'ngx.req.get_headers()["user-agent"]';
     }
 
     process() {
@@ -14,4 +14,4 @@ export class CriteriaRequestHeader extends Criteria {
     }
 
 }
-Criteria.register('requestHeader', CriteriaRequestHeader);
+Criteria.register('userAgent', CriteriaUserAgent);

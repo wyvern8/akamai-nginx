@@ -1,0 +1,8 @@
+{
+  "matchOperator": "IS_NOT_ONE_OF",
+  "values": [
+    "*MSIE 6*"
+  ],
+  "matchWildcard": true,
+  "matchCaseSensitive": false
+}
