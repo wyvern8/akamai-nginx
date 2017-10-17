@@ -30,6 +30,7 @@ local aka_request_file_name = aka_request_uri_parts[tablelength(aka_request_uri_
 local aka_request_qs = ngx.var.query_string
 local aka_origin_url = nil
 local aka_cache_ttl_seconds = nil
+local aka_gzip = nil
 
 if aka_request_qs == nil then
     aka_request_qs = ""
@@ -183,6 +184,8 @@ end
 
 -- executed after all criteria and behavior are evaluated to apply final actions
 function finalActions()
+
+    ngx.var.aka_gzip = aka_gzip
 
     -- deal with an calculated access controls
     if ngx.var.aka_deny_reason ~= nil and ngx.var.aka_deny_reason ~= "" then

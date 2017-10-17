@@ -1,6 +1,6 @@
 import { Behavior } from '../behavior.js';
 
-export class BehaviorDenyAccess extends Behavior {
+export class BehaviorGzipResponse extends Behavior {
 
     constructor(options, valueMap) {
         super();
@@ -9,11 +9,12 @@ export class BehaviorDenyAccess extends Behavior {
     }
 
     process() {
-        return this.options.enabled ? 'ngx.var.aka_deny_reason = ' + this.value(this.options.reason)
-            : [
-                '-- denyAccess disabled: ' + this.options.reason,
-                'ngx.var.aka_deny_reason = ""'
-            ];
+
+        return [
+            '-- conditional gzip of response is not easily doable..',
+            'ngx.header["X-AKA-gzipResponse"] = "TODO_this_request_should_be_gzipped_by_proxy"',
+            'aka_gzip = "on"'
+        ];
     }
 }
-Behavior.register('denyAccess', BehaviorDenyAccess);
+Behavior.register('gzipResponse', BehaviorGzipResponse);
