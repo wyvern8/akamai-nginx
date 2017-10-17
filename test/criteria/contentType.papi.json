@@ -1,0 +1,9 @@
+{
+  "matchOperator": "IS_ONE_OF",
+  "values": [
+    "text/html*",
+    "text/css*"
+  ],
+  "matchWildcard": true,
+  "matchCaseSensitive": false
+}
