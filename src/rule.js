@@ -130,7 +130,7 @@ export class Rule {
         case 'all':
             joiner = ') and (';
             break;
-        case 'm':
+        case 'any':
             joiner = ') or (';
             break;
         }
