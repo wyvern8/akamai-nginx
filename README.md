@@ -158,6 +158,31 @@ import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from 'akama
 })();
 ````
 
+### Cache management
+The Akamai 'caching' behavior is mapped to cache control response headers, with the TTLs from property configuration applied.   The TTL is represented as the standard nginx cache control 'X-Accel-Expires' response header.
+  
+A separate docker container 'edge' then controls reading and writing to an nginx proxy cache based on the standard nginx response header. 
+'X-Accel-Expires' from the akamai nginx instance.  
+
+```client -> edgecache nginx -> akamai nginx -> origin nginx or other host```
+
+This is done in a separate nginx docker instance, because at this time the proxy cache related directives in nginx cannot be 
+parameterized based on lua processing results.  In some ways this heirarchy may actually be a closer approximation of edgeserver midgress..  
+
+The cache directory from the docker container is mapped to the 'cache' directory local to the docker-compose.yml
+
+To clear the cache you can clear out this directory, ie. one of:
+
+`sudo rm -rf ./cache/*`
+
+`npm run clearcache`
+
+If you happen to have an nginx plus license, the purge capability could easily implemented.
+
+To bypass the cache for a given request(s), either:
+- add a querystring `?nocache=true`
+- add a cookie `nocache=true`
+
 ## Contributing - adding criteria and behaviors
 Fork this repo and work on your enhancements, then send a pull request.
 

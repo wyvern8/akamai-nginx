@@ -71,7 +71,7 @@ export async function generateConf() {
     conf +=  config.localPapiJsonPath ? 'local: ' + config.localPapiJsonPath : 'api: ' + getPapiUrl() + ' ###';
     conf += '\n' + defaultRule.process();
 
-    let fns = fs.readFileSync(__dirname + '/../lua/akamaiFunctions.lua', 'utf8');
+    let fns = fs.readFileSync(__dirname + '/../../lua/akamaiFunctions.lua', 'utf8');
     conf = fns + conf + '\nfinalActions()';
 
     // create empty file

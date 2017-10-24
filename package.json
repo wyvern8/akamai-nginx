@@ -6,13 +6,14 @@
   "tonicExampleFilename": "runkit-example.js",
   "scripts": {
     "commit": "./node_modules/.bin/git-cz",
-    "lint": "node ./node_modules/.bin/eslint *.js **/*.js **/**/*.js --ignore-pattern node_modules/ --ignore-pattern dist/ --ignore-pattern coverage/ --quiet",
+    "lint": "node ./node_modules/.bin/eslint *.js **/*.js **/**/*.js --ignore-pattern node_modules/ --ignore-pattern cache/ --ignore-pattern dist/ --ignore-pattern coverage/ --quiet",
     "test": "npm run build && EDGEGRID_ENV=test cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha --timeout 10000 --compilers js:babel-core/register --require babel-polyfill ./dist/test/*.spec.js ./dist/test/**/*.spec.js",
-    "build": "npm run lint && rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./lua/akamai.lua,./papiJson,./ssl,.env,./.babelrc,./npm-debug.log --copy-files",
+    "build": "npm run lint && rimraf dist/ && babel ./src --out-dir dist/src --copy-files && babel ./test --out-dir dist/test --copy-files && babel ./*.js --out-dir dist/ --copy-files",
     "start": "npm run build && AKA_MODE=PAPI node dist/start.js",
     "start-local": "npm run build && AKA_MODE=LOCAL node dist/start.js",
     "configure": "npm run build && node dist/configure.js",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "clearcache": "sudo rm -rf ./cache/*"
   },
   "engines": {
     "node": ">=8.4.0"

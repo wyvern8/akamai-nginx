@@ -1,12 +1,12 @@
 version: '2'
 services:
-    akamai:
+  edge:
       restart: always
       image: openresty/openresty:trusty
       dns:
         - 8.8.8.8
       links:
-        - origin
+        - akamai
       ports:
         - "80:80"
         - "443:443"
@@ -14,19 +14,36 @@ services:
       volumes:
         - ./lua/:/usr/local/openresty/nginx/conf/lua
         - ./ssl/:/usr/local/openresty/nginx/conf/ssl
-        - ./nginx-akamai.conf:/usr/local/openresty/nginx/conf/nginx.conf
+        - ./cache/:/usr/local/openresty/nginx/cache
+        - ./nginx-edge.conf:/usr/local/openresty/nginx/conf/nginx.conf
 
-    origin:
-      restart: always
-      image: openresty/openresty:trusty
-      dns:
-        - 8.8.8.8
-      ports:
-        - "8082:80"
-        - "8443:443"
-      privileged: true
-      volumes:
-        - ./lua/:/usr/local/openresty/nginx/conf/lua
-        - ./ssl/:/usr/local/openresty/nginx/conf/ssl
-        - ./nginx-origin.conf:/usr/local/openresty/nginx/conf/nginx.conf
+  akamai:
+    restart: always
+    image: openresty/openresty:trusty
+    dns:
+      - 8.8.8.8
+    links:
+      - origin
+    ports:
+      - "8083:80"
+      - "9443:443"
+    privileged: true
+    volumes:
+      - ./lua/:/usr/local/openresty/nginx/conf/lua
+      - ./ssl/:/usr/local/openresty/nginx/conf/ssl
+      - ./nginx-akamai.conf:/usr/local/openresty/nginx/conf/nginx.conf
+
+  origin:
+    restart: always
+    image: openresty/openresty:trusty
+    dns:
+      - 8.8.8.8
+    ports:
+      - "8082:80"
+      - "8443:443"
+    privileged: true
+    volumes:
+      - ./lua/:/usr/local/openresty/nginx/conf/lua
+      - ./ssl/:/usr/local/openresty/nginx/conf/ssl
+      - ./nginx-origin.conf:/usr/local/openresty/nginx/conf/nginx.conf
 

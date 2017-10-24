@@ -75,3 +75,6 @@ papiJson/
 
 # ignore generated lua in project root
 /*.lua
+
+# akamai docker cache
+/cache/
