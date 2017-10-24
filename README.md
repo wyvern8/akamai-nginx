@@ -40,13 +40,17 @@ The docker-compose.yml in this repo can be used to start OpenResty containers to
   
 OpenResty ( https://openresty.org ) is a packaging of nginx with the required Lua modules built in.
 
-The docker-compose.yml maps the local nginx-akamai.conf and lua directory into a docker container, 
-and a second container to act as origin has the nginx-origin.conf mapped.  
+The docker-compose.yml maps the local nginx-akamai.conf and lua directory into a docker container which is where most of the work is done, 
+and a second nginx container using nginx-edge.conf maintains the proxy cache, and a third acts as origin and has the nginx-origin.conf mapped.  
+
+request flow is:
+
+```client -> edgecache nginx -> akamai nginx -> origin nginx or other host```
 
 By default the directive 'lua_code_cache off;' is set in the nginx-akamai.conf to allow generated lua 
 to take effect without restarting nginx.  This directive should be disabled in a deployment as it has performance implications.
 
-use ```docker-compose up``` to start both containers, with localhost port 80 and 443 (self-signed) mapped to the akamai container.  Setting/mapping a property origin 
+use ```docker-compose up``` to start all containers, with localhost port 80 and 443 (self-signed) mapped to the 'edge' container. This will proxy requests to the akamai nginx, and on to origin. See note on caching below. Setting/mapping a property origin 
 hostname as 'origin' will allow the akamai container to use the second container as origin for testing.  This mapping can be done using the setValueMap function.
 
 You can test that nginx is functioning using http://localhost/info which will output env info.
