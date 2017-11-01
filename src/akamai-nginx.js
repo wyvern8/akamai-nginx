@@ -48,9 +48,9 @@ function getPapiUrl() {
         '/rules?contractId=' + config.contractId + '&groupId=' + config.groupId;
 }
 
-export async function generateConf() {
+export async function generateConf(preloadedRules) {
 
-    let propertyRules = await getPropertyRules();
+    let propertyRules = preloadedRules ? preloadedRules : await getPropertyRules();
     let propertyName = propertyRules.propertyName;
     let propertyVersion = propertyRules.propertyVersion;
 

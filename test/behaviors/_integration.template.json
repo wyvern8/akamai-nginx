@@ -1,0 +1,46 @@
+{
+  "accountId" : "act_ABD-DEF",
+  "contractId" : "ctr_A-BCDEF",
+  "groupId" : "grp_999999",
+  "propertyId" : "prp_999999",
+  "propertyName" : "akamai.com",
+  "propertyVersion" : 1,
+  "etag" : "1209837128730127781270387102837189273908",
+  "rules" : {
+    "name" : "default",
+    "NOTICE": "RULES WILL BE AUTOMATICALLY ADDED FOR EACH BEHAVIOR BY _integration.spec-int.js",
+    "children" : [
+    ],
+    "behaviors" : [ {
+      "name" : "origin",
+      "options" : {
+        "originType" : "CUSTOMER",
+        "hostname" : "origin",
+        "forwardHostHeader" : "REQUEST_HOST_HEADER",
+        "cacheKeyHostname" : "REQUEST_HOST_HEADER",
+        "compress" : true,
+        "enableTrueClientIp" : true,
+        "trueClientIpHeader" : "True-Client-IP",
+        "trueClientIpClientSetting" : false,
+        "originCertificate" : "",
+        "verificationMode" : "CUSTOM",
+        "originSni" : false,
+        "ports" : "",
+        "httpPort" : 80,
+        "httpsPort" : 443,
+        "customValidCnValues" : [ "{{Origin Hostname}}", "{{Forward Host Header}}" ],
+        "originCertsToHonor" : "STANDARD_CERTIFICATE_AUTHORITIES",
+        "standardCertificateAuthorities" : [ "akamai-permissive" ]
+      }
+
+    } ],
+    "uuid" : "default",
+    "options" : {
+      "is_secure" : true
+    },
+    "variables" : [ ],
+    "comments" : "The behaviors in the Default Rule apply to all requests for the property hostname(s) unless another rule overrides the Default Rule settings."
+  },
+  "ruleFormat" : "latest",
+  "comments" : "sample."
+}

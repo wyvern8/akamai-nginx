@@ -7,7 +7,8 @@
   "scripts": {
     "commit": "./node_modules/.bin/git-cz",
     "lint": "node ./node_modules/.bin/eslint *.js **/*.js **/**/*.js --ignore-pattern node_modules/ --ignore-pattern cache/ --ignore-pattern dist/ --ignore-pattern coverage/ --quiet",
-    "test": "npm run build && EDGEGRID_ENV=test cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha --timeout 10000 --compilers js:babel-core/register --require babel-polyfill ./dist/test/*.spec.js ./dist/test/**/*.spec.js",
+    "test": "npm run build && EDGEGRID_ENV=test cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha --timeout 10000 --require babel-core/register --require babel-polyfill ./dist/test/*.spec.js ./dist/test/**/*.spec.js",
+    "test-integration": "npm run build && EDGEGRID_ENV=test node ./node_modules/.bin/mocha --timeout 10000 --require babel-core/register --require babel-polyfill ./dist/test/**/*.spec-int.js",
     "build": "npm run lint && rimraf dist/ && babel ./src --out-dir dist/src --copy-files && babel ./test --out-dir dist/test --copy-files && babel ./*.js --out-dir dist/ --copy-files",
     "start": "npm run build && AKA_MODE=PAPI node dist/start.js",
     "start-local": "npm run build && AKA_MODE=LOCAL node dist/start.js",
@@ -44,10 +45,12 @@
     "papi"
   ],
   "dependencies": {
+    "app-root-path": "^2.0.1",
     "babel-polyfill": "^6.26.0",
     "dotenv": "^4.0.0",
     "edgegrid": "^3.0.2",
     "format-json": "^1.0.3",
+    "globule": "^1.2.0",
     "inquirer": "^3.3.0",
     "require-dir": "^0.3.2",
     "systemjs": "^0.20.18",
@@ -71,7 +74,8 @@
     "mocha": "^4.0.0",
     "nyc": "^11.2.1",
     "rimraf": "^2.6.1",
-    "semantic-release": "^8.0.3"
+    "semantic-release": "^8.0.3",
+    "supertest": "^3.0.0"
   },
   "config": {
     "commitizen": {

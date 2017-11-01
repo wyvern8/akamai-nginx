@@ -230,9 +230,25 @@ Behavior.register('origin', BehaviorOrigin);
 - the 'process' function should return the lua script to be added to the akamai.lua conf to simulate the akamai behavior in nginx.
 
 ## Unit tests
+`npm run test`
+
 Please ensure that corresponding unit tests are created in:
 ```
-test/criteria
-test/behaviors
+test/criteria/*.spec.js
+test/behaviors/*.spec.js
 ```
 Each unit test should verify that the json options generate the correct lua script, and are a prerequisite for a pull request to be accepted.
+
+## Integration tests
+`npm run test-integration`
+
+Please ensure that corresponding integration tests are created in:
+```
+test/criteria/*.spec-int.js (todo)
+test/behaviors/*.spec-int.js
+```
+Each integration test should verify the behavior returns the expected response from the docker-compose in this repo, and are a prerequisite for a pull request to be accepted.
+
+Some framework has been put in place to generate lua config based on `/test/**/*.papi.json`.
+
+The integration config generated consists of predictable paths to enable targetting of behaviors. Refer to test/behaviors/_integration* and *.spec-int.js
