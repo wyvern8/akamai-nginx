@@ -6,8 +6,11 @@ import { setLocalConfig, generateConf } from '../../src/akamai-nginx.js';
 //lazy init
 let behaviorOpts = {};
 
-let integrationUrlPrefix = 'http://localhost';
+let integrationUrlPrefix = 'https://localhost';
 let integrationUrlPathBehavior = '/integration/behavior/';
+
+// todo use agent in supertest instead
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 async function behaviorConfig() {
 
