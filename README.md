@@ -36,6 +36,16 @@ a propertyId via api calls yourself and set env vars.
 https://developer.akamai.com/api/luna/papi/resources.html
 
 ## Nginx integration
+It is recommended to install docker-compose and use the containers supplied in this repo start with. https://docs.docker.com/compose/install/
+
+The following npm scripts can be used to control the containers if you are not familiar with docker:
+
+```
+npm run docker-start
+npm run docker-stop
+npm run docker-logs
+```
+
 The docker-compose.yml in this repo can be used to start OpenResty containers to simulate an akamai property.
   
 OpenResty ( https://openresty.org ) is a packaging of nginx with the required Lua modules built in.
@@ -240,15 +250,19 @@ test/behaviors/*.spec.js
 Each unit test should verify that the json options generate the correct lua script, and are a prerequisite for a pull request to be accepted.
 
 ## Integration tests
+To start the docker nginx containers and execute the integration tests use:
+
 `npm run test-integration`
 
-Please ensure that corresponding integration tests are created in:
+Please ensure that corresponding integration tests covering any new features are created in:
 ```
 test/criteria/*.spec-int.js (todo)
 test/behaviors/*.spec-int.js
 ```
 Each integration test should verify the behavior returns the expected response from the docker-compose in this repo, and are a prerequisite for a pull request to be accepted.
 
-Some framework has been put in place to generate lua config based on `/test/**/*.papi.json`.
+Framework has been put in place to generate lua config based on `/test/**/*.papi.json`.
 
-The integration config generated consists of predictable paths to enable targetting of behaviors. Refer to test/behaviors/_integration* and *.spec-int.js
+The integration Lua config generated consists of predictable path criteria rules to enable targeting of behavior configs. These are generated based on the \*.papi.json files in the test directory.
+
+Refer to test/behaviors/_integration* and *.spec-int.js for details and examples
