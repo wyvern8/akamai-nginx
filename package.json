@@ -8,13 +8,16 @@
     "commit": "./node_modules/.bin/git-cz",
     "lint": "node ./node_modules/.bin/eslint *.js **/*.js **/**/*.js --ignore-pattern node_modules/ --ignore-pattern cache/ --ignore-pattern dist/ --ignore-pattern coverage/ --quiet",
     "test": "npm run build && EDGEGRID_ENV=test cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha --timeout 10000 --require babel-core/register --require babel-polyfill ./dist/test/*.spec.js ./dist/test/**/*.spec.js",
-    "test-integration": "npm run build && EDGEGRID_ENV=test node ./node_modules/.bin/mocha --timeout 10000 --require babel-core/register --require babel-polyfill ./dist/test/**/*.spec-int.js",
+    "test-integration": "npm run docker-start && npm run build && EDGEGRID_ENV=test node ./node_modules/.bin/mocha --timeout 10000 --require babel-core/register --require babel-polyfill ./dist/test/**/*.spec-int.js",
     "build": "npm run lint && rimraf dist/ && babel ./src --out-dir dist/src --copy-files && babel ./test --out-dir dist/test --copy-files && babel ./*.js --out-dir dist/ --copy-files",
     "start": "npm run build && AKA_MODE=PAPI node dist/start.js",
     "start-local": "npm run build && AKA_MODE=LOCAL node dist/start.js",
     "configure": "npm run build && node dist/configure.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "clearcache": "sudo rm -rf ./cache/*"
+    "clearcache": "sudo rm -rf ./cache/*",
+    "docker-start": "docker-compose up -d",
+    "docker-stop": "docker-compose stop",
+    "docker-logs": "docker-compose logs --tail=0 --follow"
   },
   "engines": {
     "node": ">=8.4.0"
