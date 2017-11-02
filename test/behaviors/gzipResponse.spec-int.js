@@ -1,33 +1,23 @@
 import { describe, it } from 'mocha';
+import { expect } from 'chai';
 import supertest from 'supertest';
 import integration from './_integration.spec-int.js';
 
-describe('BehaviorDenyAccess', () => {
+describe('BehaviorGzipResponse', () => {
 
-    describe('denyAccess enabled', () => {
-
-        let request = supertest(integration.urlPrefix);
-
-        it('should return denied status code', (done) => {
-
-            request
-                .get(integration.behaviorTestUrl('denyAccess.enabled.papi.json'))
-                .expect(401)
-                .end(done);
-
-        });
-    });
-
-    describe('denyAccess disabled', () => {
+    describe('gzip header', () => {
 
         let request = supertest(integration.urlPrefix);
 
-        it('should NOT return denied status code', (done) => {
+        it('should return the expected header', (done) => {
 
             request
-                .get(integration.behaviorTestUrl('denyAccess.disabled.papi.json'))
+                .get(integration.behaviorTestUrl('gzipResponse.papi.json'))
                 .expect(200)
-                .end(done);
+                .end(function (err, res) {
+                    expect(res.headers['x-aka-gzipresponse']).to.equal('TODO_this_request_should_be_gzipped_by_proxy');
+                    done();
+                });
 
         });
     });

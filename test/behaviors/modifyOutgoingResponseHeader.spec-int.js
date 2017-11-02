@@ -3,19 +3,19 @@ import { expect } from 'chai';
 import supertest from 'supertest';
 import integration from './_integration.spec-int.js';
 
-describe('BehaviorGzipResponse', () => {
+describe('BehaviorModifyOutgoingResponseHeader', () => {
 
-    describe('gzip header', () => {
+    describe('response header', () => {
 
         let request = supertest(integration.urlPrefix);
 
         it('should return the expected header', (done) => {
 
             request
-                .get(integration.behaviorTestUrl('gzipResponse.papi.json'))
+                .get(integration.behaviorTestUrl('modifyOutgoingResponseHeader.papi.json'))
                 .expect(200)
                 .end(function (err, res) {
-                    expect(res.headers['x-aka-gzipresponse']).to.equal('TODO_this_request_should_be_gzipped_by_proxy');
+                    expect(res.headers['strict-transport-security']).to.equal('max-age=31536000');
                     done();
                 });
 

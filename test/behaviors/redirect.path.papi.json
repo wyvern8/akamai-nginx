@@ -2,7 +2,8 @@
   "queryString" : "APPEND",
   "responseCode" : 301,
   "destinationHostname" : "SAME_AS_REQUEST",
-  "destinationPath" : "/testredirect",
+  "destinationPath" : "OTHER",
+  "destinationPathOther": "/testredirect",
   "destinationProtocol" : "HTTPS",
   "mobileDefaultChoice" : "DEFAULT"
 }

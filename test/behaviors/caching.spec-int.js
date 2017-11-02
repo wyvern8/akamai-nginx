@@ -1,31 +1,21 @@
-import { before, describe, it } from 'mocha';
+import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import supertest from 'supertest';
 import integration from './_integration.spec-int.js';
 
-describe('BehaviorCpCode', () => {
+describe('BehaviorCaching', () => {
 
-    let opts;
-    before( (done) => {
-        integration.behaviorConfig().then( (data) => {
-            opts = data['cpCode.papi.json'];
-            done();
-        });
-    });
-
-    describe('cpCode header', () => {
+    describe('caching header', () => {
 
         let request = supertest(integration.urlPrefix);
 
         it('should return the expected header', (done) => {
 
-            let header = opts.value.id + (opts.value.name ? '_' + opts.value.name.replace(' ', '_') : '');
-
             request
-                .get(integration.behaviorTestUrl('cpCode.papi.json'))
+                .get(integration.behaviorTestUrl('caching.papi.json'))
                 .expect(200)
                 .end(function (err, res) {
-                    expect(res.headers['x-aka-cpcode']).to.equal(header);
+                    expect(res.headers['x-accel-expires']).to.equal('7200');
                     done();
                 });
 
