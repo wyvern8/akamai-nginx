@@ -1,7 +1,7 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import supertest from 'supertest';
-import integration from './_integration.spec-int.js';
+import integration from '../_integration.spec-int.js';
 
 describe('BehaviorModifyOutgoingResponseHeader', () => {
 
@@ -12,7 +12,7 @@ describe('BehaviorModifyOutgoingResponseHeader', () => {
         it('should return the expected header', (done) => {
 
             request
-                .get(integration.behaviorTestUrl('modifyOutgoingResponseHeader.papi.json'))
+                .get(integration.testUrl('modifyOutgoingResponseHeader.papi.json'))
                 .expect(200)
                 .end(function (err, res) {
                     expect(res.headers['strict-transport-security']).to.equal('max-age=31536000');

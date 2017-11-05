@@ -20,11 +20,20 @@ local function tablelength(T)
     return count
 end
 
+-- checked string for concatenation
+function cs(s)
+    if s == nil then
+        s = ""
+    end
+    return s
+end
+
 -- ################ vars for reference in criteria and behaviours
 local aka_request_scheme = ngx.var.scheme
 local aka_request_host = ngx.var.host
 local aka_request_path = ngx.var.document_uri
-local aka_request_file_extension = aka_request_path:match("^.+(%..+)$")
+local aka_request_file_extension_all = cs(aka_request_path:match("^.+(%..+)$"))
+local aka_request_file_extension = aka_request_file_extension_all:gsub("%.", "")
 local aka_request_uri_parts = aka_request_path:split("/")
 local aka_request_file_name = aka_request_uri_parts[tablelength(aka_request_uri_parts)]
 local aka_request_qs = ngx.var.query_string
@@ -36,14 +45,6 @@ if aka_request_qs == nil then
     aka_request_qs = ""
 else
     aka_request_qs = "?" .. aka_request_qs
-end
-
--- checked string for concatenation
-function cs(s)
-    if s == nil then
-        s = ""
-    end
-    return s
 end
 
 ngx.log(ngx.ERR,

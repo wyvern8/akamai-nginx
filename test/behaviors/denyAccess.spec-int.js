@@ -1,6 +1,6 @@
 import { describe, it } from 'mocha';
 import supertest from 'supertest';
-import integration from './_integration.spec-int.js';
+import integration from '../_integration.spec-int.js';
 
 describe('BehaviorDenyAccess', () => {
 
@@ -11,7 +11,7 @@ describe('BehaviorDenyAccess', () => {
         it('should return denied status code', (done) => {
 
             request
-                .get(integration.behaviorTestUrl('denyAccess.enabled.papi.json'))
+                .get(integration.testUrl('denyAccess.enabled.papi.json'))
                 .expect(401)
                 .end(done);
 
@@ -25,7 +25,7 @@ describe('BehaviorDenyAccess', () => {
         it('should NOT return denied status code', (done) => {
 
             request
-                .get(integration.behaviorTestUrl('denyAccess.disabled.papi.json'))
+                .get(integration.testUrl('denyAccess.disabled.papi.json'))
                 .expect(200)
                 .end(done);
 
