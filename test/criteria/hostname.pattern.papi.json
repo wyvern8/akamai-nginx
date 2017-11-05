@@ -1,4 +1,4 @@
 {
   "matchOperator" : "IS_ONE_OF",
-  "values" : [ "*", "*.host" ]
+  "values" : [ "*", "*.host", "local*" ]
 }

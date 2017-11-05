@@ -1,4 +1,4 @@
 {
   "matchOperator" : "IS_ONE_OF",
-  "values" : [ "akamai.com", "edgekey.net" ]
+  "values" : [ "akamai.com", "edgekey.net", "localhost" ]
 }

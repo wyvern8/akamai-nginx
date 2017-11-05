@@ -6,7 +6,7 @@ import { default as fs } from 'fs';
 describe('CriteriaFilename', function() {
     describe('specific match', function () {
         it('should return expected lua', function (done) {
-            fs.readFile(__dirname + '/filename.papi.json', 'utf8', (err, options) => {
+            fs.readFile(__dirname + '/filename.not.papi.json', 'utf8', (err, options) => {
                 if (err) {
                     throw (err);
                 }

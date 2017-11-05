@@ -3,16 +3,16 @@ import { expect } from 'chai';
 import supertest from 'supertest';
 import integration from '../_integration.spec-int.js';
 
-describe('CriteriaFileName', () => {
+describe('CriteriaHostname', () => {
 
     describe('matches on request attributes', () => {
 
         let request = supertest(integration.urlPrefix);
 
-        it('should trigger behaviors if filename matches', (done) => {
+        it('should trigger behaviors if hostname matches exactly', (done) => {
 
             request
-                .get(integration.testUrl('filename.is.papi.json', 'criteria', '/abc.pdf'))
+                .get(integration.testUrl('hostname.exact.papi.json', 'criteria'))
                 .expect(200)
                 .end(function (err, res) {
                     expect(res.headers[integration.checkHeaderName.toLowerCase()]).to.equal(integration.checkHeaderValue);
@@ -21,10 +21,10 @@ describe('CriteriaFileName', () => {
 
         });
 
-        it('should trigger behaviors if filename DOES NOT match', (done) => {
+        it('should trigger behaviors if hostname matches pattern', (done) => {
 
             request
-                .get(integration.testUrl('filename.not.papi.json', 'criteria', '/wrong.pdf'))
+                .get(integration.testUrl('hostname.pattern.papi.json', 'criteria'))
                 .expect(200)
                 .end(function (err, res) {
                     expect(res.headers[integration.checkHeaderName.toLowerCase()]).to.equal(integration.checkHeaderValue);

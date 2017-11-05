@@ -1,5 +1,5 @@
 {
-  "matchOperator": "IS_NOT_ONE_OF",
+  "matchOperator": "IS_ONE_OF",
   "values": [
     "abc.pdf"
   ],

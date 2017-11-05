@@ -23,7 +23,7 @@ describe('CriteriaRequestMethod', function() {
     });
     describe('check is not method', function () {
         it('should return expected lua', function (done) {
-            fs.readFile(__dirname + '/requestMethod.isNot.papi.json', 'utf8', (err, options) => {
+            fs.readFile(__dirname + '/requestMethod.not.papi.json', 'utf8', (err, options) => {
                 if (err) {
                     throw (err);
                 }

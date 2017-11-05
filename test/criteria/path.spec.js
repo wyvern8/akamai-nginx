@@ -6,14 +6,15 @@ import { default as fs } from 'fs';
 describe('CriteriaPath', function() {
     describe('match any', function () {
         it('should return expected lua', function (done) {
-            fs.readFile(__dirname + '/path.papi.json', 'utf8', (err, options) => {
+            fs.readFile(__dirname + '/path.is.papi.json', 'utf8', (err, options) => {
                 if (err) {
                     throw (err);
                 }
                 let opts = JSON.parse(options);
 
                 let expected = 'matches(aka_request_path, "' + opts.values[0] +
-                    '*") or matches(aka_request_path, "' + opts.values[1] + '*")';
+                    '*") or matches(aka_request_path, "' + opts.values[1] +
+                    '*") or matches(aka_request_path, "' + opts.values[2] + '*")';
 
                 let criteria = new CriteriaPath(opts);
                 let actual = criteria.process(true, '*');

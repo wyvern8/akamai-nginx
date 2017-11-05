@@ -12,7 +12,7 @@ describe('CriteriaUserAgent', function() {
                 }
                 let opts = JSON.parse(options);
 
-                let expected = 'matches(ngx.req.get_headers()["user-agent"], ' +
+                let expected = 'not matches(ngx.req.get_headers()["user-agent"], ' +
                     '"' + opts.values[0] + '")';
 
                 let criteria = new CriteriaUserAgent(opts);
