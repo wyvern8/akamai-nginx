@@ -35,7 +35,8 @@ export class Criteria extends RuleAttribute {
             valueArray.forEach((val) => {
                 if (valueSuffix) val = val + valueSuffix;
                 if (usePattern || this.options.matchWildcard === true || val.indexOf('*') > -1) {
-                    let negate = this.options.matchOperator === 'DOES_NOT_MATCH_ONE_OF' ? 'not ' : '';
+                    let negate = (this.options.matchOperator === 'DOES_NOT_MATCH_ONE_OF' ||
+                        this.options.matchOperator === 'IS_NOT_ONE_OF') ? 'not ' : '';
                     conditionArray.push(negate + 'matches(' + this.checkVar + ', ' + this.value(val) + ')');
                 } else {
                     conditionArray.push(this.checkVar + this.matchOperatorCompare() + this.value(val));

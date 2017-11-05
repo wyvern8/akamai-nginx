@@ -1,0 +1,7 @@
+{
+  "matchOperator": "IS_NOT_ONE_OF",
+  "values": [
+    "abc.pdf"
+  ],
+  "matchCaseSensitive": true
+}
