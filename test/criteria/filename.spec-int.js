@@ -15,7 +15,11 @@ describe('CriteriaFilename', () => {
                 .get(integration.testUrl('filename.is.papi.json', 'criteria', '/abc.pdf'))
                 .expect(200)
                 .end(function (err, res) {
-                    expect(res.headers[integration.checkHeaderName.toLowerCase()]).to.equal(integration.checkHeaderValue);
+                    expect(res.headers[integration.checkHeaderName.toLowerCase()])
+                        .to.equal(
+                            integration.checkHeaderValue,
+                            'filename positive match did not trigger behavior'
+                        );
                     done();
                 });
 
@@ -27,7 +31,11 @@ describe('CriteriaFilename', () => {
                 .get(integration.testUrl('filename.not.papi.json', 'criteria', '/wrong.pdf'))
                 .expect(200)
                 .end(function (err, res) {
-                    expect(res.headers[integration.checkHeaderName.toLowerCase()]).to.equal(integration.checkHeaderValue);
+                    expect(res.headers[integration.checkHeaderName.toLowerCase()])
+                        .to.equal(
+                            integration.checkHeaderValue,
+                            'filename negative match failed'
+                        );
                     done();
                 });
 

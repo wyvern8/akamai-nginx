@@ -25,7 +25,8 @@ describe('BehaviorCpCode', () => {
                 .get(integration.testUrl('cpCode.papi.json'))
                 .expect(200)
                 .end(function (err, res) {
-                    expect(res.headers['x-aka-cpcode']).to.equal(header);
+                    expect(res.headers['x-aka-cpcode'])
+                        .to.equal(header, 'cpCode header not set correctly');
                     done();
                 });
 

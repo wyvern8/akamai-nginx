@@ -15,7 +15,8 @@ describe('BehaviorCaching', () => {
                 .get(integration.testUrl('caching.papi.json'))
                 .expect(200)
                 .end(function (err, res) {
-                    expect(res.headers['x-accel-expires']).to.equal('7200');
+                    expect(res.headers['x-accel-expires'])
+                        .to.equal('7200', 'cache header not set correctly');
                     done();
                 });
 

@@ -1,9 +1,17 @@
-import { describe, it } from 'mocha';
+import { before, describe, it } from 'mocha';
 import { expect } from 'chai';
 import supertest from 'supertest';
 import integration from '../_integration.spec-int.js';
 
 describe('BehaviorRedirect', () => {
+
+    let opts;
+    before( (done) => {
+        integration.config().then( (papiOpts) => {
+            opts = papiOpts.behavior['redirect.path.papi.json'];
+            done();
+        });
+    });
 
     describe('redirect to specific path on current domain', () => {
 
@@ -13,9 +21,13 @@ describe('BehaviorRedirect', () => {
 
             request
                 .get(integration.testUrl('redirect.path.papi.json'))
-                .expect(301)
+                .expect(opts.responseCode)
                 .end(function (err, res) {
-                    expect(res.headers['location']).to.equal('https://localhost/testredirect?nocache=true');
+                    expect(res.headers['location'])
+                        .to.equal(
+                            integration.urlPrefix + opts.destinationPathOther + '?nocache=true',
+                            'redirect location not set correctly'
+                        );
                     done();
                 });
 

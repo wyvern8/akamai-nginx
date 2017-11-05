@@ -3,22 +3,23 @@ import { expect } from 'chai';
 import supertest from 'supertest';
 import integration from '../_integration.spec-int.js';
 
-describe('CriteriaFileExtension', () => {
+describe('CriteriaUserAgent', () => {
 
     describe('matches on request attributes', () => {
 
         let request = supertest(integration.urlPrefix);
 
-        it('should trigger behaviors if file extension matches', (done) => {
+        it('should trigger behaviors if user agent matches', (done) => {
 
             request
-                .get(integration.testUrl('fileExtension.papi.json', 'criteria', '/test.jpg'))
+                .get(integration.testUrl('userAgent.papi.json', 'criteria'))
+                .set('User-Agent', 'automated integration test')
                 .expect(200)
                 .end(function (err, res) {
                     expect(res.headers[integration.checkHeaderName.toLowerCase()])
                         .to.equal(
                             integration.checkHeaderValue,
-                            'file extension match failed'
+                            'user agent match failed'
                         );
                     done();
                 });

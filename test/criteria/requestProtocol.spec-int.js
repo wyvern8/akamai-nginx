@@ -3,22 +3,22 @@ import { expect } from 'chai';
 import supertest from 'supertest';
 import integration from '../_integration.spec-int.js';
 
-describe('CriteriaFileExtension', () => {
+describe('CriteriaRequestProtocol', () => {
 
     describe('matches on request attributes', () => {
 
-        let request = supertest(integration.urlPrefix);
+        let request = supertest(integration.urlPrefix.replace('https', 'http'));
 
-        it('should trigger behaviors if file extension matches', (done) => {
+        it('should trigger behaviors if request protocol matches', (done) => {
 
             request
-                .get(integration.testUrl('fileExtension.papi.json', 'criteria', '/test.jpg'))
+                .get(integration.testUrl('requestProtocol.papi.json', 'criteria'))
                 .expect(200)
                 .end(function (err, res) {
                     expect(res.headers[integration.checkHeaderName.toLowerCase()])
                         .to.equal(
                             integration.checkHeaderValue,
-                            'file extension match failed'
+                            'request protocol match failed'
                         );
                     done();
                 });

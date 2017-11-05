@@ -3,38 +3,38 @@ import { expect } from 'chai';
 import supertest from 'supertest';
 import integration from '../_integration.spec-int.js';
 
-describe('CriteriaHostname', () => {
+describe('CriteriaRequestMethod', () => {
 
     describe('matches on request attributes', () => {
 
         let request = supertest(integration.urlPrefix);
 
-        it('should trigger behaviors if hostname matches exactly', (done) => {
+        it('should trigger behaviors if request method matches', (done) => {
 
             request
-                .get(integration.testUrl('hostname.exact.papi.json', 'criteria'))
+                .get(integration.testUrl('requestMethod.is.papi.json', 'criteria'))
                 .expect(200)
                 .end(function (err, res) {
                     expect(res.headers[integration.checkHeaderName.toLowerCase()])
                         .to.equal(
                             integration.checkHeaderValue,
-                            'hostname exact match did not trigger behavior'
+                            'request method positive check failed'
                         );
                     done();
                 });
 
         });
 
-        it('should trigger behaviors if hostname matches pattern', (done) => {
+        it('should trigger behaviors if request method DOES NOT match', (done) => {
 
             request
-                .get(integration.testUrl('hostname.pattern.papi.json', 'criteria'))
+                .post(integration.testUrl('requestMethod.not.papi.json', 'criteria'))
                 .expect(200)
                 .end(function (err, res) {
                     expect(res.headers[integration.checkHeaderName.toLowerCase()])
                         .to.equal(
                             integration.checkHeaderValue,
-                            'hostname pattern match failed'
+                            'request method negative check failed'
                         );
                     done();
                 });

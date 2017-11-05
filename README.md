@@ -256,13 +256,13 @@ To start the docker nginx containers and execute the integration tests use:
 
 Please ensure that corresponding integration tests covering any new features are created in:
 ```
-test/criteria/*.spec-int.js (todo)
+test/criteria/*.spec-int.js
 test/behaviors/*.spec-int.js
 ```
-Each integration test should verify the behavior returns the expected response from the docker-compose in this repo, and are a prerequisite for a pull request to be accepted.
+Each integration test should verify the behavior/criteria results in the expected response from the docker-compose in this repo, and are a prerequisite for a pull request to be accepted.
 
 Framework has been put in place to generate lua config based on `/test/**/*.papi.json`.
 
-The integration Lua config generated consists of predictable path criteria rules to enable targeting of behavior configs. These are generated based on the \*.papi.json files in the test directory.
+The integration Lua config generated consists of predictable path criteria rules to enable targeting of behavior/criteria configs. These are generated based on the \*.papi.json files in the test directory.
 
-Refer to test/behaviors/_integration* and *.spec-int.js for details and examples
+Refer to test/_integration* and *.spec-int.js for details and examples.

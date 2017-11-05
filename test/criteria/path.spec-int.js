@@ -15,7 +15,11 @@ describe('CriteriaPath', () => {
                 .get(integration.testUrl('path.is.papi.json', 'criteria'))
                 .expect(200)
                 .end(function (err, res) {
-                    expect(res.headers[integration.checkHeaderName.toLowerCase()]).to.equal(integration.checkHeaderValue);
+                    expect(res.headers[integration.checkHeaderName.toLowerCase()])
+                        .to.equal(
+                            integration.checkHeaderValue,
+                            'positive path match did not trigger behavior'
+                        );
                     done();
                 });
 
@@ -27,7 +31,11 @@ describe('CriteriaPath', () => {
                 .get(integration.testUrl('path.not.papi.json', 'criteria'))
                 .expect(200)
                 .end(function (err, res) {
-                    expect(res.headers[integration.checkHeaderName.toLowerCase()]).to.equal(integration.checkHeaderValue);
+                    expect(res.headers[integration.checkHeaderName.toLowerCase()])
+                        .to.equal(
+                            integration.checkHeaderValue,
+                            'negative path match failed'
+                        );
                     done();
                 });
 
