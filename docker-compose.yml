@@ -15,7 +15,7 @@ services:
         - ./lua/:/usr/local/openresty/nginx/conf/lua
         - ./ssl/:/usr/local/openresty/nginx/conf/ssl
         - ./cache/:/usr/local/openresty/nginx/cache
-        - ./nginx-edge.conf:/usr/local/openresty/nginx/conf/nginx.conf
+        - ./nginx-conf/nginx-edge.conf:/usr/local/openresty/nginx/conf/nginx.conf
 
   akamai:
     restart: always
@@ -31,7 +31,7 @@ services:
     volumes:
       - ./lua/:/usr/local/openresty/nginx/conf/lua
       - ./ssl/:/usr/local/openresty/nginx/conf/ssl
-      - ./nginx-akamai.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./nginx-conf/nginx-akamai.conf:/usr/local/openresty/nginx/conf/nginx.conf
 
   origin:
     restart: always
@@ -45,5 +45,5 @@ services:
     volumes:
       - ./lua/:/usr/local/openresty/nginx/conf/lua
       - ./ssl/:/usr/local/openresty/nginx/conf/ssl
-      - ./nginx-origin.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./nginx-conf/nginx-origin.conf:/usr/local/openresty/nginx/conf/nginx.conf
 
