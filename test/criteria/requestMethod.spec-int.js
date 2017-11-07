@@ -28,7 +28,7 @@ describe('CriteriaRequestMethod', () => {
         it('should trigger behaviors if request method DOES NOT match', (done) => {
 
             request
-                .post(integration.testUrl('requestMethod.not.papi.json', 'criteria'))
+                .get(integration.testUrl('requestMethod.not.papi.json', 'criteria'))
                 .expect(200)
                 .end(function (err, res) {
                     expect(res.headers[integration.checkHeaderName.toLowerCase()])

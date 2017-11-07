@@ -32,6 +32,7 @@ end
 local aka_request_scheme = ngx.var.scheme
 local aka_request_host = ngx.var.host
 local aka_request_path = ngx.var.document_uri
+local aka_request_method = ngx.var.request_method
 local aka_request_file_extension_all = cs(aka_request_path:match("^.+(%..+)$"))
 local aka_request_file_extension = aka_request_file_extension_all:gsub("%.", "")
 local aka_request_uri_parts = aka_request_path:split("/")
@@ -51,6 +52,7 @@ ngx.log(ngx.ERR,
     "### incoming request details >> \n" ..
     "--------------------------------------------------\n" ..
     "aka_request_scheme: " .. cs(aka_request_scheme) .. "\n" ..
+    "aka_request_method: " ..cs(aka_request_method) .. "\n" ..
     "aka_request_host: " .. cs(aka_request_host) .. "\n" ..
     "aka_request_path: " .. cs(aka_request_path) .. "\n" ..
     "aka_request_file_extension: " .. cs(aka_request_file_extension) .. "\n" ..
@@ -62,6 +64,9 @@ ngx.log(ngx.ERR,
 -- table to contain manage headers sent to origin
 local aka_upstream_headers = ngx.req.get_headers()
 local aka_downstream_headers = { }
+
+local aka_request_method_status = { }
+aka_request_method_status["GET"] = "ALLOW"
 
 function globtopattern(g)
     -- Some useful references:
@@ -195,7 +200,18 @@ function finalActions()
         ngx.status = ngx.HTTP_UNAUTHORIZED
         ngx.log(ngx.ERR, "access denied: " .. ngx.var.aka_deny_reason)
         ngx.say("access denied: " .. ngx.var.aka_deny_reason)
-        ngx.exit(ngx.HTTP_OK)
+        ngx.exit(ngx.HTTP_UNAUTHORIZED)
+    end
+
+    -- deal with request method restrictions
+    if aka_request_method_status[aka_request_method] == nil or aka_request_method_status[aka_request_method] ~= "ALLOW" then
+        ngx.log(ngx.ERR, aka_request_method_status[aka_request_method])
+        ngx.var.aka_origin_host = ""
+        ngx.header.content_type = "text/plain";
+        ngx.status = ngx.HTTP_NOT_ALLOWED
+        ngx.log(ngx.ERR, "method not allowed: " .. aka_request_method)
+        ngx.say("method not allowed: " .. aka_request_method)
+        ngx.exit(ngx.HTTP_NOT_ALLOWED)
     end
 
     -- if redirect calculated, do it

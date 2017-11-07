@@ -17,6 +17,11 @@ export class Behavior extends RuleAttribute {
             this.options.customHeaderName : [headerNameOption]) + '"';
     }
 
+    processRequestMethodOptions(method, options) {
+        return options.enabled ? 'aka_request_method_status["' + method + '"] = "ALLOW"'
+            : 'aka_request_method_status["' + method + '"] = "DENY"';
+    }
+
     processHeaderOptions(luaMapName, comment, capture) {
         let headerName = this.switchByVal({
             'MODIFY': this.getHeaderName('standardModifyHeaderName'),

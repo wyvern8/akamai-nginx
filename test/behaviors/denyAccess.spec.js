@@ -21,7 +21,7 @@ describe('BehaviorDenyAccess', () => {
     });
 
     describe('deny disabled', () => {
-        it('should return expected lua', () => {
+        it('should return expected lua', (done) => {
             fs.readFile(__dirname + '/denyAccess.disabled.papi.json', 'utf8', (err, options) => {
                 if (err) {
                     throw (err);
@@ -35,6 +35,7 @@ describe('BehaviorDenyAccess', () => {
                 let actual = new BehaviorDenyAccess(opts).process();
                 assert.equal(actual[0], expected[0]);
                 assert.equal(actual[1], expected[1]);
+                done();
             });
         });
     });
