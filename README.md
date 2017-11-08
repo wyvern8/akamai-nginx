@@ -8,16 +8,16 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
-<a href="https://github.com/wyvern8/akamai-nginx">
-  <img src="https://raw.githubusercontent.com/wyvern8/akamai-nginx/master/logo.png?raw=true" alt="" title="logo" style="width: 150px;" align="right">
-</a>
-
 Configure an nginx reverse proxy/simulator based on Akamai property rules (Unofficial)
 
 This project takes an Akamai property api json response, and generates lua code integrated with nginx, in order to 
 simulate an akamai property.  
 
-This can be useful for: 
+<a href="https://github.com/wyvern8/akamai-nginx">
+  <img src="https://raw.githubusercontent.com/wyvern8/akamai-nginx/master/logo.png?raw=true" alt="" title="logo" style="width:140px;float:right">
+</a>
+
+#### This can be useful for: 
 - local development on apps that rely on akamai property rules
 - non prod environments that cannot be granted ingress from Akamai due to organization policy
 - on-demand temporarily provisioned environments to run CI tests against in pipelines
