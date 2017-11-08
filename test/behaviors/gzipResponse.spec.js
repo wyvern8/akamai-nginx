@@ -14,7 +14,7 @@ describe('BehaviorGzipResponse', function() {
                 let opts = JSON.parse(options);
                 let expected = [
                     '-- conditional gzip of response is not easily doable..',
-                    'ngx.header["X-AKA-gzipResponse"] = "TODO_this_request_should_be_gzipped_by_proxy"',
+                    'ngx.header["X-AKA-gzipResponse"] = "true"',
                     'aka_gzip = "on"'
                 ];
 

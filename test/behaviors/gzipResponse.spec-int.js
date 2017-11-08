@@ -16,7 +16,7 @@ describe('BehaviorGzipResponse', () => {
                 .expect(200)
                 .end(function (err, res) {
                     expect(res.headers['x-aka-gzipresponse'])
-                        .to.equal('TODO_this_request_should_be_gzipped_by_proxy', 'gzip message header not set');
+                        .to.equal('true', 'gzip message header not set');
                     done();
                 });
 
