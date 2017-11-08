@@ -1,4 +1,4 @@
-# Akamai NGINX : CDN simulator
+# Akamai NGINX: CDN simulator
 
 [![npm version](https://badge.fury.io/js/akamai-nginx.svg)](https://badge.fury.io/js/akamai-nginx)
 [![Build Status](https://travis-ci.org/wyvern8/akamai-nginx.svg?branch=master)](https://travis-ci.org/wyvern8/akamai-nginx)
