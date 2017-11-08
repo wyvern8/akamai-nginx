@@ -1,3 +1,5 @@
+# Akamai NGINX : CDN simulator
+
 [![npm version](https://badge.fury.io/js/akamai-nginx.svg)](https://badge.fury.io/js/akamai-nginx)
 [![Build Status](https://travis-ci.org/wyvern8/akamai-nginx.svg?branch=master)](https://travis-ci.org/wyvern8/akamai-nginx)
 [![Code Climate](https://codeclimate.com/github/wyvern8/akamai-nginx/badges/gpa.svg)](https://codeclimate.com/github/wyvern8/akamai-nginx)
@@ -5,8 +7,6 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/wyvern8/akamai-nginx.svg)](https://greenkeeper.io/)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
-
-# Akamai NGINX : CDN simulator
 
 <a href="https://github.com/wyvern8/akamai-nginx">
   <img src="https://raw.githubusercontent.com/wyvern8/akamai-nginx/master/logo.png?raw=true" alt="" title="logo" style="width: 150px;" align="right">
