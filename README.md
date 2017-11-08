@@ -14,7 +14,7 @@ This project takes an Akamai property api json response, and generates lua code 
 simulate an akamai property.  
 
 <a href="https://github.com/wyvern8/akamai-nginx">
-  <img src="https://raw.githubusercontent.com/wyvern8/akamai-nginx/master/logo.png?raw=true" alt="" title="logo" style="width:140px;float:right">
+  <img src="https://raw.githubusercontent.com/wyvern8/akamai-nginx/master/logo.png?raw=true" alt="" title="logo" align="right" style="width:140px">
 </a>
 
 #### This can be useful for: 
