@@ -24,3 +24,5 @@ For more information, see the `CONTRIBUTING` guide.
 ### Versions
 
 You can get this information from executing `npm version`.
+
+*Important: please do not include any sensitive data/creds.*
