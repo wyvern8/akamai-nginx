@@ -18,10 +18,10 @@ simulate an akamai property.
 </a>
 
 #### This can be useful for: 
-- local development on apps that rely on akamai property rules
-- non prod environments that cannot be granted ingress from Akamai due to organization policy
-- on-demand temporarily provisioned environments to run CI tests against in pipelines
-- learning the basic concepts of how Akamai works
+- Local development on apps that rely on akamai property rules.
+- Non prod environments that cannot be granted ingress from Akamai due to organization policy.
+- On-demand temporarily provisioned environments to run CI tests against in pipelines.
+- Learning the basic concepts of how a CDN works.
 
 ## Install
 `npm install akamai-nginx`
