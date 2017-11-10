@@ -103,6 +103,32 @@ Examples:
 
 `AKA_MODE=LOCAL AKA_PAPI_JSON_FILE=papiJson/dev-www.yoursite.com-v2.papi.json node dist/start.js`
 
+### Translation of values
+The 'setValueMap' function can be used to pass in values such as origin hostnames to be 
+translated from the PAPI json values to hostnames that work in the context of the simulator.
+
+In addition you can create a file 'valueMap.local.json' in the root of the app that will be used to 
+the map. The js map is also converted to a lua map 'luaValueMap' which can be used in behaviors.
+
+**Examples:**
+- converting 'localhost' to the host header value expected by origin virtualhosting
+- converting a PAPI json origin hostname to a localhost/other site instance
+
+**Sample valueMap.local.json**
+```
+[
+  [
+    "localhost",
+    "www.mysitevirtualhost.com"
+  ],
+  [
+    "myorigin.com",
+    "localhost"
+  ]  
+]
+```
+Note that a number of other behavior options are also mapped - refer to source.
+
 ### Example usage in a node app
 ```javascript
 require('babel-polyfill');

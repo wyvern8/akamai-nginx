@@ -11,9 +11,15 @@ describe('BehaviorOrigin', () => {
                     throw (err);
                 }
                 let opts = JSON.parse(options);
-                let expected = 'ngx.var.aka_origin_host = "' + opts.hostname + '"';
+                let expected = [
+                    'ngx.var.aka_origin_host = "' + opts.hostname + '"',
+                    'ngx.var.aka_origin_host_header = luaValueMap(aka_request_host)',
+                    'aka_upstream_headers["True-Client-IP"] = ngx.req.get_headers()["True-Client-IP"]'
+                ];
                 let actual = new BehaviorOrigin(opts).process();
-                assert.equal(actual, expected);
+                assert.equal(actual[0], expected[0]);
+                assert.equal(actual[1], expected[1]);
+                assert.equal(actual[2], expected[2]);
                 done();
             });
         });
