@@ -191,7 +191,9 @@ end
 -- 1 January, 1970 00:00:01 GMT
 function expiryDateString(secs)
     local dt = os.date("!*t");
-    dt.sec = dt.sec + secs
+    if secs ~= nil and secs ~= "" then
+        dt.sec = dt.sec + secs
+    end
     return os.date("%d %B %Y %H:%M:%S GMT", os.time(dt))
 end
 
