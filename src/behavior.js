@@ -61,6 +61,27 @@ export class Behavior extends RuleAttribute {
         return lua;
     }
 
+    static translateTTL(ttl) {
+        if (!ttl) return 0;
+        let ttlSeconds = 0;
+        let ttlInt = parseInt(ttl.substring(0, ttl.length - 1));
+        switch (ttl.slice(-1)) {
+        case 's':
+            ttlSeconds = ttlInt;
+            break;
+        case 'm':
+            ttlSeconds = ttlInt * 60;
+            break;
+        case 'h':
+            ttlSeconds = ttlInt * 60 * 60;
+            break;
+        case 'd':
+            ttlSeconds = ttlInt * 60 * 60 * 24;
+            break;
+        }
+        return ttlSeconds;
+    }
+
 }
 
 requireDir('./behaviors');

@@ -1,0 +1,7 @@
+{
+    "behavior": "ALLOW",
+    "allowBehavior": "FROM_VALUE",
+    "ttl": "90d",
+    "sendHeaders": "CACHE_CONTROL_AND_EXPIRES",
+    "sendPrivate": false
+}

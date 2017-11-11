@@ -1,0 +1,6 @@
+{
+    "behavior": "ALLOW",
+    "allowBehavior": "FROM_MAX_AGE",
+    "sendHeaders": "CACHE_CONTROL_AND_EXPIRES",
+    "sendPrivate": true
+}
