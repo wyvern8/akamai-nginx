@@ -54,7 +54,7 @@
     "edgegrid": "^3.0.2",
     "format-json": "^1.0.3",
     "globule": "^1.2.0",
-    "inquirer": "^3.3.0",
+    "inquirer": "^4.0.0",
     "require-dir": "^0.3.2",
     "systemjs": "^0.20.18",
     "webpack": "^3.6.0"
