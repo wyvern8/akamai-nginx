@@ -108,7 +108,8 @@ The 'setValueMap' function can be used to pass in values such as origin hostname
 translated from the PAPI json values to hostnames that work in the context of the simulator.
 
 In addition you can create a file 'valueMap.local.json' in the root of the app that will be used to 
-the map. The js map is also converted to a lua map 'luaValueMap' which can be used in behaviors.
+the map. The js map is also converted to a lua map 'valueMap' which can be used in behaviors either directly 
+or via the mapValue function which handles nil values.
 
 **Examples:**
 - converting 'localhost' to the host header value expected by origin virtualhosting

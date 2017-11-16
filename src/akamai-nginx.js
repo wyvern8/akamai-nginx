@@ -67,29 +67,19 @@ export async function generateConf(preloadedRules) {
         0 // depth starts at 0
     );
 
-    let conf = '-- ### generated from ';
+    let conf = '\n-- ### generated from ';
     conf +=  config.localPapiJsonPath ? 'local: ' + config.localPapiJsonPath : 'api: ' + getPapiUrl() + ' ###';
     conf += '\n' + defaultRule.process();
 
     // translate the js valueMap into a lua map - used for host header translation in origin behavior
-    let luaValueMap = '\n' +
-        'function luaValueMap(val)\n' +
-        '    local valueMap = { }\n';
+    let luaValueMap = 'local valueMap = { }\n';
 
     for (let [key, value] of valueMap.entries()) {
-        luaValueMap += '    valueMap["' + key + '"] = "' + value + '"\n';
+        luaValueMap += 'valueMap["' + key + '"] = "' + value + '"\n';
     }
 
-    luaValueMap += '' +
-        '    if valueMap[val] == nil then\n' +
-        '        return val\n' +
-        '    else\n' +
-        '        return valueMap[val]\n' +
-        '    end\n' +
-        'end\n\n';
-
     let fns = fs.readFileSync(__dirname + '/../../lua/akamaiFunctions.lua', 'utf8');
-    conf = fns + luaValueMap + conf + '\nfinalActions()';
+    conf = luaValueMap + '\n' + fns + conf + '\nfinalActions()';
 
     // create empty file
     fs.closeSync(fs.openSync(config.outPutFile, 'w'));

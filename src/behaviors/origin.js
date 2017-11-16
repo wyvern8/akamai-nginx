@@ -16,7 +16,7 @@ export class BehaviorOrigin extends Behavior {
 
             let forwardHostHeader = this.switchByVal({
                 'ORIGIN_HOSTNAME': this.value(this.options.hostname),
-                'REQUEST_HOST_HEADER': 'luaValueMap(aka_request_host)'
+                'REQUEST_HOST_HEADER': 'mapValue(aka_request_host)'
             }, 'aka_request_host', this.options.forwardHostHeader);
 
             lua.push('ngx.var.aka_origin_host_header = ' + forwardHostHeader);

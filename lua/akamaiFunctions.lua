@@ -247,5 +247,17 @@ function finalActions()
 
 end
 
+function mapValue(val)
+    if val == nil then
+        return ""
+    end
 
+    if valueMap[val] == nil then
+        return val
+    else
+        return valueMap[val]
+    end
+end
 
+ngx.ctx["cs"] = cs
+ngx.ctx["mapValue"] = mapValue
