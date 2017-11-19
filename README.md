@@ -24,10 +24,23 @@ simulate an akamai property.
 - Learning the basic concepts of how a CDN works.
 
 ## Install
-`npm install akamai-nginx`
-    
-Or clone this repository.
+To install for your project:
 
+`npm install akamai-nginx --save-dev`
+
+Or clone this repository for initial experimentation.
+
+### Generate ssl certs in the ssl dir
+
+If you are using akamai-nginx as a dependency to your project, you will need to esure that the appropriate lua, json and ssl dirs exist to suit your containers and the config generation process.
+
+If you are running just with this repo checked out, the directories will already exist, however you will need to generate the ssl certs.
+
+Assuming openssl is on your path, run this to generate the certs:
+```
+npm run generate-certs
+```
+    
 ## Setup papi
 1. Follow the instructions here to setup your .edgerc and test api calls are working. https://github.com/akamai/AkamaiOPEN-edgegrid-node 
 
@@ -48,6 +61,7 @@ The following npm scripts can be used to control the containers if you are not f
 npm run docker-start
 npm run docker-stop
 npm run docker-logs
+npm run docker-bounce (restart containers and tail logs)
 ```
 
 The docker-compose.yml is used to start OpenResty containers to simulate an akamai property, edge and origin.

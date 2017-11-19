@@ -65,10 +65,12 @@ dist/
 lua/akamai.lua
 
 # ignore ssl dir
-ssl/
+ssl/*
+!ssl/README.md
 
 # ignore papi json dir
-papiJson/
+papiJson/*
+!papiJson/README.md
 
 # ignore local conf json
 /*.local.json
