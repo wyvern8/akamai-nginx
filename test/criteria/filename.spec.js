@@ -12,7 +12,7 @@ describe('CriteriaFilename', function() {
                 }
                 let opts = JSON.parse(options);
 
-                let expected = 'aka_request_file_name ~= "' + opts.values[0] + '"';
+                let expected = 'aka_request_file_name ~= swapVars("' + opts.values[0] + '")';
 
                 let criteria = new CriteriaFilename(opts);
                 let actual = criteria.process(true);

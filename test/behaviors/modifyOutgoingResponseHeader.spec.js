@@ -15,7 +15,7 @@ describe('BehaviorModifyOutgoingResponseHeader', () => {
                 let expected = [
                     '-- ' + opts.action + ' CAPTURE response header to client',
                     'aka_downstream_headers["' + opts.customHeaderName + '"] = ' +
-                        '{ "MODIFY", "max-age=31536000", "undefined", "undefined" }'
+                        '{ "MODIFY", swapVars("max-age=31536000"), swapVars("undefined"), swapVars("undefined") }'
                 ];
 
                 let actual = new BehaviorModifyOutgoingResponseHeader(opts).process();

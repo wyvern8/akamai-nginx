@@ -13,9 +13,9 @@ describe('CriteriaRequestHeader', function() {
                 let opts = JSON.parse(options);
 
                 let expected = 'ngx.req.get_headers()["' + opts.headerName + '"]' +
-                    ' == "' + opts.values[0] + '" or ' +
+                    ' == swapVars("' + opts.values[0] + '") or ' +
                     'ngx.req.get_headers()["' + opts.headerName + '"]' +
-                    ' == "' + opts.values[1] + '"';
+                    ' == swapVars("' + opts.values[1] + '")';
 
                 let criteria = new CriteriaRequestHeader(opts);
                 let actual = criteria.process();

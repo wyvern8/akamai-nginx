@@ -12,7 +12,7 @@ describe('CriteriaRequestProtocol', function() {
                 }
                 let opts = JSON.parse(options);
 
-                let expected = 'ngx.var.scheme == "' + opts.value + '"';
+                let expected = 'ngx.var.scheme == swapVars("' + opts.value + '")';
 
                 let criteria = new CriteriaRequestProtocol(opts);
                 let actual = criteria.process();

@@ -12,8 +12,8 @@ describe('CriteriaContentType', function() {
                 }
                 let opts = JSON.parse(options);
 
-                let expected = 'matches(ngx.header["Content-Type"], "' + opts.values[0] +
-                    '") or matches(ngx.header["Content-Type"], "' + opts.values[1] + '")';
+                let expected = 'matches(ngx.header["Content-Type"], swapVars("' + opts.values[0] +
+                    '")) or matches(ngx.header["Content-Type"], swapVars("' + opts.values[1] + '"))';
 
                 let criteria = new CriteriaContentType(opts);
                 let actual = criteria.process(true, '*');

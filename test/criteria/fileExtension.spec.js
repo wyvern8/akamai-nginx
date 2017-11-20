@@ -12,9 +12,9 @@ describe('CriteriaFileExtension', function() {
                 }
                 let opts = JSON.parse(options);
 
-                let expected = 'aka_request_file_extension == "' + opts.values[0] + '"' +
-                    ' or aka_request_file_extension == "' + opts.values[1] + '"' +
-                    ' or aka_request_file_extension == "' + opts.values[2] + '"';
+                let expected = 'aka_request_file_extension == swapVars("' + opts.values[0] + '")' +
+                    ' or aka_request_file_extension == swapVars("' + opts.values[1] + '")' +
+                    ' or aka_request_file_extension == swapVars("' + opts.values[2] + '")';
 
                 let criteria = new CriteriaFileExtension(opts);
                 let actual = criteria.process(true);

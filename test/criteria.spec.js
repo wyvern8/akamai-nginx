@@ -13,8 +13,8 @@ describe('Criteria', function() {
                     }
                     let opts = JSON.parse(options);
 
-                    let expected = 'matches(ngx.test, "' + opts.values[0] +
-                        '") or matches(ngx.test, "' + opts.values[1] + '")';
+                    let expected = 'matches(ngx.test, swapVars("' + opts.values[0] +
+                        '")) or matches(ngx.test, swapVars("' + opts.values[1] + '"))';
 
                     Criteria.register('testCriteria', Criteria);
                     let criteria = Criteria.create('testCriteria', opts);
@@ -34,7 +34,7 @@ describe('Criteria', function() {
                     }
                     let opts = JSON.parse(options);
 
-                    let expected = 'ngx.test ~= "' + opts.value + '"';
+                    let expected = 'ngx.test ~= swapVars("' + opts.value + '")';
 
                     Criteria.register('testCriteria', Criteria);
                     let criteria = Criteria.create('testCriteria', opts);

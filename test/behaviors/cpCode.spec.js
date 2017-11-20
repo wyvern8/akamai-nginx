@@ -12,8 +12,8 @@ describe('BehaviorCpCode', () => {
                 }
                 let opts = JSON.parse(options);
 
-                let expected = 'ngx.header["X-AKA-cpCode"] = "' +
-                    opts.value.id + '_' + opts.value.name.replace(' ', '_') + '"';
+                let expected = 'aka_downstream_headers["X-AKA-cpCode"] = {"SET", "' +
+                    opts.value.id + '_' + opts.value.name.replace(' ', '_') + '"}';
 
                 let actual = new BehaviorCpCode(opts).process();
                 assert.equal(actual, expected);

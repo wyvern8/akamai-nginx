@@ -1,0 +1,172 @@
+[
+  {
+    "key": "AK_PM_CACHEABLE_OBJECT",
+    "lua": "(ngx.var.aka_cache_ttl_seconds > 0)",
+    "comment": "Either true if the requested object is cacheable, or false if not."
+  },
+  {
+    "key": "AK_BASE_URL",
+    "lua": "basePath(aka_request_path)",
+    "comment": "The incoming request’s URL path, without filename and extension."
+  },
+  {
+    "key": "AK_CLIENT_IP",
+    "lua": "trueClientIp()",
+    "comment": "Client IP address as seen by the Akamai server, possibly overridden by X-Forwarded-For or Akamai-Client-IP request headers."
+  },
+  {
+    "key": "AK_CLIENT_REAL_IP",
+    "lua": "ngx.var.remote_addr",
+    "comment": "The client IP address as seen by the Akamai server, ignoring any request headers."
+  },
+  {
+    "key": "AK_CLIENT_RTT",
+    "lua": "nil",
+    "comment": "Milliseconds elapsed for the TCP round-trip (RTT) between client and edge server."
+  },
+  {
+    "key": "AK_CLIENT_TRANSFER_TIME",
+    "lua": "nil",
+    "comment": "Milliseconds elapsed to transfer content from edge to client. This value is only available after the client response completes. Applies only to custom log fields."
+  },
+  {
+    "key": "AK_CLIENT_TURNAROUND_TIME",
+    "lua": "nil",
+    "comment": "Milliseconds elapsed for the combined initial request (AK_CLIENT_RTT) plus the response’s transfer time (AK_CLIENT_TRANSFER_TIME). This value is only available after the client response completes. Applies only to custom log fields."
+  },
+  {
+    "key": "AK_CONNECTED_CLIENT_IP",
+    "lua": "ngx.var.remote_addr",
+    "comment": "The IP on the TCP socket, either client or a redirecting ghost."
+  },
+  {
+    "key": "AK_CPCODE",
+    "lua": "aka_downstream_headers[\"X-AKA-cpCode\"][2]",
+    "comment": "The CP code associated with the request."
+  },
+  {
+    "key": "AK_CURRENT_TIME",
+    "lua": "ngx.time()",
+    "comment": "The epoch time when edge metadata is applied to the request. If necessary, use the setVariable behavior to convert epoch time values to other time formats."
+  },
+  {
+    "key": "AK_DOMAIN",
+    "lua": "hostDomain(aka_request_host)",
+    "comment": "The hostname without the initial subdomain, such as example.com when requesting www.example.com."
+  },
+  {
+    "key": "AK_EXTENSION",
+    "lua": "aka_request_file_extension",
+    "comment": "The filename extension of the incoming request."
+  },
+  {
+    "key": "AK_FILENAME",
+    "lua": "aka_request_file_name",
+    "comment": "The complete filename of the incoming request."
+  },
+  {
+    "key": "AK_FIREWALL_ALERTED_RULES",
+    "lua": "nil",
+    "comment": "With webApplicationFirewall enabled, a colon-separated list of IDs for firewall rules that triggered an alert for the current request."
+  },
+  {
+    "key": "AK_FIREWALL_DENY_RULEID",
+    "lua": "nil",
+    "comment": "With webApplicationFirewall enabled, the ID for a firewall rule set to deny the request when the rule triggers."
+  },
+  {
+    "key": "AK_FIREWALL_DETECTED_RULES",
+    "lua": "nil",
+    "comment": "With webApplicationFirewall enabled, a colon-separated list of IDs for all firewall rules that apply to the request."
+  },
+  {
+    "key": "AK_GHOST_IP",
+    "lua": "ngx.var.remote_addr",
+    "comment": "The IP address on which end client requests are received, and ultimately resolve for the end user."
+  },
+  {
+    "key": "AK_GHOST_SERVICE_IP",
+    "lua": "ngx.var.server_addr",
+    "comment": "The edge server IP address used to forward a request, also commonly known as the machine IP. This is the IP address the origin server sees as the client IP when it receives a request from the edge."
+  },
+  {
+    "key": "AK_HOST_CNAME_CHAIN",
+    "lua": "nil",
+    "comment": "A space-delimited list of the CNAME chain provided by DNS lookup on the incoming Host header."
+  },
+  {
+    "key": "AK_HOST",
+    "lua": "aka_request_host",
+    "comment": "The incoming request’s hostname."
+  },
+  {
+    "key": "AK_METHOD",
+    "lua": "aka_request_method",
+    "comment": "The request method, such as GET, PUT, POST, or HEAD."
+  },
+  {
+    "key": "AK_ORIGINAL_URL",
+    "lua": "aka_request_scheme .. \"://\" .. aka_request_host .. aka_request_path .. aka_request_qs",
+    "comment": "The original URL before any processing by Akamai Edge servers."
+  },
+  {
+    "key": "AK_PATH",
+    "lua": "aka_request_file_extension",
+    "comment": "The original URL path as seen by the Akamai Edge server."
+  },
+  {
+    "key": "AK_PROTOCOL_NEGOTIATION",
+    "lua": "ngx.var.server_protocol",
+    "comment": "The protocol negotiated with the client when NPN or ALPN is in use. Under HTTP, possible values are http/1.1 or http/1.0. For HTTP2, values are h2-14 or h2. For SPDY, values are spdy/3.1, spdy/3 or spdy/2."
+  },
+  {
+    "key": "AK_QUERY",
+    "lua": "aka_request_qs",
+    "comment": "The URL’s entire query string."
+  },
+  {
+    "key": "AK_REQUEST_ID",
+    "lua": "ngx.var.request_id",
+    "comment": "Unique identifier for each request on the edge server, the same as reported in logs."
+  },
+  {
+    "key": "AK_SCHEME",
+    "lua": "aka_request_scheme",
+    "comment": "The request scheme, either http or https."
+  },
+  {
+    "key": "AK_SLOT",
+    "lua": "nil",
+    "comment": "The incoming request’s slot number."
+  },
+  {
+    "key": "AK_TLS_CIPHER_NAME",
+    "lua": "ngx.var.ssl_cipher",
+    "comment": "For HTTPS and SPDY requests, specifies the name of the cipher used for the SSL connection, otherwise NO-CIPHER for HTTP requests."
+  },
+  {
+    "key": "AK_TLS_ENCRYPTION_BITS",
+    "lua": "nil",
+    "comment": "Bits of encryption used for the request."
+  },
+  {
+    "key": "AK_TLS_PREFERRED_CIPHERS",
+    "lua": "nil",
+    "comment": "The value of the request’s security:essl.slot-assignment.preferred-ciphers tag."
+  },
+  {
+    "key": "AK_TLS_SNI_NAME",
+    "lua": "ngx.var.ssl_server_name",
+    "comment": "The SNI name submitted by the client."
+  },
+  {
+    "key": "AK_TLS_VERSION",
+    "lua": "nil",
+    "comment": "The TLS version used for the connection."
+  },
+  {
+    "key": "AK_URL",
+    "lua": "aka_request_scheme .. \"://\" .. aka_request_host .. aka_request_path .. aka_request_qs",
+    "comment": "The incoming request’s entire URL."
+  }
+]

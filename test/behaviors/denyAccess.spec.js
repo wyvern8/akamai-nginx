@@ -12,7 +12,7 @@ describe('BehaviorDenyAccess', () => {
                 }
                 let opts = JSON.parse(options);
 
-                let expected = 'ngx.var.aka_deny_reason = "' + opts.reason + '"';
+                let expected = 'ngx.var.aka_deny_reason = swapVars("' + opts.reason + '")';
                 let actual = new BehaviorDenyAccess(opts).process();
                 assert.equal(actual, expected);
                 done();

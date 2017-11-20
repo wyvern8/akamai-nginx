@@ -48,6 +48,41 @@ function getPapiUrl() {
         '/rules?contractId=' + config.contractId + '&groupId=' + config.groupId;
 }
 
+function buildLuaVarMap(propertyRules) {
+
+    // load builtin var definitions
+    let variableDefns = JSON.parse(fs.readFileSync(__dirname + '/akamai-vars.json', 'utf8'));
+
+    // collect any pmuser declared vars for property
+    if (propertyRules.rules.variables.length > 0) {
+        propertyRules.rules.variables.forEach( (pmUserVar) => {
+            variableDefns.push({
+                key: pmUserVar.name,
+                lua: '"' + pmUserVar.value + '"',
+                comment: pmUserVar.description
+            });
+        });
+    }
+
+    let lua = '\n\n-- ### Generated varMap from akamai-vars.json and property vars..\n';
+    lua += 'local varMap = { }\n';
+    variableDefns.forEach((variable) => {
+        lua += '-- ' + variable.comment + '\n';
+        lua += 'varMap["' + variable.key + '"] = function() return ' + variable.lua + ' end\n\n';
+    });
+
+    return lua;
+}
+
+function buildLuaValueMap(valueMap) {
+    let lua = '\n\n-- ### Generated valueMap from valueMap.local.json and passed in valueMap..\n';
+    lua += 'local valueMap = { }\n';
+    for (let [key, value] of valueMap.entries()) {
+        lua += 'valueMap["' + key + '"] = "' + value + '"\n';
+    }
+    return lua;
+}
+
 export async function generateConf(preloadedRules) {
 
     let propertyRules = preloadedRules ? preloadedRules : await getPropertyRules();
@@ -67,25 +102,30 @@ export async function generateConf(preloadedRules) {
         0 // depth starts at 0
     );
 
-    let conf = '\n-- ### generated from ';
-    conf +=  config.localPapiJsonPath ? 'local: ' + config.localPapiJsonPath : 'api: ' + getPapiUrl() + ' ###';
-    conf += '\n' + defaultRule.process();
+    let ruleConf = '\n-- ### Property Rules : generated from ';
+    ruleConf +=  config.localPapiJsonPath ? 'local: ' + config.localPapiJsonPath : 'api: ' + getPapiUrl() + ' ###';
+    ruleConf += '\n' + defaultRule.process() + '\n';
+
+    // dynamically construct a lua mapping function based on declared property vars
+    let luaVarMap = buildLuaVarMap(propertyRules);
 
     // translate the js valueMap into a lua map - used for host header translation in origin behavior
-    let luaValueMap = 'local valueMap = { }\n';
+    let luaValueMap = buildLuaValueMap(valueMap);
 
-    for (let [key, value] of valueMap.entries()) {
-        luaValueMap += 'valueMap["' + key + '"] = "' + value + '"\n';
-    }
+    // load some utils and vars
+    let utilFunctions = fs.readFileSync(__dirname + '/../../lua/utils.lua', 'utf8');
 
-    let fns = fs.readFileSync(__dirname + '/../../lua/akamaiFunctions.lua', 'utf8');
-    conf = luaValueMap + '\n' + fns + conf + '\nfinalActions()';
+    // load some utils and vars
+    let akamaiFunctions = fs.readFileSync(__dirname + '/../../lua/akamaiFunctions.lua', 'utf8');
 
-    // create empty file
+    // concat all lua
+    let luaConf = utilFunctions + luaValueMap + luaVarMap + akamaiFunctions + ruleConf + 'finalActions()';
+
+    // create empty file and write
     fs.closeSync(fs.openSync(config.outPutFile, 'w'));
-    fs.writeFileSync(config.outPutFile, conf, 'utf8');
+    fs.writeFileSync(config.outPutFile, luaConf, 'utf8');
 
-    console.log('processing completed for property ' + propertyName + ' v' + propertyVersion);
+    await console.log('processing completed for property ' + propertyName + ' v' + propertyVersion);
 
 }
 

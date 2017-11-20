@@ -15,7 +15,7 @@ describe('BehaviorRedirect', function() {
                 let expected = [
                     'ngx.var.aka_redirect_location = "https" .. "://" .. aka_request_host .. aka_request_path' +
                     ' .. aka_request_qs',
-                    'ngx.var.aka_redirect_code = "'+ opts.responseCode + '"'
+                    'ngx.var.aka_redirect_code = swapVars("'+ opts.responseCode + '")'
                 ];
 
                 let behavior = new BehaviorRedirect(opts);

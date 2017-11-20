@@ -12,7 +12,7 @@ describe('CriteriaRequestMethod', function() {
                 }
                 let opts = JSON.parse(options);
 
-                let expected = 'ngx.req.get_method() == "' + opts.value + '"';
+                let expected = 'ngx.req.get_method() == swapVars("' + opts.value + '")';
 
                 let criteria = new CriteriaRequestMethod(opts);
                 let actual = criteria.process();
@@ -29,7 +29,7 @@ describe('CriteriaRequestMethod', function() {
                 }
                 let opts = JSON.parse(options);
 
-                let expected = 'ngx.req.get_method() ~= "' + opts.value + '"';
+                let expected = 'ngx.req.get_method() ~= swapVars("' + opts.value + '")';
                 let criteria = new CriteriaRequestMethod(opts);
                 let actual = criteria.process();
                 assert.equal(actual, expected);

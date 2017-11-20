@@ -22,13 +22,16 @@ export class RuleAttribute {
     }
 
     value(value) {
+        let result;
         if (this.valueMap && this.valueMap.has(value)) {
             let replacement = this.valueMap.get(value);
             console.debug('replacing "' + value + '" with "' + replacement + '"');
-            return '"' + replacement + '"';
+            result = '"' + replacement + '"';
         } else {
-            return '"' + value + '"';
+            result = '"' + value + '"';
         }
+
+        return 'swapVars(' + result + ')';
     }
 
     static get registeredTypes() {

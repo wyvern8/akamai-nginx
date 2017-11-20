@@ -12,9 +12,9 @@ describe('CriteriaPath', function() {
                 }
                 let opts = JSON.parse(options);
 
-                let expected = 'matches(aka_request_path, "' + opts.values[0] +
-                    '*") or matches(aka_request_path, "' + opts.values[1] +
-                    '*") or matches(aka_request_path, "' + opts.values[2] + '*")';
+                let expected = 'matches(aka_request_path, swapVars("' + opts.values[0] +
+                    '*")) or matches(aka_request_path, swapVars("' + opts.values[1] +
+                    '*")) or matches(aka_request_path, swapVars("' + opts.values[2] + '*"))';
 
                 let criteria = new CriteriaPath(opts);
                 let actual = criteria.process(true, '*');

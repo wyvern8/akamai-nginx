@@ -14,7 +14,7 @@ describe('BehaviorModifyOutgoingRequestHeader', function() {
 
                 let expected = [
                     '-- ' + opts.action + ' request header to origin',
-                    'aka_upstream_headers["' + opts.customHeaderName + '"] = "' + opts.newHeaderValue + '"'
+                    'aka_upstream_headers["' + opts.customHeaderName + '"] = swapVars("' + opts.newHeaderValue + '")'
                 ];
 
                 let behavior = new BehaviorModifyOutgoingRequestHeader(opts);
