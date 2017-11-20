@@ -1,0 +1,6 @@
+{
+  "variableName": "PMUSER_TEST_BETWEEN",
+  "matchOperator": "IS_BETWEEN",
+  "lowerBound": "100",
+  "upperBound": "200"
+}

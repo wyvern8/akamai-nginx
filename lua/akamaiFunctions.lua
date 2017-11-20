@@ -65,18 +65,31 @@ end
 ngx.ctx["cs"] = cs
 ngx.ctx["mapValue"] = mapValue
 
+function getVar(var)
+    local fn = varMap[var]
+    if fn ~= nil then
+        return fn()
+    end
+end
+
+function getVarNumber(var)
+    local result
+    local varString = getVar(var)
+    if not tonumber(varString) then
+        result = -1
+    else
+        result = tonumber(varString)
+    end
+    return result
+end
+
 function swapVars(value)
     local result = value
     for token in string.gmatch( value, "(%{%{[^%.]*%.[^%}]*%}%})" ) do
         -- ngx.log(ngx.ERR, token)
         local var = string.match( token, "%.([^%}]*)%}" )
 
-        local replacement
-
-        local fn = varMap[var]
-        if fn ~= nil then
-            replacement = fn()
-        end
+        local replacement = getVar(var)
 
         if replacement ~= nil then
             ngx.log(ngx.ERR, "replacing var: " .. token .. " with [" .. replacement .. "]")

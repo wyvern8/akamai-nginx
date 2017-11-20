@@ -1,0 +1,7 @@
+{
+  "variableName": "PMUSER_TEST_MATCH",
+  "matchOperator": "IS",
+  "matchWildcard": false,
+  "matchCaseSensitive": true,
+  "variableExpression": "exactMatchMe"
+}

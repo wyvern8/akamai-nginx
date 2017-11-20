@@ -36,6 +36,31 @@ async function integrationConfig() {
     // load template papi json to inject behavior rules to test
     let integrationPapi = JSON.parse(fs.readFileSync(appRoot + '/test/_integration.template.json', 'utf8'));
 
+    // add sample vars
+    integrationPapi.rules.variables.push(...[
+        {
+            name: 'PMUSER_TEST_MATCH',
+            value: 'exactMatchMe',
+            description: 'a test variable',
+            hidden: false,
+            sensitive: false
+        },
+        {
+            name: 'PMUSER_TEST_ONE_OF',
+            value: 'aklm',
+            description: 'a test variable',
+            hidden: false,
+            sensitive: false
+        },
+        {
+            name: 'PMUSER_TEST_BETWEEN',
+            value: '150',
+            description: 'a test variable',
+            hidden: false,
+            sensitive: false
+        }
+    ]);
+
     globule.find(appRoot + '/test/**/*.papi.json').forEach((papiPath) => {
 
         let isBehavior = papiPath.indexOf('behavior') > -1;

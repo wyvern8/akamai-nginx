@@ -16,16 +16,24 @@ export class Criteria extends RuleAttribute {
         this._checkVar = checkVar;
     }
 
+    /**
+     * process criteria options into lua expression
+     * @param usePattern
+     * @param valueSuffix
+     * @returns {string}
+     */
     process(usePattern, valueSuffix) {
-        if (this.options.matchOperator === 'EXISTS') {
-            return this.checkVar + this.matchOperatorCompare() + 'nil';
 
-        } else if (this.options.matchOperator === 'DOES_NOT_EXIST') {
-            return this.checkVar + this.matchOperatorCompare() + 'nil';
+        if (['EXISTS', 'IS_NOT_EMPTY', 'DOES_NOT_EXIST', 'IS_EMPTY'].includes(this.options.matchOperator)) {
+
+            return this.checkVar + this.matchOperatorCompare() + 'nil' +
+                ' or ' + this.checkVar + this.matchOperatorCompare() + '""';
 
         } else {
+
             let conditionArray = [];
             let valueArray = [];
+
             if (this.options.value) {
                 valueArray = [this.options.value];
             } else if (this.options.values) {
@@ -33,15 +41,30 @@ export class Criteria extends RuleAttribute {
             }
 
             valueArray.forEach((val) => {
+
                 if (valueSuffix) val = val + valueSuffix;
+
                 if (usePattern || this.options.matchWildcard === true || val.indexOf('*') > -1) {
-                    let negate = (this.options.matchOperator === 'DOES_NOT_MATCH_ONE_OF' ||
-                        this.options.matchOperator === 'IS_NOT_ONE_OF') ? 'not ' : '';
+
+                    let negate = (['DOES_NOT_MATCH_ONE_OF', 'IS_NOT', 'IS_NOT_ONE_OF']
+                        .includes(this.options.matchOperator)) ? 'not ' : '';
+
                     conditionArray.push(negate + 'matches(' + this.checkVar + ', ' + this.value(val) + ')');
+
                 } else {
-                    conditionArray.push(this.checkVar + this.matchOperatorCompare() + this.value(val));
+
+                    if (this.useNumericComparison()) {
+                        conditionArray.push(this.checkVar +
+                            this.matchOperatorCompare() + 'tonumber(' + this.value(val) + ')');
+
+                    } else {
+                        conditionArray.push(this.checkVar + this.matchOperatorCompare() + this.value(val));
+
+                    }
                 }
+
             });
+
             return conditionArray.join(this.matchOperatorJoiner());
 
         }
@@ -60,10 +83,23 @@ export class Criteria extends RuleAttribute {
         return this.switchByVal({
             'EXISTS': ' ~= ',
             'DOES_NOT_EXIST': ' == ',
+            'IS': ' == ',
             'IS_ONE_OF': ' == ',
             'IS_NOT': ' ~= ',
-            'IS_NOT_ONE_OF': ' ~= '
+            'IS_NOT_ONE_OF': ' ~= ',
+            'IS_GREATER_THAN': ' > ',
+            'IS_LESS_THAN': ' < ',
+            'IS_GREATER_THAN_OR_EQUAL_TO': ' >= ',
+            'IS_LESS_THAN_OR_EQUAL_TO': ' <= '
         }, ' == ', this.options.matchOperator);
+    }
+
+    useNumericComparison() {
+        return (['IS_GREATER_THAN',
+            'IS_LESS_THAN',
+            'IS_GREATER_THAN_OR_EQUAL_TO',
+            'IS_LESS_THAN_OR_EQUAL_TO'
+        ].includes(this.options.matchOperator));
     }
 
 }

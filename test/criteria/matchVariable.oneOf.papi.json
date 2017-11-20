@@ -1,0 +1,10 @@
+{
+  "variableName": "PMUSER_TEST_ONE_OF",
+  "matchOperator": "IS_ONE_OF",
+  "variableValues": [
+    "hij",
+    "*klm"
+  ],
+  "matchWildcard": true,
+  "matchCaseSensitive": true
+}
