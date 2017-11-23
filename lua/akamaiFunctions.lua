@@ -143,5 +143,86 @@ function trueClientIp()
     return ngx.var.remote_addr
 end
 
+function transformVariable(oldValue, options)
+
+    local newValue
+    local transformers = { }
+
+    -- arithmetic
+    transformers['NONE'] = function(val, opts) return val end
+    transformers['ADD'] = function(val, opts) return tonumber(val) + tonumber(swapVars(opts.operandOne)) end
+    transformers['SUBTRACT'] = function(val, opts) return tonumber(val) - tonumber(swapVars(opts.operandOne)) end
+    transformers['MINUS'] = function(val, opts) return tonumber(val) * -1 end
+    transformers['MULTIPLY'] = function(val, opts) return tonumber(val) * tonumber(swapVars(opts.operandOne)) end
+    transformers['DIVIDE'] = function(val, opts) return tonumber(val) / tonumber(swapVars(opts.operandOne)) end
+    transformers['MODULO'] = function(val, opts) return tonumber(val) % tonumber(swapVars(opts.operandOne)) end
+    -- TODO: EXTRACT_PARAM + use "swapVars(paramName)", "separator"
+
+    -- string
+    transformers['LOWER'] = function(val, opts) return string.lower(val) end
+    transformers['UPPER'] = function(val, opts) return string.upper(val) end
+    transformers['STRING_LENGTH'] = function(val, opts) return string.len(val) end
+    transformers['REMOVE_WHITESPACE'] = function(val, opts) return string.gsub(val, "%s+", "") end
+    transformers['TRIM'] = function(val, opts) return string.gsub(val, "^%s*(.-)%s*$", "%1") end
+    transformers['SUBSTITUTE'] = function(val, opts) return string.gsub(val, opts.regex, swapVars(opts.replacement)) end
+        -- TODO+ use "regex", "replacement", "caseSensitive", "globalSubstitution"
+        -- "replacement" supports group capture replacement via $1, $2 … $n
+
+    transformers['SUBSTRING'] =
+        function(val, opts)
+            return string.sub(val, tonumber(swapVars(opts.startIndex)), tonumber(swapVars(opts.endIndex)))
+        end
+
+    transformers['STRING_INDEX'] =
+        function(val, opts)
+            local result = string.find(val, swapVars(opts.subString))
+            if result == nil then
+                result = -1
+            end
+            return result
+        end
+
+    -- encoding and decoding
+    transformers['URL_ENCODE'] = function(val, opts) return urlencode(val) end -- TODO: exceptChars, forceChars
+    transformers['URL_DECODE'] = function(val, opts) return urldecode(val) end
+    transformers['HEX_ENCODE'] = function(val, opts) return string.tohex(val) end
+    transformers['HEX_DECODE'] = function(val, opts) return string.fromhex(val) end
+    -- TODO: XML_ENCODE, XML_DECODE, URL_DECODE_UNI, NORMALIZE_PATH_WIN
+
+    -- bitwise operations
+    -- TODO: BITWISE_AND, BITWISE_OR, BITWISE_XOR + use "operandOne" BITWISE_NOT
+
+    -- numeric conversion
+    transformers['DECIMAL_TO_HEX'] = function(val, opts) return decimalToHex(val) end
+    transformers['HEX_TO_DECIMAL'] = function(val, opts) return hexToDecimal(val) end
+
+    -- encoding/decoding
+    -- TODO: DECRYPT, ENCRYPT
+    transformers['BASE_64_ENCODE'] = function(val, opts) return base64encode(val) end
+    transformers['BASE_64_DECODE'] = function(val, opts) return base64decode(val) end
+
+    -- hash
+    -- TODO: SHA_1, SHA_256, MD5, HMAC, HASH
+
+    -- time formats
+    transformers['UTC_SECONDS'] = function(val, opts) return os.time() end
+    transformers['EPOCH_TO_STRING'] = function(val, opts) return os.date(opts.formatString, os.time(val)) end
+    -- TODO: STRING_TO_EPOCH
+    -- %m/%d/%y as specified by strftime
+
+    -- networking
+    -- TODO: NETMASK + use "ipVersion" (IPV4 or IPV6), "ipv6Prefix", "ipv4Prefix"
+
+
+    local func = transformers[options["transform"]]
+    if (func) then
+        newValue = func(oldValue, options)
+    else
+        newValue = oldValue
+    end
+
+    return newValue
+end
+
 -- #### END akamaiFunctions.lua
 

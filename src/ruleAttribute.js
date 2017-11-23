@@ -14,7 +14,21 @@ export class RuleAttribute {
     }
 
     switchByVal(cases, defaultCase, key) {
-        return key in cases ? cases[key] : defaultCase;
+        let result;
+        if (key in cases) result = cases[key];
+
+        // if exact key not found try splitting comma delimited and check each subkey
+        if (!result) {
+            Object.keys(cases).forEach((k) => {
+                let subKeys = k.split(',').map((i) => {return i.trim();});
+                if (subKeys.includes(key)) {
+                    result = cases[k];
+                }
+            });
+        }
+
+        if (!result) result = defaultCase;
+        return result;
     }
 
     process() {

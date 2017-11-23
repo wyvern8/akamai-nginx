@@ -1,0 +1,8 @@
+{
+  "variableName": "PMUSER_TEST_1",
+  "valueSource": "EXTRACT",
+  "transform": "ADD",
+  "operandOne": 5,
+  "extractLocation": "CLIENT_REQUEST_HEADER",
+  "headerName": "testing"
+}

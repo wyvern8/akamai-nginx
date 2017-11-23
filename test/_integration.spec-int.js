@@ -16,6 +16,8 @@ let integrationUrlPathBehavior = '/integration/behavior/';
 let checkHeaderName = 'CRITERIA-TEST';
 let checkHeaderValue = 'BEHAVIOR-TRIGGERED';
 
+let variableCheckHeaderName = 'SETVARIABLE-RESULT';
+
 // trigger config build before describe blocks
 before( (done) => {
     integrationConfig().then( () => {
@@ -58,6 +60,13 @@ async function integrationConfig() {
             description: 'a test variable',
             hidden: false,
             sensitive: false
+        },
+        {
+            name: 'PMUSER_TEST_SETVARIABLE',
+            value: '150',
+            description: 'placeholder',
+            hidden: false,
+            sensitive: false
         }
     ]);
 
@@ -75,13 +84,30 @@ async function integrationConfig() {
         if (isBehavior) {
             papiOpts.behavior[papiFilename] = opts;
 
+            let behaviors = [];
+            behaviors.push({
+                name: papiName,
+                options: opts
+            });
+
+            // if this is a setVariable behavior, return a header for testing result
+            if (papiName === 'setVariable') {
+                behaviors.push({
+                    name: 'modifyOutgoingResponseHeader',
+                    options: {
+                        action: 'MODIFY',
+                        standardModifyHeaderName: 'OTHER',
+                        customHeaderName: variableCheckHeaderName,
+                        newHeaderValue: '{{user.' + opts.variableName + '}}',
+                        avoidDuplicateHeaders: true
+                    }
+                });
+            }
+
             integrationPapi.rules.children.push({
                 name: 'behavior ' + papiName,
                 children: [],
-                behaviors: [{
-                    name: papiName,
-                    options: opts
-                }],
+                behaviors: behaviors,
                 criteria: [{
                     name: 'path',
                     options: {
@@ -155,6 +181,7 @@ function integrationTestUrl(papiJsonFileName, type, pathSuffix) {
     }
 }
 
+module.exports.variableCheckHeaderName = variableCheckHeaderName;
 module.exports.checkHeaderName = checkHeaderName;
 module.exports.checkHeaderValue = checkHeaderValue;
 module.exports.urlPrefix = integrationUrlPrefix;

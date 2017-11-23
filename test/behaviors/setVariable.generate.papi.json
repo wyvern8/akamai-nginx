@@ -1,0 +1,8 @@
+{
+  "variableName": "PMUSER_TEST_1",
+  "valueSource": "GENERATE",
+  "transform": "NONE",
+  "generator": "RAND",
+  "minRandomNumber": "0",
+  "maxRandomNumber": "4294967295"
+}

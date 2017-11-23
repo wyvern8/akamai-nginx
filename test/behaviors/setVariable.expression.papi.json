@@ -1,0 +1,6 @@
+{
+  "variableName": "PMUSER_TEST_1",
+  "valueSource": "EXPRESSION",
+  "transform": "NONE",
+  "variableValue": "hostname is {{builtin.AK_HOST}}"
+}
