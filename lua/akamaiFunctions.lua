@@ -175,11 +175,11 @@ function transformVariable(oldValue, options)
 
     transformers['STRING_INDEX'] =
         function(val, opts)
-            local result = string.find(val, swapVars(opts.subString))
+            local result = string.find(val, urldecode(swapVars(opts.subString)))
             if result == nil then
                 result = -1
             end
-            return result
+            return result-1 -- to be zero based per akamai
         end
 
     -- encoding and decoding

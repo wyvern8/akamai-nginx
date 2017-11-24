@@ -1,0 +1,8 @@
+{
+  "variableName": "PMUSER_TEST_1",
+  "valueSource": "EXTRACT",
+  "transform": "STRING_INDEX",
+  "extractLocation": "QUERY_STRING",
+  "queryParameterName": "testing",
+  "subString": "target"
+}

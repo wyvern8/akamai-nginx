@@ -17,11 +17,25 @@ simulate an akamai property.
   <img src="https://raw.githubusercontent.com/wyvern8/akamai-nginx/master/logo.png?raw=true" alt="" title="logo" align="right" style="width:140px">
 </a>
 
-#### This can be useful for: 
+## Why? 
 - Local development on apps that rely on akamai property rules.
 - Non prod environments that cannot be granted ingress from Akamai due to organization policy.
 - On-demand temporarily provisioned environments to run CI tests against in pipelines.
 - Learning the basic concepts of how a CDN works.
+
+## How?
+This node module calls the Akamai PAPI (Property API), and configures a local Nginx instance with the same logical criteria and behaviors in use on the Akamai CDN for a given property.  
+
+The most commonly used capabilites are simulated, and advanced features are skipped in some cases.
+
+In order to configure Nginx, this module generates Lua code, and some nginx modules handle the execution of the Lua on each request.
+
+The Nginx container used is OpenResty ( https://openresty.org ) This is a packaging of nginx with the required Lua modules built in.
+
+<a href="https://github.com/wyvern8/akamai-nginx">
+  <img src="https://raw.githubusercontent.com/wyvern8/akamai-nginx/master/akamai-nginx-flow.png?raw=true" alt="" title="logo" align="right" style="width:140px">
+</a>
+
 
 ## Install
 To install for your project:
@@ -66,8 +80,6 @@ npm run docker-bounce (restart containers and tail logs)
 
 The docker-compose.yml is used to start OpenResty containers to simulate an akamai property, edge and origin.
   
-OpenResty ( https://openresty.org ) is a packaging of nginx with the required Lua modules built in.
-
 This is done by mapping the local nginx-akamai.conf and lua directory into a docker container which is where most of the work is done.  
 
 A second nginx container using nginx-edge.conf maintains the proxy cache, and a third acts as origin and has the nginx-origin.conf mapped.  
@@ -121,15 +133,26 @@ Examples:
 The 'setValueMap' function can be used to pass in values such as origin hostnames to be 
 translated from the PAPI json values to hostnames that work in the context of the simulator.
 
-In addition you can create a file 'valueMap.local.json' in the root of the app that will be used to 
-the map. The js map is also converted to a lua map 'valueMap' which can be used in behaviors either directly 
+Note that the valueMap mechanism is for *config build time* replacements.  If you are using the Akamai variables functionality 
+in your property, you can use the valueMap to swap out the variables before runtime, and any remaining variables will be dynamically 
+evaluated as they would be on the Akamai network.
+
+The supported Akamai variables features are:
+- variable replacement in criteria and behaviors
+- the **matchVariable** criteria
+- the **setVariable** behavior (with support for the basic transforms)
+
+To populate the valueMap, you can either call the 'setValueMap' function as mentioned, or create a file 'valueMap.local.json' in the 
+root of the app, and this will be used to build the map. 
+
+This js map is also converted to a lua map 'valueMap' which can be used in behaviors either directly 
 or via the mapValue function which handles nil values.
 
-**Examples:**
+#### Examples
 - converting 'localhost' to the host header value expected by origin virtualhosting
 - converting a PAPI json origin hostname to a localhost/other site instance
 
-**Sample valueMap.local.json**
+#### Sample valueMap.local.json
 ```
 [
   [
@@ -220,7 +243,7 @@ import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from 'akama
 })();
 ````
 
-### Cache management
+## Cache management
 The Akamai 'caching' behavior is mapped to cache control response headers, with the TTLs from property configuration applied.   The TTL is represented as the standard nginx cache control 'X-Accel-Expires' response header.
   
 A separate docker container 'edge' then controls reading and writing to an nginx proxy cache based on this response header from upstream. 

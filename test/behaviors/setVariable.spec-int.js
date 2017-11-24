@@ -116,4 +116,33 @@ describe('BehaviorSetVariable', () => {
         });
     });
 
+    describe('set variable by querystring extract + transform stringindex', () => {
+
+        let request = supertest(integration.urlPrefix);
+
+        let opts;
+        before( (done) => {
+            integration.config().then( (papiOpts) => {
+                opts = papiOpts.behavior['setVariable.extract-qs-stringindex.papi.json'];
+                done();
+            });
+        });
+
+        it('should find the correct string index', (done) => {
+
+            request
+                .get(integration.testUrl('setVariable.extract-qs-stringindex.papi.json') + '&' + opts.queryParameterName + '=this target')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(parseInt(res.headers[integration.variableCheckHeaderName.toLowerCase()]))
+                        .to.equal(
+                            5,
+                            'incorrect string index returned'
+                        );
+                    done();
+                });
+
+        });
+    });
+
 });
