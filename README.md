@@ -33,7 +33,7 @@ In order to configure Nginx, this module generates Lua code, and some nginx modu
 The Nginx container used is OpenResty ( https://openresty.org ) This is a packaging of nginx with the required Lua modules built in.
 
 <a href="https://github.com/wyvern8/akamai-nginx">
-  <img src="https://raw.githubusercontent.com/wyvern8/akamai-nginx/master/akamai-nginx-flow.png?raw=true" alt="" title="logo" align="right" style="width:140px">
+  <img src="https://raw.githubusercontent.com/wyvern8/akamai-nginx/master/akamai-nginx-flow.png?raw=true" alt="" title="nginx flow">
 </a>
 
 
