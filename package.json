@@ -79,7 +79,7 @@
     "mocha": "^4.0.0",
     "nyc": "^11.2.1",
     "rimraf": "^2.6.1",
-    "semantic-release": "^8.0.3",
+    "semantic-release": "^11.0.2",
     "supertest": "^3.0.0"
   },
   "config": {
