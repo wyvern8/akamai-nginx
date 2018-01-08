@@ -13,7 +13,7 @@
     "start": "npm run build && AKA_MODE=PAPI node dist/start.js",
     "start-local": "npm run build && AKA_MODE=LOCAL node dist/start.js",
     "configure": "npm run build && node dist/configure.js",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "semantic-release": "semantic-release",
     "clearcache": "sudo rm -rf ./cache/*",
     "generate-certs": "openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout ssl/nginx.key -out ssl/nginx.crt -subj \"/C=AU/ST=NSW/L=Sydney/O=ACME Tech Inc/CN=www.site.test\"",
     "docker-start": "docker-compose up -d",
