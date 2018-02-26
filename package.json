@@ -58,7 +58,7 @@
     "globule": "^1.2.0",
     "inquirer": "^5.0.0",
     "require-dir": "^0.3.2",
-    "systemjs": "^0.20.18",
+    "systemjs": "^0.21.0",
     "webpack": "^3.6.0"
   },
   "devDependencies": {
