@@ -57,7 +57,7 @@
     "format-json": "^1.0.3",
     "globule": "^1.2.0",
     "inquirer": "^5.0.0",
-    "require-dir": "^0.3.2",
+    "require-dir": "^1.0.0",
     "systemjs": "^0.21.0",
     "webpack": "^3.6.0"
   },
