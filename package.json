@@ -59,7 +59,7 @@
     "inquirer": "^5.0.0",
     "require-dir": "^1.0.0",
     "systemjs": "^0.21.0",
-    "webpack": "^3.6.0"
+    "webpack": "^4.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
