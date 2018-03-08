@@ -39,7 +39,7 @@
     "type": "git",
     "url": "https://github.com/wyvern8/akamai-nginx.git"
   },
-  "author": "Andrew Vaughan <andrewv@smartcreations.com.au> (https://halt.sh)",
+  "author": "Andrew Vaughan <av@zoto.io> (https://halt.sh)",
   "license": "MIT",
   "keywords": [
     "akamai",
