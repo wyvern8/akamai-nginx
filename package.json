@@ -52,7 +52,7 @@
   "dependencies": {
     "app-root-path": "^2.0.1",
     "babel-polyfill": "^6.26.0",
-    "dotenv": "^5.0.0",
+    "dotenv": "^6.1.0",
     "edgegrid": "^3.0.2",
     "format-json": "^1.0.3",
     "globule": "^1.2.0",
