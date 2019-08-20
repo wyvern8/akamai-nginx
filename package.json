@@ -76,7 +76,7 @@
     "commitizen": "^2.9.6",
     "cross-env": "^5.0.5",
     "cz-conventional-changelog": "^2.0.0",
-    "eslint": "^4.7.0",
+    "eslint": "^6.2.1",
     "mocha": "^5.0.0",
     "nyc": "^11.2.1",
     "rimraf": "^2.6.1",
