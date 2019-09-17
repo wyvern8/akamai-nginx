@@ -74,7 +74,7 @@
     "babel-register": "^6.26.0",
     "chai": "^4.1.1",
     "commitizen": "^2.9.6",
-    "cross-env": "^5.0.5",
+    "cross-env": "^6.0.0",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "^4.7.0",
     "mocha": "^5.0.0",
