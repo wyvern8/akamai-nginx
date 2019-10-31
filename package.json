@@ -50,7 +50,7 @@
     "papi"
   ],
   "dependencies": {
-    "app-root-path": "^2.0.1",
+    "app-root-path": "^3.0.0",
     "babel-polyfill": "^6.26.0",
     "dotenv": "^5.0.0",
     "edgegrid": "^3.0.2",
