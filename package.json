@@ -59,7 +59,7 @@
     "inquirer": "^5.0.0",
     "require-dir": "^1.0.0",
     "systemjs": "^0.21.0",
-    "webpack": "^4.0.0",
+    "webpack": "^4.42.0",
     "moment": "^2.21.0"
   },
   "devDependencies": {
