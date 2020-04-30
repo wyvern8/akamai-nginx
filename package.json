@@ -19,7 +19,9 @@
     "docker-start": "docker-compose up -d",
     "docker-stop": "docker-compose stop",
     "docker-logs": "docker-compose logs --tail=0 --follow",
-    "docker-bounce": "docker-compose restart && npm run docker-logs"
+    "docker-bounce": "docker-compose restart && npm run docker-logs",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "engines": {
     "node": ">=8.4.0"
@@ -60,7 +62,8 @@
     "require-dir": "^1.0.0",
     "systemjs": "^0.21.0",
     "webpack": "^4.0.0",
-    "moment": "^2.21.0"
+    "moment": "^2.21.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -87,5 +90,6 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "snyk": true
 }
