@@ -53,13 +53,13 @@
     "app-root-path": "^2.0.1",
     "babel-polyfill": "^6.26.0",
     "dotenv": "^5.0.0",
-    "edgegrid": "^3.0.2",
+    "edgegrid": "^3.0.5",
     "format-json": "^1.0.3",
     "globule": "^1.2.0",
     "inquirer": "^5.0.0",
     "require-dir": "^1.0.0",
     "systemjs": "^0.21.0",
-    "webpack": "^4.0.0",
+    "webpack": "^5.0.0",
     "moment": "^2.21.0"
   },
   "devDependencies": {
