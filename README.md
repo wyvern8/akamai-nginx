@@ -4,7 +4,6 @@
 [![Build Status](https://travis-ci.org/wyvern8/akamai-nginx.svg?branch=master)](https://travis-ci.org/wyvern8/akamai-nginx)
 [![Code Climate](https://codeclimate.com/github/wyvern8/akamai-nginx/badges/gpa.svg)](https://codeclimate.com/github/wyvern8/akamai-nginx)
 [![Test Coverage](https://codeclimate.com/github/wyvern8/akamai-nginx/badges/coverage.svg)](https://codeclimate.com/github/wyvern8/akamai-nginx/coverage)
-[![Greenkeeper badge](https://badges.greenkeeper.io/wyvern8/akamai-nginx.svg)](https://greenkeeper.io/)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?clear)](http://commitizen.github.io/cz-cli/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
@@ -203,7 +202,7 @@ This in conjunction with the nginx.conf and docker-compose can be used to build 
 ### Example usage in ES6
 ```javascript
 import 'babel-polyfill'
-import EdgeGrid from 'edgegrid';
+import EdgeGrid from 'akamai-edgegrid';
 import dotenv from 'dotenv';
 import { setApiConfig, setValueMap, setSkipBehaviors, generateConf } from 'akamai-nginx';
 

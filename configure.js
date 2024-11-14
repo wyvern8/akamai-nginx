@@ -1,5 +1,5 @@
 import 'babel-polyfill';
-import EdgeGrid from 'edgegrid';
+import EdgeGrid from 'akamai-edgegrid';
 import dotenv from 'dotenv';
 import inquirer from 'inquirer';
 import formatJson from 'format-json';

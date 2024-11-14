@@ -1,7 +1,7 @@
 import { before } from 'mocha';
-import { default as fs } from 'fs';
+import fs from 'fs';
+import path from 'path';
 import appRoot from 'app-root-path';
-import globule from 'globule';
 import { setLocalConfig, generateConf } from '../src/akamai-nginx.js';
 
 //lazy init
@@ -70,7 +70,26 @@ async function integrationConfig() {
         }
     ]);
 
-    globule.find(appRoot + '/test/**/*.papi.json').forEach((papiPath) => {
+    const directoryPath = path.join(appRoot, 'test');
+    const searchPattern = /\.papi\.json$/;
+
+    // Recursive function to find all .papi.json files in subdirectories
+    function findFiles(dir) {
+        let results = [];
+        fs.readdirSync(dir).forEach((file) => {
+            const filePath = path.join(dir, file);
+            const stat = fs.statSync(filePath);
+
+            if (stat && stat.isDirectory()) {
+                results = results.concat(findFiles(filePath));
+            } else if (searchPattern.test(file)) {
+                results.push(filePath);
+            }
+        });
+        return results;
+    }
+
+    findFiles(directoryPath).forEach((papiPath) => {
 
         let isBehavior = papiPath.indexOf('behavior') > -1;
 

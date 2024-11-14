@@ -35,12 +35,12 @@ export class BehaviorSetVariable extends Behavior {
         if (options.valueSource === 'GENERATE') {
             lua.push('-- GENERATE: ' + options.generator);
             lua.push(...
-                this.switchByVal({
-                    'RAND': [
-                        'math.randomseed(os.time())',
-                        'result = math.random(' + options.minRandomNumber + ', ' + options.maxRandomNumber + ')'
-                    ]
-                }, '-- not supported yet.', options.generator)
+            this.switchByVal({
+                'RAND': [
+                    'math.randomseed(os.time())',
+                    'result = math.random(' + options.minRandomNumber + ', ' + options.maxRandomNumber + ')'
+                ]
+            }, '-- not supported yet.', options.generator)
             );
         }
 

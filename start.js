@@ -1,5 +1,5 @@
 import 'babel-polyfill';
-import EdgeGrid from 'edgegrid';
+import EdgeGrid from 'akamai-edgegrid';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import { setLocalConfig, setApiConfig, setValueMap, setSkipBehaviors, generateConf } from './src/akamai-nginx.js';
